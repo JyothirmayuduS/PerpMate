@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PrepMate - Company Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#e5e2e1",
+                        "surface": "#fdf8f8",
+                        "inverse-on-surface": "#f4f0ef",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#002113",
+                        "on-surface-variant": "#444748",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#c8c6c5",
+                        "on-primary-container": "#858383",
+                        "tertiary": "#000000",
+                        "on-secondary-container": "#5a0f00",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#5f5e5e",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#8a1c00",
+                        "on-primary-fixed": "#1c1b1b",
+                        "surface-container-low": "#f7f3f2",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "surface-variant": "#e5e2e1",
+                        "on-tertiary-container": "#009668",
+                        "outline-variant": "#c4c7c7",
+                        "outline": "#747878",
+                        "on-tertiary-fixed": "#002113",
+                        "secondary": "#b52701",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1c1b1b",
+                        "secondary-fixed-dim": "#ffb4a3",
+                        "inverse-surface": "#313030",
+                        "on-secondary-fixed": "#3d0700",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-container-highest": "#e5e2e1",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#1c1b1b",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#f1edec",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#fdf8f8",
+                        "secondary-container": "#ff5c36",
+                        "surface-dim": "#ddd9d8",
+                        "primary": "#000000",
+                        "tertiary-fixed": "#6ffbbe",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "surface-container-high": "#ebe7e6",
+                        "on-background": "#1c1b1b",
+                        "background": "#fdf8f8",
+                        "secondary-fixed": "#ffdad2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "section-gap": "80px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "20px",
+                        "card-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg-mobile": ["Bricolage Grotesque"],
+                        "headline-xl": ["Bricolage Grotesque"],
+                        "body-base": ["Inter"],
+                        "label-xs": ["Inter"],
+                        "stat-xl": ["Bricolage Grotesque"],
+                        "display-lg": ["Bricolage Grotesque"],
+                        "headline-lg": ["Bricolage Grotesque"]
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-base": ["15px", { "lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "label-xs": ["11px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "stat-xl": ["36px", { "lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .bento-card {
+            background-color: theme('colors.surface-container-lowest');
+            border: 1px solid theme('colors.surface-variant');
+            box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+            border-color: theme('colors.outline-variant');
+        }
+        .lucide {
+            stroke-width: 1.5;
+        }
+        
+        /* Staggered animation */
+        .stagger-in {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 0.5s ease-out forwards;
+        }
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-base antialiased selection:bg-secondary-container selection:text-on-secondary-container flex flex-col md:flex-row h-screen overflow-hidden">
+<!-- TopNavBar (Mobile) -->
+<header class="flex justify-between items-center px-margin-mobile h-20 w-full max-w-container-max mx-auto bg-surface border-b border-outline-variant flat no shadows md:hidden fixed top-0 left-0 z-40">
+<div class="font-display-lg-mobile font-extrabold text-primary">PrepMate</div>
+<div class="flex gap-4">
+<button class="text-primary hover:text-secondary transition-colors duration-200 scale-95 transition-transform duration-150 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-primary hover:text-secondary transition-colors duration-200 scale-95 transition-transform duration-150 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col h-screen p-6 gap-y-4 bg-surface docked left-0 h-full w-64 border-r border-outline-variant flat no shadows z-40 shrink-0 sticky top-0 overflow-y-auto">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img alt="Student Profile Picture" class="w-full h-full object-cover" data-alt="A small, professional portrait headshot of a student in a bright, modern setting. The lighting is soft and flattering. High key, light mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7_S6tx2IWoldY6MxWbRL8u28MfBE4FgMVgYzGCZw4aZ1CuBqfi5r22EjBQOOgm8OmL5zsU9K3AFsF790jeaUok8__mLQM2jxIR6rWBkFiXYvYlxbpB6OFSMVDWHxsOOn1n8EbHFjTVVY9UkRfH-OQsaRBX7Fe-fCXoyAsP5eHsRy1lXpHGASpBrUkGzGwrqeK1G-HjvVlXz1KsNkOqjM05dCDK-K0T3hu2Hm-KEByZgtceXFdWfoO"/>
+</div>
+<div>
+<h1 class="font-display-lg text-headline-lg font-black text-primary leading-none">PrepMate</h1>
+<p class="font-label-xs text-label-xs text-on-surface-variant mt-1">Level 12 • 2450 XP</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-body-base py-3 rounded-lg font-bold mb-4 scale-95 transition-transform duration-100 active:scale-90 hover:opacity-90">Start Mock Test</button>
+<div class="flex flex-col gap-1 flex-grow font-label-xs text-label-xs">
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-low transition-all translate-y(-2px) transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-low transition-all translate-y(-2px) transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="exercise">exercise</span>
+                Practice Hub
+            </a>
+<a class="flex items-center gap-3 p-3 rounded-lg bg-secondary-container text-on-secondary-container font-bold translate-y(-2px) transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="corporate_fare">corporate_fare</span>
+                Company Hub
+            </a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-low transition-all translate-y(-2px) transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+                Community
+            </a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-low transition-all translate-y(-2px) transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+                Roadmap
+            </a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-low transition-all translate-y(-2px) transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+                Leaderboard
+            </a>
+</div>
+<div class="flex flex-col gap-1 mt-auto font-label-xs text-label-xs pt-4 border-t border-surface-variant">
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-low transition-all translate-y(-2px) transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-low transition-all translate-y(-2px) transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Support
+            </a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow overflow-y-auto pt-24 md:pt-0 pb-20 md:pb-0">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 stagger-in stagger-1">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-primary mb-3 hidden md:block">Company Hub</h1>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary mb-3 md:hidden">Company Hub</h1>
+<p class="font-body-base text-body-base text-on-surface-variant max-w-2xl leading-relaxed">Company-Specific Modules tailored for top tech interviews. Master the specific patterns and frequently asked questions for your target roles.</p>
+</div>
+</div>
+<!-- Filters & Search -->
+<div class="flex flex-col xl:flex-row gap-6 mb-10 stagger-in stagger-2 items-center">
+<div class="relative flex-grow w-full max-w-xl">
+<span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full pl-14 pr-6 py-4 rounded-full border border-surface-variant bg-surface-container-lowest shadow-sm focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-base text-body-base text-on-surface placeholder:text-outline" placeholder="Search companies..." type="text"/>
+</div>
+<div class="flex gap-3 overflow-x-auto pb-2 md:pb-0 no-scrollbar shrink-0 w-full xl:w-auto">
+<button class="px-6 py-3 rounded-full bg-primary text-on-primary font-label-xs text-label-xs uppercase tracking-wider font-semibold whitespace-nowrap shadow-sm hover:opacity-90 active:scale-95 transition-all">All</button>
+<button class="px-6 py-3 rounded-full border border-outline-variant bg-transparent text-on-surface-variant hover:border-primary hover:text-primary font-label-xs text-label-xs uppercase tracking-wider font-semibold whitespace-nowrap active:scale-95 transition-all">FAANG</button>
+<button class="px-6 py-3 rounded-full border border-outline-variant bg-transparent text-on-surface-variant hover:border-primary hover:text-primary font-label-xs text-label-xs uppercase tracking-wider font-semibold whitespace-nowrap active:scale-95 transition-all">Product-Based</button>
+<button class="px-6 py-3 rounded-full border border-outline-variant bg-transparent text-on-surface-variant hover:border-primary hover:text-primary font-label-xs text-label-xs uppercase tracking-wider font-semibold whitespace-nowrap active:scale-95 transition-all">Service-Based</button>
+</div>
+</div>
+<!-- Company Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1: Google -->
+<a class="bento-card flex flex-col group stagger-in stagger-3 block" href="#">
+<div class="flex justify-between items-start mb-6">
+<div class="w-16 h-16 rounded-2xl bg-surface-container flex items-center justify-center p-3 border border-surface-variant/50 shadow-sm">
+<img class="w-full h-full object-contain" data-alt="A clean, minimalist vector logo resembling a multicolored 'G' on a pure white background. The style is modern, corporate, and flat, fitting a high-end tech SaaS platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcva37vndDv0c5QFGk1_vR1HChqO0e_fSrsX84kuNcYcjCRbHk3IA6P8NH1vFIO_RqhffmqsODmj8Tu2F9zlgL8w4h_xRrVK3PEu68HQSjlgN5nbuZTE3fLjDEz2zfyjB_oWH7a2YTmX55SMmjlzxNyHWImF242dNUcdGD5weRBejgye5Pd8YtewPs2Kjx_59rJ9j7x4DFaUmGKKbNz5l_cPRqazkx06mlZqs4sTSR05HMUG8Ip4tt"/>
+</div>
+<span class="px-4 py-1.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-full font-bold uppercase tracking-widest">FAANG</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg font-bold text-primary mb-3">Google</h3>
+<p class="font-body-base text-body-base text-on-surface-variant mb-6 line-clamp-2 flex-grow leading-relaxed">Focus heavily on Graphs, Dynamic Programming, and System Design for L4+ roles.</p>
+<div class="flex flex-col gap-4 py-6 border-y border-outline-variant/30 mt-auto">
+<div class="flex justify-between items-center">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider font-semibold">Most Asked</span>
+<span class="font-body-base text-body-base font-semibold text-primary">Graphs, DP</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider font-semibold">Experiences</span>
+<span class="font-body-base text-body-base font-semibold text-primary">124+</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider font-semibold">Questions</span>
+<span class="font-body-base text-body-base font-semibold text-primary">350</span>
+</div>
+</div>
+<div class="mt-6 text-center">
+<span class="text-[#FF5C36] font-label-xs text-label-xs font-bold uppercase tracking-widest flex items-center justify-center gap-1 group-hover:opacity-80 transition-opacity">View Module <span class="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span></span>
+</div>
+</a>
+<!-- Card 2: Amazon -->
+<a class="bento-card flex flex-col group stagger-in stagger-4 block" href="#">
+<div class="flex justify-between items-start mb-6">
+<div class="w-16 h-16 rounded-2xl bg-surface-container flex items-center justify-center p-3 border border-surface-variant/50 shadow-sm">
+<img class="w-full h-full object-contain" data-alt="A clean, minimalist vector logo featuring a black 'a' with a subtle orange curved arrow underneath, on a pure white background. Modern, corporate SaaS style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5leiU_YTawID9Pe-INhkq4UpGa8GbIfgyP7oYWrY1TSkKeNFDf6tM32JKMU61tmMl1kej6meGi1qpzDBBweGDVzk_7WTNnjGftz2t42aG3tq2dOpaa_tScdDmK3hwPfrQsC0XlOuwx0uy1zPva4KadJRQ4UmtjR705gqfLlOVROE0M3u5GK8kAHHJnNcBUvpLspvlQ8A0JNte0oJbHtpPf-Vl0IlrV_yftuWTt3mep7EJcVVwjzMO"/>
+</div>
+<span class="px-4 py-1.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-full font-bold uppercase tracking-widest">FAANG</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg font-bold text-primary mb-3">Amazon</h3>
+<p class="font-body-base text-body-base text-on-surface-variant mb-6 line-clamp-2 flex-grow leading-relaxed">Leadership Principles are critical. High emphasis on Trees, Heaps, and OOD.</p>
+<div class="flex flex-col gap-4 py-6 border-y border-outline-variant/30 mt-auto">
+<div class="flex justify-between items-center">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider font-semibold">Most Asked</span>
+<span class="font-body-base text-body-base font-semibold text-primary">Trees, Arrays</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider font-semibold">Experiences</span>
+<span class="font-body-base text-body-base font-semibold text-primary">210+</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider font-semibold">Questions</span>
+<span class="font-body-base text-body-base font-semibold text-primary">420</span>
+</div>
+</div>
+<div class="mt-6 text-center">
+<span class="text-[#FF5C36] font-label-xs text-label-xs font-bold uppercase tracking-widest flex items-center justify-center gap-1 group-hover:opacity-80 transition-opacity">View Module <span class="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span></span>
+</div>
+</a>
+<!-- Card 3: Microsoft -->
+<a class="bento-card flex flex-col group stagger-in stagger-5 block" href="#">
+<div class="flex justify-between items-start mb-6">
+<div class="w-16 h-16 rounded-2xl bg-surface-container flex items-center justify-center p-3 border border-surface-variant/50 shadow-sm">
+<img class="w-full h-full object-contain" data-alt="A clean, minimalist vector logo consisting of four colored squares forming a larger square window shape on a pure white background. Modern, corporate style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaAL5g52hVNwX74ziDeaFEfI8CrwnfS9O5xfGG7tLjPNUmxYe2SOJLOTbY_UHGkWoIhKzr15YFjfzZyhNEQX2ww3B_yy5FKGcroiJodup9F7qr3Ta8K7e9T7F0sRIcOR7L48apY4DL4uNUfhl4JIttdk7K4gdTUSlBE8oq4WTSskU48Jqn4ZdxufU88EEGLVmLiTQJAi-v_SITB-TDyyzLAKjf8cn9sYE2rFJxQhVlSOIdoHwjk-bM"/>
+</div>
+<span class="px-4 py-1.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-full font-bold uppercase tracking-widest">Product</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg font-bold text-primary mb-3">Microsoft</h3>
+<p class="font-body-base text-body-base text-on-surface-variant mb-6 line-clamp-2 flex-grow leading-relaxed">Strong focus on Linked Lists, Strings, and System Design fundamentals.</p>
+<div class="flex flex-col gap-4 py-6 border-y border-outline-variant/30 mt-auto">
+<div class="flex justify-between items-center">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider font-semibold">Most Asked</span>
+<span class="font-body-base text-body-base font-semibold text-primary">Strings, LinkedList</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider font-semibold">Experiences</span>
+<span class="font-body-base text-body-base font-semibold text-primary">185+</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider font-semibold">Questions</span>
+<span class="font-body-base text-body-base font-semibold text-primary">280</span>
+</div>
+</div>
+<div class="mt-6 text-center">
+<span class="text-[#FF5C36] font-label-xs text-label-xs font-bold uppercase tracking-widest flex items-center justify-center gap-1 group-hover:opacity-80 transition-opacity">View Module <span class="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span></span>
+</div>
+</a>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 md:hidden bg-surface border-t border-outline-variant shadow-sm docked full-width bottom-0 rounded-t-xl" style="box-shadow: 0 2px 12px rgba(0,0,0,0.04);">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-container-low scale-95 transition-transform duration-100 font-label-xs text-label-xs p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+            Home
+        </a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-container-low scale-95 transition-transform duration-100 font-label-xs text-label-xs p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="fitness_center">fitness_center</span>
+            Practice
+        </a>
+<a class="flex flex-col items-center justify-center text-secondary font-bold active:bg-surface-container-low scale-95 transition-transform duration-100 font-label-xs text-label-xs p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="corporate_fare" data-weight="fill" style="font-variation-settings: 'FILL' 1;">corporate_fare</span>
+            Company
+        </a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-container-low scale-95 transition-transform duration-100 font-label-xs text-label-xs p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="route">route</span>
+            Roadmap
+        </a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-container-low scale-95 transition-transform duration-100 font-label-xs text-label-xs p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+            Profile
+        </a>
+</nav>
+</body></html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PrepMate - Doubts Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fdf8f8",
+                        "on-secondary-fixed-variant": "#8a1c00",
+                        "on-secondary-fixed": "#3d0700",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#ff5c36",
+                        "surface-container-high": "#ebe7e6",
+                        "secondary-fixed-dim": "#ffb4a3",
+                        "on-tertiary-container": "#009668",
+                        "secondary": "#b52701",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-primary-container": "#858383",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e5e2e1",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#002113",
+                        "inverse-surface": "#313030",
+                        "primary-fixed": "#e5e2e1",
+                        "surface": "#fdf8f8",
+                        "primary": "#000000",
+                        "on-tertiary-fixed": "#002113",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1c1b1b",
+                        "tertiary-fixed": "#6ffbbe",
+                        "outline-variant": "#c4c7c7",
+                        "secondary-fixed": "#ffdad2",
+                        "surface-dim": "#ddd9d8",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#444748",
+                        "on-background": "#1c1b1b",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-tint": "#5f5e5e",
+                        "surface-variant": "#e5e2e1",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f7f3f2",
+                        "tertiary": "#000000",
+                        "outline": "#747878",
+                        "inverse-primary": "#c8c6c5",
+                        "primary-container": "#1c1b1b",
+                        "on-primary-fixed": "#1c1b1b",
+                        "inverse-on-surface": "#f4f0ef",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#5a0f00",
+                        "surface-container": "#f1edec",
+                        "surface-bright": "#fdf8f8",
+                        "on-primary-fixed-variant": "#474646"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "card-padding": "24px",
+                        "section-gap": "80px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "label-xs": ["Inter"],
+                        "stat-xl": ["Bricolage Grotesque"],
+                        "headline-xl": ["Bricolage Grotesque"],
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "display-lg": ["Bricolage Grotesque"],
+                        "body-base": ["Inter"],
+                        "display-lg-mobile": ["Bricolage Grotesque"]
+                    },
+                    "fontSize": {
+                        "label-xs": ["11px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "stat-xl": ["36px", { "lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "body-base": ["15px", { "lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        .shadow-soft {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .shadow-hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+        .bento-card {
+            background-color: #FFFFFF;
+            border: 1px solid #ECEAE5;
+            border-radius: 1rem; /* rounded-2xl roughly */
+            padding: 24px;
+            transition: all 0.2s ease-in-out;
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e5e2e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c4c7c7;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base antialiased min-h-screen flex flex-col md:flex-row">
+<!-- TopAppBar (Mobile Only) -->
+<header class="flex md:hidden justify-between items-center w-full px-margin-mobile h-20 bg-background/90 backdrop-blur-sm border-b border-outline-variant z-40 fixed top-0">
+<div class="font-headline-lg text-headline-lg font-black tracking-tight text-primary">PrepMate</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:opacity-80 transition-opacity">notifications</span>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A small circular user profile picture featuring a professional headshot against a clean, warm ivory background, cohesive with a premium, minimal SaaS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeVQgVSiB6hauL33wouD9HejPPGVUaHLPYPYzQLP-AKY7ZJ6-NF0bQWmUb9rr4Qlb_vp3Gwh8b-L510ilQ4ekmiGEbI7rFOJGBO4V-jERbgtgFTQYtEANgcLfgK27mfTmccptBzXtTOwF1bw44RJHF4sQuhjHf2h3qda-FYFJxmMy5qJoLFURkv81UIEeKhBcn-HyGAP7rXr_onm2X2Q2JP-8YjiiRM0xuUAFrxXAS0B97-vMz6X3U">
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex fixed left-0 top-0 h-full flex-col justify-between py-margin-desktop px-4 bg-surface border-r border-outline-variant shadow-sm w-64 z-50">
+<div>
+<div class="flex items-center gap-3 px-4 mb-8">
+<img alt="PrepMate Logo" class="w-10 h-10 rounded-lg object-cover" data-alt="A minimalist logo for an educational platform named PrepMate, designed in black and white with a sharp, geometric aesthetic, emphasizing precision and learning." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-YSSs81SmeQOKmCbivR8pORp9DiQ7umVtVCZvOe0aF3WtV_RCScU0LksrrGERsVm9y--HPgA3zLR112Fu53YWUg_H-CqLwhMN9kq2u_tknQopnSZ-4IMej488Dax87BWpaH4FnjE_6XwBXDsHMhmJnbc5hDj6_CYhnUTJ4APAMqMv2NQKNCl7_d5RbgvH1xhC0U-2wcdN_wJ9V0hlH8eMPa2apNx_b7mGwVrZiyQpEXOCfL_o7gWQ">
+<div>
+<div class="font-headline-lg text-headline-lg font-extrabold text-primary text-xl">PrepMate</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant uppercase mt-1">Placement Ready</div>
+</div>
+</div>
+<div class="space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 rounded-full font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 rounded-full font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined" data-icon="exercise">exercise</span>
+                    Practice
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary text-on-primary rounded-full transition-all duration-200 font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+                    Doubts
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 rounded-full font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+                    Roadmap
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 rounded-full font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+                    Leaderboard
+                </a>
+</div>
+</div>
+<div class="space-y-2">
+<button class="w-full bg-primary text-on-primary py-3 rounded-full font-label-xs text-label-xs uppercase tracking-widest hover:bg-surface-container-high hover:text-primary border border-primary transition-all active:scale-95 mb-4">Start Practice</button>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 pt-24 md:pt-margin-desktop px-margin-mobile md:px-margin-desktop pb-24 max-w-container-max mx-auto w-full">
+<!-- Header & Search -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-primary mb-2">Community Doubts</h1>
+<p class="text-on-surface-variant font-body-base text-body-base">Help peers or get your questions answered by the community.</p>
+</div>
+<div class="w-full md:w-96 relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface border border-outline-variant rounded-full py-3 pl-12 pr-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-base text-body-base" placeholder="Search for tags, topics, or keywords..." type="text">
+</div><div class="flex items-center gap-2 bg-surface border border-outline-variant rounded-full px-4 py-2 cursor-pointer hover:border-primary transition-all"><span class="font-label-xs text-label-xs text-on-surface-variant uppercase">Sort by:</span><span class="font-body-base text-body-base font-semibold">Newest</span><span class="material-symbols-outlined text-outline">expand_more</span></div>
+</div>
+<!-- Filters -->
+<div class="flex overflow-x-auto pb-4 mb-6 gap-3 hide-scrollbar">
+<button class="px-5 py-2 rounded-full bg-primary text-on-primary font-label-xs text-label-xs uppercase whitespace-nowrap active:scale-95 transition-transform">All Doubts</button>
+<button class="px-5 py-2 rounded-full bg-transparent border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-xs text-label-xs uppercase whitespace-nowrap transition-all">Unsolved</button>
+<button class="px-5 py-2 rounded-full bg-transparent border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-xs text-label-xs uppercase whitespace-nowrap transition-all">My Doubts</button>
+<button class="px-5 py-2 rounded-full bg-transparent border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-xs text-label-xs uppercase whitespace-nowrap transition-all">#DSA</button>
+<button class="px-5 py-2 rounded-full bg-transparent border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-xs text-label-xs uppercase whitespace-nowrap transition-all">#QUANTITATIVE</button><button class="px-5 py-2 rounded-full bg-transparent border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-xs text-label-xs uppercase whitespace-nowrap transition-all">#REASONING</button><button class="px-5 py-2 rounded-full bg-transparent border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-xs text-label-xs uppercase whitespace-nowrap transition-all">#VERBAL</button><button class="px-5 py-2 rounded-full bg-transparent border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-xs text-label-xs uppercase whitespace-nowrap transition-all">#INTERVIEW</button>
+</div>
+<!-- Feed Container -->
+<div class="space-y-6">
+<!-- Date Divider -->
+<div class="flex items-center gap-4">
+<span class="font-label-xs text-label-xs text-outline uppercase">TODAY</span>
+<div class="h-px bg-outline-variant flex-1"></div>
+</div>
+<!-- Doubt Card 1 -->
+<div class="bento-card shadow-soft group cursor-pointer relative overflow-hidden">
+<div class="flex gap-4">
+<!-- Voting -->
+<div class="flex flex-col items-center gap-1">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">expand_less</span></button>
+<span class="font-body-base text-body-base font-semibold text-primary">42</span>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">expand_more</span></button>
+</div>
+<!-- Content -->
+<div class="flex-1">
+<div class="flex items-start justify-between gap-4 mb-2">
+<h3 class="font-headline-lg text-headline-lg text-xl text-primary leading-tight">Optimizing Dijkstra's Algorithm for dense graphs in C++?</h3>
+<div class="flex items-center gap-1 bg-tertiary-fixed-dim/20 text-on-tertiary-container px-2 py-1 rounded-md">
+<span class="material-symbols-outlined fill text-[16px]">check_circle</span>
+<span class="font-label-xs text-label-xs">Solved</span>
+</div>
+</div>
+<p class="text-on-surface-variant line-clamp-2 mb-4 font-body-base text-body-base">I'm currently working on a routing problem where the graph is extremely dense (E ~ V^2). The standard priority_queue approach is timing out. Should I switch to a Fibonacci heap, or is there a simpler array-based optimization I'm missing for this specific constraint?</p>
+<div class="flex items-center justify-between">
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-label-xs text-label-xs lowercase">#cpp</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-label-xs text-label-xs lowercase">#graphs</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-label-xs text-label-xs lowercase">#algorithms</span>
+</div>
+<div class="flex items-center gap-4 text-outline font-label-xs text-label-xs">
+<div class="flex items-center gap-2"><div class="flex -space-x-2"><img class="w-6 h-6 rounded-full border-2 border-surface object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeVQgVSiB6hauL33wouD9HejPPGVUaHLPYPYzQLP-AKY7ZJ6-NF0bQWmUb9rr4Qlb_vp3Gwh8b-L510ilQ4ekmiGEbI7rFOJGBO4V-jERbgtgFTQYtEANgcLfgK27mfTmccptBzXtTOwF1bw44RJHF4sQuhjHf2h3qda-FYFJxmMy5qJoLFURkv81UIEeKhBcn-HyGAP7rXr_onm2X2Q2JP-8YjiiRM0xuUAFrxXAS0B97-vMz6X3U" alt="User"><img class="w-6 h-6 rounded-full border-2 border-surface object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeVQgVSiB6hauL33wouD9HejPPGVUaHLPYPYzQLP-AKY7ZJ6-NF0bQWmUb9rr4Qlb_vp3Gwh8b-L510ilQ4ekmiGEbI7rFOJGBO4V-jERbgtgFTQYtEANgcLfgK27mfTmccptBzXtTOwF1bw44RJHF4sQuhjHf2h3qda-FYFJxmMy5qJoLFURkv81UIEeKhBcn-HyGAP7rXr_onm2X2Q2JP-8YjiiRM0xuUAFrxXAS0B97-vMz6X3U" alt="User"><div class="w-6 h-6 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center text-[10px] font-bold">+9</div></div><span class="font-label-xs text-label-xs">12 answers</span></div>
+<span class="">2h ago by @algo_ninja</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Doubt Card 2 -->
+<div class="bento-card shadow-soft group cursor-pointer">
+<div class="flex gap-4">
+<!-- Voting -->
+<div class="flex flex-col items-center gap-1">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">expand_less</span></button>
+<span class="font-body-base text-body-base font-semibold text-primary">15</span>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">expand_more</span></button>
+</div>
+<!-- Content -->
+<div class="flex-1">
+<div class="flex items-start justify-between gap-4 mb-2">
+<h3 class="font-headline-lg text-headline-lg text-xl text-primary leading-tight">Confusion regarding React useEffect dependency array stale closures</h3><div class="flex items-center gap-1 bg-secondary-container/20 text-secondary px-2 py-1 rounded-md"><span class="material-symbols-outlined text-[16px]">pending</span><span class="font-label-xs text-label-xs">Unsolved</span></div>
+</div>
+<p class="text-on-surface-variant line-clamp-2 mb-4 font-body-base text-body-base">I have an interval set up inside a useEffect, but it keeps referencing an old value of state. If I add the state to the dependency array, it resets the interval constantly. How do I access the latest state without triggering a re-render or re-setup of the effect?</p>
+<div class="flex items-center justify-between">
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-label-xs text-label-xs lowercase">#react</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-label-xs text-label-xs lowercase">#javascript</span>
+</div>
+<div class="flex items-center gap-4 text-outline font-label-xs text-label-xs">
+<div class="flex items-center gap-2"><div class="flex -space-x-2"><img class="w-6 h-6 rounded-full border-2 border-surface object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeVQgVSiB6hauL33wouD9HejPPGVUaHLPYPYzQLP-AKY7ZJ6-NF0bQWmUb9rr4Qlb_vp3Gwh8b-L510ilQ4ekmiGEbI7rFOJGBO4V-jERbgtgFTQYtEANgcLfgK27mfTmccptBzXtTOwF1bw44RJHF4sQuhjHf2h3qda-FYFJxmMy5qJoLFURkv81UIEeKhBcn-HyGAP7rXr_onm2X2Q2JP-8YjiiRM0xuUAFrxXAS0B97-vMz6X3U" alt="User"><div class="w-6 h-6 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center text-[10px] font-bold">+3</div></div><span class="font-label-xs text-label-xs">4 answers</span></div>
+<span class="">5h ago by @frontend_dev</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Date Divider -->
+<div class="flex items-center gap-4 mt-8">
+<span class="font-label-xs text-label-xs text-outline uppercase">YESTERDAY</span>
+<div class="h-px bg-outline-variant flex-1"></div>
+</div>
+<!-- Doubt Card 3 -->
+<div class="bento-card shadow-soft group cursor-pointer">
+<div class="flex gap-4">
+<!-- Voting -->
+<div class="flex flex-col items-center gap-1">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">expand_less</span></button>
+<span class="font-body-base text-body-base font-semibold text-primary">89</span>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">expand_more</span></button>
+</div>
+<!-- Content -->
+<div class="flex-1">
+<div class="flex items-start justify-between gap-4 mb-2">
+<h3 class="font-headline-lg text-headline-lg text-xl text-primary leading-tight">How to approach System Design for a distributed message queue like Kafka?</h3>
+<div class="flex items-center gap-1 bg-tertiary-fixed-dim/20 text-on-tertiary-container px-2 py-1 rounded-md">
+<span class="material-symbols-outlined fill text-[16px]">check_circle</span>
+<span class="font-label-xs text-label-xs">Solved</span>
+</div>
+</div>
+<p class="text-on-surface-variant line-clamp-2 mb-4 font-body-base text-body-base">For an upcoming interview, I need to design a high-throughput, low-latency message queue. I understand the basics of pub/sub, but I'm struggling with how to explain partition replication and leader election to the interviewer clearly without getting bogged down in implementation details.</p>
+<div class="flex items-center justify-between">
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-label-xs text-label-xs lowercase">#systemdesign</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-label-xs text-label-xs lowercase">#kafka</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-label-xs text-label-xs lowercase">#interview</span>
+</div>
+<div class="flex items-center gap-4 text-outline font-label-xs text-label-xs">
+<div class="flex items-center gap-2"><div class="flex -space-x-2"><img class="w-6 h-6 rounded-full border-2 border-surface object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeVQgVSiB6hauL33wouD9HejPPGVUaHLPYPYzQLP-AKY7ZJ6-NF0bQWmUb9rr4Qlb_vp3Gwh8b-L510ilQ4ekmiGEbI7rFOJGBO4V-jERbgtgFTQYtEANgcLfgK27mfTmccptBzXtTOwF1bw44RJHF4sQuhjHf2h3qda-FYFJxmMy5qJoLFURkv81UIEeKhBcn-HyGAP7rXr_onm2X2Q2JP-8YjiiRM0xuUAFrxXAS0B97-vMz6X3U" alt="User"><img class="w-6 h-6 rounded-full border-2 border-surface object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeVQgVSiB6hauL33wouD9HejPPGVUaHLPYPYzQLP-AKY7ZJ6-NF0bQWmUb9rr4Qlb_vp3Gwh8b-L510ilQ4ekmiGEbI7rFOJGBO4V-jERbgtgFTQYtEANgcLfgK27mfTmccptBzXtTOwF1bw44RJHF4sQuhjHf2h3qda-FYFJxmMy5qJoLFURkv81UIEeKhBcn-HyGAP7rXr_onm2X2Q2JP-8YjiiRM0xuUAFrxXAS0B97-vMz6X3U" alt="User"><div class="w-6 h-6 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center text-[10px] font-bold">+31</div></div><span class="font-label-xs text-label-xs">34 answers</span></div>
+<span class="">1d ago by @sys_arch</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button (Sticky Ask Doubt) -->
+<button class="fixed bottom-24 md:bottom-8 right-6 md:right-8 bg-primary text-on-primary px-6 py-4 rounded-full shadow-hover flex items-center gap-2 hover:scale-105 active:scale-95 transition-all z-40 group">
+<span class="material-symbols-outlined group-hover:rotate-12 transition-transform">edit_square</span>
+<span class="font-label-xs text-label-xs uppercase tracking-widest">Ask a Doubt</span>
+</button>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe md:hidden bg-surface/80 backdrop-blur-md border-t border-outline-variant shadow-lg rounded-t-xl py-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-xs text-label-xs mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="exercise">exercise</span>
+<span class="font-label-xs text-label-xs mt-1">Practice</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-1 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined fill" data-icon="forum">forum</span>
+<span class="font-label-xs text-label-xs mt-1 font-bold">Doubts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+<span class="font-label-xs text-label-xs mt-1">Roadmap</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+<span class="font-label-xs text-label-xs mt-1">Rank</span>
+</a>
+</nav>
+
+
+</body></html>

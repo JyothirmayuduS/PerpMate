@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PrepMate - Discussion Thread</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container": "#f1edec",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "secondary": "#b52701",
+                      "on-secondary-container": "#5a0f00",
+                      "surface-bright": "#fdf8f8",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "primary": "#000000",
+                      "tertiary": "#000000",
+                      "outline-variant": "#c4c7c7",
+                      "background": "#fdf8f8",
+                      "inverse-primary": "#c8c6c5",
+                      "on-primary-container": "#858383",
+                      "on-secondary-fixed-variant": "#8a1c00",
+                      "primary-container": "#1c1b1b",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f7f3f2",
+                      "on-surface-variant": "#444748",
+                      "secondary-fixed-dim": "#ffb4a3",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed-variant": "#474646",
+                      "tertiary-fixed": "#6ffbbe",
+                      "on-tertiary-container": "#009668",
+                      "surface-container-high": "#ebe7e6",
+                      "on-secondary-fixed": "#3d0700",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "on-primary": "#ffffff",
+                      "inverse-on-surface": "#f4f0ef",
+                      "surface-variant": "#e5e2e1",
+                      "on-primary-fixed": "#1c1b1b",
+                      "surface-tint": "#5f5e5e",
+                      "secondary-fixed": "#ffdad2",
+                      "error": "#ba1a1a",
+                      "surface": "#fdf8f8",
+                      "on-background": "#1c1b1b",
+                      "on-error-container": "#93000a",
+                      "outline": "#747878",
+                      "error-container": "#ffdad6",
+                      "primary-fixed": "#e5e2e1",
+                      "on-surface": "#1c1b1b",
+                      "inverse-surface": "#313030",
+                      "secondary-container": "#ff5c36",
+                      "surface-container-highest": "#e5e2e1",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-fixed": "#002113",
+                      "tertiary-container": "#002113",
+                      "surface-dim": "#ddd9d8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "card-padding": "24px",
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "section-gap": "80px",
+                      "margin-desktop": "40px",
+                      "margin-mobile": "20px"
+              },
+              "fontFamily": {
+                      "headline-xl": ["Bricolage Grotesque"],
+                      "stat-xl": ["Bricolage Grotesque"],
+                      "display-lg-mobile": ["Bricolage Grotesque"],
+                      "body-base": ["Inter"],
+                      "label-xs": ["Inter"],
+                      "display-lg": ["Bricolage Grotesque"],
+                      "headline-lg": ["Bricolage Grotesque"]
+              },
+              "fontSize": {
+                      "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                      "stat-xl": ["36px", { "lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                      "display-lg-mobile": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                      "body-base": ["15px", { "lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                      "label-xs": ["11px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                      "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                      "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { background-color: #F7F6F3; } /* Custom matching surface-container-low approx */
+        .card-shadow { box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        /* Syntax highlighting mock */
+        .token.keyword { color: #ffb4a3; }
+        .token.class-name { color: #6ffbbe; }
+        .token.function { color: #ffffff; }
+        .token.punctuation { color: #c4c7c7; }
+    </style>
+</head>
+<body class="bg-surface-container-low text-on-surface font-body-base text-body-base antialiased min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-surface-container-lowest h-screen w-64 border-r border-outline-variant shadow-sm fixed left-0 top-0 flex-col p-6 z-50">
+<div class="mb-8">
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary">PrepMate</h1>
+<p class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider mt-1">Excellence in Prep</p>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-all active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-all active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+                    Practice
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-all active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="alt_route">alt_route</span>
+                    Roadmap
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-all active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+                    Leaderboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-bold bg-surface-container-high rounded-lg transition-all active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+                    Community
+                </a>
+</li>
+</ul>
+<div class="mt-auto pt-6 border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-bold active:scale-95 transition-transform">
+                Upgrade to Pro
+            </button>
+</div>
+</nav>
+<!-- Main Layout Wrapper -->
+<div class="flex-1 md:ml-64 flex flex-col min-h-screen relative">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 left-0 md:left-64 flex justify-between items-center px-gutter py-4 z-40 bg-surface-container-lowest/80 border-b border-outline-variant backdrop-blur-md">
+<!-- Search (Left aligned as per JSON) -->
+<div class="flex-1 max-w-md hidden sm:block">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-full pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-primary focus:bg-surface-container-lowest transition-colors" placeholder="Search discussions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 ml-auto">
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container overflow-hidden border border-outline-variant ml-2">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A professional headshot of a young software engineer smiling subtly, wearing a neutral tone sweater, well-lit against a stark white background in a crisp, modern editorial style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-9iK0CN6DhARGSpAr9Uvb1rX-MtTnA6ejUqCVvRtmgGozA8q4csjUg0-IOV8Vo3Ohb1EzbU_imjlwCf6ycDX9QpyHHJVSznwweIHtYwvym-e21p0A3Osy1-OZ4UZF8WlEYMzuisnYoA2qdZrL0kNOZ2sBL6BZHbbKHW8lqmXriGiabHBJY-9UeIfrv30QSeapPjInwipvDtrzRFCYzyo2EKLngyyptmiQ0co_vcTOe2W2asXULwgJ"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 pt-24 px-gutter pb-section-gap max-w-4xl mx-auto w-full">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-sm text-on-surface-variant mb-6 font-label-xs uppercase tracking-wider">
+<a class="hover:text-primary transition-colors" href="#">Community</a>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Doubts</a>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-bold">Algorithms</span>
+</nav>
+<!-- Original Post -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-card-padding card-shadow mb-8 relative">
+<!-- User Meta -->
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Avatar illustration of a stylized fox character in a minimalist geometric vector style, using muted earth tones and a bright coral accent on a light grey background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs7rmgRgPTEb1b03q3xarQ364c4PoJMyX7Ril-_8PlijPHk02pVwizfzorh52mdTuGNE5S-quGXiAk6FfovWhsKzPTVoQnRUTyE1-gE2OsEBfeg__QhLqvuzGrInfETLbheIleqGlHAMpmkbBwWKycMOGTVReiDPcB_uhVvsiGTMluJ5IJHQ4ZUmLDcwRBUC-Y6_y2msZcXpCd3U6See4x0SGAR-Hiu0SWEcYQRXyRisg1G8-ZghKQ"/>
+</div>
+<div>
+<div class="font-bold text-primary flex items-center gap-2">
+                                AlexChen_99
+                                <span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">OP</span>
+</div>
+<div class="text-sm text-on-surface-variant">Posted 2 hours ago</div>
+</div>
+</div>
+</div>
+<!-- Content -->
+<h2 class="font-headline-lg text-headline-lg font-bold text-primary mb-4 leading-tight">
+                    Issue with O(1) removal in custom LRU Cache implementation (Java)
+                </h2>
+<div class="prose prose-sm max-w-none text-on-surface mb-6">
+<p>I'm trying to implement an LRU cache using a HashMap and a custom Doubly Linked List. The insertion works fine, but I'm hitting a snag when the capacity is reached and I need to evict the least recently used item. It seems my `removeNode` function isn't properly updating the pointers, leading to a NullPointerException during the eviction phase.</p>
+<p>Here is my current node removal logic. Can anyone spot what I'm missing?</p>
+</div>
+<!-- Code Block (Dark Theme Mock) -->
+<div class="bg-inverse-surface rounded-lg p-4 mb-6 overflow-x-auto text-sm font-mono leading-relaxed shadow-inner">
+<pre><code class="text-inverse-on-surface">
+<span class="token keyword">private void</span> <span class="token function">removeNode</span><span class="token punctuation">(</span><span class="token class-name">Node</span> node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Node</span> prevNode <span class="token punctuation">=</span> node<span class="token punctuation">.</span>prev<span class="token punctuation">;</span>
+    <span class="token class-name">Node</span> nextNode <span class="token punctuation">=</span> node<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+
+    <span class="token comment text-surface-tint">// I suspect the issue is here when node is tail</span>
+    prevNode<span class="token punctuation">.</span>next <span class="token punctuation">=</span> nextNode<span class="token punctuation">;</span>
+    nextNode<span class="token punctuation">.</span>prev <span class="token punctuation">=</span> prevNode<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+                    </code></pre>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-6 border-t border-surface-variant pt-4">
+<div class="flex items-center bg-surface-container-low rounded-full border border-outline-variant">
+<button class="p-2 text-on-surface-variant hover:text-secondary-container transition-colors rounded-l-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_upward">arrow_upward</span>
+</button>
+<span class="font-bold px-2 text-sm">42</span>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-r-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_downward">arrow_downward</span>
+</button>
+</div>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors text-sm font-bold">
+<span class="material-symbols-outlined text-[20px]" data-icon="reply">reply</span>
+                        Reply
+                    </button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors text-sm font-bold ml-auto">
+<span class="material-symbols-outlined text-[20px]" data-icon="share">share</span>
+                        Share
+                    </button>
+</div>
+</article>
+<!-- Thread Section -->
+<div class="mb-6 flex items-center justify-between">
+<h3 class="font-bold text-lg">3 Answers</h3>
+<select class="bg-surface-container-lowest border border-outline-variant rounded px-3 py-1 text-sm font-bold text-primary focus:ring-secondary-container focus:border-secondary-container">
+<option>Top Voted</option>
+<option>Newest</option>
+</select>
+</div>
+<div class="flex flex-col gap-6">
+<!-- Answer 1 (Verified + Solution) -->
+<div class="bg-surface-container-lowest border-2 border-secondary-container/20 rounded-lg p-card-padding relative overflow-hidden card-shadow">
+<!-- Solution Banner accent -->
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+<!-- Solution Badge -->
+<div class="inline-flex items-center gap-1.5 bg-secondary-fixed text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold mb-4 border border-secondary/20">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Marked as Solution by OP
+                    </div>
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a mature female tech lead looking directly at the camera with a confident expression, professional studio lighting highlighting facial features against a clean white backdrop, editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtwdESAnPI2hosAvOGdWU0GTZLXM5Zyx7b6lBqRJExSH161gCQsO8v0HkTlRtUDuUOIibCIKYIssl2YyaAQTpsmtzQtR6QCgqFgbspWwVLeyEzofufclT6ho-Zy5nWQ_lf7n0FRb45Ziq4Qec2i8UUkqBwZFmeAJuFOW-wTYtukPi-W4uO6_wb9sHPdIyJk6NiJf7ABXyKQMhXxccIY4WImqoDYZF451IaM-r86-7wxWirtrNnEACX"/>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-primary">SarahJ_Dev</span>
+<!-- Expert Badge -->
+<span class="flex items-center gap-1 bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">
+<span class="material-symbols-outlined text-[12px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+                                        Expert Verified
+                                    </span>
+</div>
+<div class="text-xs text-on-surface-variant">1 hour ago</div>
+</div>
+</div>
+</div>
+<div class="prose prose-sm max-w-none text-on-surface mb-6">
+<p>You are exactly right in your suspicion. If you are evicting the tail node, `nextNode` will be `null`. Therefore, calling `nextNode.prev` will throw a `NullPointerException`.</p>
+<p>To fix this, you need to add null checks, or better yet, use <strong>dummy head and tail nodes</strong>. Using dummy nodes eliminates edge cases when inserting or removing from the ends of the list.</p>
+</div>
+<div class="flex items-center gap-4 border-t border-surface-variant pt-4 flex-wrap">
+<!-- Upvoted State -->
+<div class="flex items-center bg-secondary-fixed/30 rounded-full border border-secondary-container/30 text-secondary-container">
+<button class="p-2 hover:bg-secondary-fixed/50 transition-colors rounded-l-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_upward" style="font-variation-settings: 'FILL' 1;">arrow_upward</span>
+</button>
+<span class="font-bold px-2 text-sm">156</span>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant transition-colors rounded-r-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_downward">arrow_downward</span>
+</button>
+</div>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors text-sm font-bold">
+<span class="material-symbols-outlined text-[20px]" data-icon="reply">reply</span>
+                            Reply
+                        </button>
+<!-- Psychology Feature: Reciprocity -->
+<button class="ml-auto flex items-center gap-2 bg-surface-container-lowest border border-secondary-container text-secondary-container px-4 py-1.5 rounded-full text-sm font-bold hover:bg-secondary-fixed transition-colors active:scale-95 group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform" data-icon="favorite">favorite</span>
+                            Thank contributor (+50 XP)
+                        </button>
+</div>
+<!-- Nested Reply -->
+<div class="mt-6 ml-4 md:ml-8 pl-4 md:pl-6 border-l-2 border-surface-variant">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Avatar illustration of a stylized fox character in a minimalist geometric vector style, using muted earth tones and a bright coral accent on a light grey background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWW9-BLKpI6tFyd4lLocaYWaQwCV2eNcflrhfIfz3ssBpI_A09FLcmyf7gi9ZuWgCsvDfZckXzaO-SuYvqEBLNbx4hXHcfGa0o-nX0ExKvf1yNlz7g7AM-Ju2SnmENMGaz5pPgsqvOsAQE-j4FabADRdVM1-9nSwARibPU-yKQv9qHXMNuazXk2tH8fEPxlf3-1pdPPBV9eTP3mAINh2Gt2KKSTsG17URRycDEBKiHofGYXH04PJr_"/>
+</div>
+<span class="font-bold text-sm text-primary">AlexChen_99</span>
+<span class="bg-surface-container-high text-on-surface-variant px-1.5 rounded text-[9px] uppercase font-bold tracking-wider">OP</span>
+<span class="text-xs text-on-surface-variant ml-2">45 mins ago</span>
+</div>
+<p class="text-sm text-on-surface mb-3">Ah, dummy nodes! I completely forgot about that pattern. That cleans up the logic significantly. Thanks so much, marked as solution!</p>
+<div class="flex items-center gap-3">
+<button class="text-xs font-bold text-on-surface-variant hover:text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="thumb_up">thumb_up</span> 12
+                            </button>
+</div>
+</div>
+</div>
+<!-- Answer 2 (Standard) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-card-padding card-shadow">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a young male student wearing glasses, looking thoughtful, set against a pristine white background, lit with soft natural light to create a clean, contemporary feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlO-YMM6VKrxEXEKeCHGxw6ePGu2VfO4gaYkiF9zHsEpPyaMHEgFb9TnCnqti42Nf0rTgFMwmYkEchEEGc9Sikj5vzYo9-vELvrG0xQNzko7WT9DVOkR7tSs7hADdeEQik3ZUTiNqTiwe6KSqkEKJ7RVgz187JbDHHoU6rZWamFGvKELhqqUIRD9te_RwAxt234CyDbtyC5ne6t5mLaKrHtY7gi2FnmPMjf8cKK9hQg5cd0CDXwhhT"/>
+</div>
+<div>
+<div class="font-bold text-primary">CodeNinja22</div>
+<div class="text-xs text-on-surface-variant">2 hours ago</div>
+</div>
+</div>
+</div>
+<div class="prose prose-sm max-w-none text-on-surface mb-6">
+<p>Just add a null check before reassigning pointers. <code>if(nextNode != null) nextNode.prev = prevNode;</code>. Same for prevNode.</p>
+</div>
+<div class="flex items-center gap-4 border-t border-surface-variant pt-4">
+<div class="flex items-center bg-surface-container-low rounded-full border border-outline-variant">
+<button class="p-2 text-on-surface-variant hover:text-secondary-container transition-colors rounded-l-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_upward">arrow_upward</span>
+</button>
+<span class="font-bold px-2 text-sm">3</span>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-r-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_downward">arrow_downward</span>
+</button>
+</div>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors text-sm font-bold">
+<span class="material-symbols-outlined text-[20px]" data-icon="reply">reply</span>
+                            Reply
+                        </button>
+</div>
+</div>
+</div>
+<!-- Bottom Add Reply -->
+<div class="mt-8 bg-surface-container-lowest border border-outline-variant rounded-lg p-4 flex gap-4">
+<div class="w-8 h-8 rounded-full bg-primary-container overflow-hidden shrink-0 hidden sm:block">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young software engineer smiling subtly, wearing a neutral tone sweater, well-lit against a stark white background in a crisp, modern editorial style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaKwvhU_AQGSRV5-P-Rqg5XB3UfOR1ZCvOzI_N2SYxoGw4bF-H4Y9wOFuLF76U04kt2UTGfcHdVdgEK2KknwISD-crJVf-sIB52vE5GPJBxs95PshiLxlw2T7mZ78-55B5dFAH4hIRbRF1knBzsD4Yx3Dn434JJJMT-DOBeIQ9x9KrnXxb4rs4lD8g8lCtbgo1eL26cHy8IPzC6dF9ahFlLt5a58steNf04CoUd1025OnnUH6Vu55x"/>
+</div>
+<div class="flex-1">
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-3 text-sm focus:outline-none focus:border-primary focus:bg-surface-container-lowest transition-colors min-h-[100px] resize-y" placeholder="Write a reply..."></textarea>
+<div class="flex justify-between items-center mt-3">
+<div class="flex gap-2 text-on-surface-variant">
+<button class="p-1.5 hover:bg-surface-variant rounded transition-colors"><span class="material-symbols-outlined text-[20px]" data-icon="code">code</span></button>
+<button class="p-1.5 hover:bg-surface-variant rounded transition-colors"><span class="material-symbols-outlined text-[20px]" data-icon="format_bold">format_bold</span></button>
+<button class="p-1.5 hover:bg-surface-variant rounded transition-colors"><span class="material-symbols-outlined text-[20px]" data-icon="link">link</span></button>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold text-sm hover:opacity-90 transition-opacity active:scale-95">Post Reply</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

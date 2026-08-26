@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding - PrepMate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed": "#e5e2e1",
+                      "surface": "#fdf8f8",
+                      "inverse-on-surface": "#f4f0ef",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-container": "#002113",
+                      "on-surface-variant": "#444748",
+                      "error": "#ba1a1a",
+                      "inverse-primary": "#c8c6c5",
+                      "on-primary-container": "#858383",
+                      "tertiary": "#000000",
+                      "on-secondary-container": "#5a0f00",
+                      "on-error-container": "#93000a",
+                      "surface-tint": "#5f5e5e",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed-variant": "#8a1c00",
+                      "on-primary-fixed": "#1c1b1b",
+                      "surface-container-low": "#f7f3f2",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "surface-variant": "#e5e2e1",
+                      "on-tertiary-container": "#009668",
+                      "outline-variant": "#c4c7c7",
+                      "outline": "#747878",
+                      "on-tertiary-fixed": "#002113",
+                      "secondary": "#b52701",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#1c1b1b",
+                      "secondary-fixed-dim": "#ffb4a3",
+                      "inverse-surface": "#313030",
+                      "on-secondary-fixed": "#3d0700",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "surface-container-highest": "#e5e2e1",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#1c1b1b",
+                      "on-tertiary": "#ffffff",
+                      "surface-container": "#f1edec",
+                      "on-primary-fixed-variant": "#474646",
+                      "on-primary": "#ffffff",
+                      "surface-bright": "#fdf8f8",
+                      "secondary-container": "#ff5c36",
+                      "surface-dim": "#ddd9d8",
+                      "primary": "#000000",
+                      "tertiary-fixed": "#6ffbbe",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "surface-container-high": "#ebe7e6",
+                      "on-background": "#1c1b1b",
+                      "background": "#fdf8f8",
+                      "secondary-fixed": "#ffdad2"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "section-gap": "80px",
+                      "margin-desktop": "40px",
+                      "margin-mobile": "20px",
+                      "card-padding": "24px"
+              },
+              "fontFamily": {
+                      "display-lg-mobile": [
+                              "Bricolage Grotesque"
+                      ],
+                      "headline-xl": [
+                              "Bricolage Grotesque"
+                      ],
+                      "body-base": [
+                              "Inter"
+                      ],
+                      "label-xs": [
+                              "Inter"
+                      ],
+                      "stat-xl": [
+                              "Bricolage Grotesque"
+                      ],
+                      "display-lg": [
+                              "Bricolage Grotesque"
+                      ],
+                      "headline-lg": [
+                              "Bricolage Grotesque"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg-mobile": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-base": [
+                              "15px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-xs": [
+                              "11px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "stat-xl": [
+                              "36px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&amp;family=Inter:wght@400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { background-color: #F7F6F3; }
+        .bento-card {
+            background-color: #FFFFFF;
+            border: 1px solid #ECEAE5;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+        .bento-card.selected {
+            border-color: #0F0F0F;
+            border-width: 2px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-base">
+<!-- Progress Indicator (Top) -->
+<header class="w-full px-margin-mobile md:px-margin-desktop py-6 flex justify-between items-center bg-surface sticky top-0 z-10 fade-in-up" style="animation-delay: 0.1s;">
+<div class="font-headline-lg font-bold text-primary">PrepMate</div>
+<div class="flex items-center gap-4">
+<span class="font-label-xs text-on-surface-variant uppercase tracking-widest">Step 1 of 3</span>
+<div class="flex gap-1">
+<div class="h-1 w-8 bg-primary rounded-full"></div>
+<div class="h-1 w-8 bg-surface-variant rounded-full"></div>
+<div class="h-1 w-8 bg-surface-variant rounded-full"></div>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="font-label-xs">SKIP</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col items-center justify-center px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto w-full">
+<div class="text-center max-w-2xl mb-12 fade-in-up" style="animation-delay: 0.2s;">
+<h1 class="font-display-lg-mobile md:font-display-lg text-primary mb-4">Welcome to PrepMate. <br class="hidden md:block"/><span class="text-on-surface-variant">Let's personalize your journey.</span></h1>
+<p class="font-body-base text-on-surface-variant">Select your target companies to tailor your practice tests, interview modules, and study roadmaps.</p>
+</div>
+<!-- Bento Grid for Companies -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-gutter w-full max-w-4xl fade-in-up" style="animation-delay: 0.3s;">
+<!-- Company Card 1 -->
+<button class="bento-card rounded-xl p-card-padding flex flex-col items-center justify-center gap-4 aspect-square group" onclick="this.classList.toggle('selected')">
+<div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-2">
+<img class="w-10 h-10 object-contain rounded-full" data-alt="A minimalist logo for a tech company, featuring bold geometric shapes in deep blue and grey on a clean white background. Modern, flat design aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9ZaNGzatGKUXkm9G_p0Shv-QQYAA1JqfcH7Z35J2DgiUe6UPw8jmHsnfr1oRFGnoo4ryjrIUwa1d-deEuONVGoIaC9EQ661N1pmi4b737gW4MPYoMp4tGOPPQiQv3_aswYQ5D1jxUgcSZKJoMt61YKL2dpWNHIqmEvMX06nthML8P7QMEPPWuR5IJHqbAQRlb3UFTu2IGMrw9Rb5bKTp1LykEwZuELOIXoKX7brjarHhnk09KMnZx"/>
+</div>
+<span class="font-label-xs text-primary group-hover:text-secondary transition-colors">TCS</span>
+</button>
+<!-- Company Card 2 -->
+<button class="bento-card rounded-xl p-card-padding flex flex-col items-center justify-center gap-4 aspect-square group selected" onclick="this.classList.toggle('selected')">
+<div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-2">
+<img class="w-10 h-10 object-contain rounded-full" data-alt="A modern tech company logo with a vibrant multi-colored 'G' on a pristine white background. Corporate yet approachable design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkOD41ygS2bct23E4M_otJcrxdZzUbgMbyRrrlLijmkxgJmV9gkY-ybPrmHbkxF4bEq_5AgpOiJRQVjuxCfjvLWRania_xguEf1zLnAQZkP-IhuEb99ZX0u9UXJN-ZcoEdCeZNtLlad0uwJp4BoYuTCrcQTVi29vioFLbpxzP3qvGTdQjPK-kLokv3E1Y0OsD7-Qq-KQVoKq7MZYuILpJQrPkqkLxI7J9oLUUI1tjxQlJA9qhickfC"/>
+</div>
+<span class="font-label-xs text-primary group-hover:text-secondary transition-colors">Google</span>
+</button>
+<!-- Company Card 3 -->
+<button class="bento-card rounded-xl p-card-padding flex flex-col items-center justify-center gap-4 aspect-square group" onclick="this.classList.toggle('selected')">
+<div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-2">
+<img class="w-10 h-10 object-contain rounded-full" data-alt="A sleek corporate logo for an IT firm, using abstract lines forming a globe in dark teal, set against a bright white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD3tZLt-9ogz_NIhvn7suTW0uwO6N3aeePGzY1nFIQzfOQdK4oyjZaHCApD4SYRnFqiEcZXFbjRVGwFR34r7m_WZRec307pY5TUXQxDw12llpdpEL0ePONi0DEzBsiw2ASeA5A9-nt592qlZr0ul6Ooy16465pxIZtMsizaNXdIwMhKYB1MjwJWSTTDHfVLj5LwXmKQzL19cTu38J4Q69ng_Dis6aK_ht9HrVtb9mbKk_jiTg8kUyz"/>
+</div>
+<span class="font-label-xs text-primary group-hover:text-secondary transition-colors">Infosys</span>
+</button>
+<!-- Company Card 4 -->
+<button class="bento-card rounded-xl p-card-padding flex flex-col items-center justify-center gap-4 aspect-square group" onclick="this.classList.toggle('selected')">
+<div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-2">
+<img class="w-10 h-10 object-contain rounded-full" data-alt="A colorful tech startup logo featuring an abstract flower shape in vibrant secondary colors, isolated on a clean white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAt-OIXXnJRx0BEjsvUik4tuz3Hc-EkJ4XkHQB4pFVH5Cscxg6v8kesjSVeBBg7gWMZJZz8FgHQ38BAA_FuTLIypO9BqgvkDuTq9kkpun_c6aif-3J2DVJKLaO9xEwNh9MIT1tXUFS1oOrCz0eFZ4WFWHo9bNJbNN0iDqcDvrEe_BuK6VVvyzAOzZalUEoMJeZ8nyGMuYD1q6rJoHqey0UxGClM0_HiGpS9e6FQEgbfgeJZnscVoCB"/>
+</div>
+<span class="font-label-xs text-primary group-hover:text-secondary transition-colors">Wipro</span>
+</button>
+<!-- Company Card 5 -->
+<button class="bento-card rounded-xl p-card-padding flex flex-col items-center justify-center gap-4 aspect-square group" onclick="this.classList.toggle('selected')">
+<div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">business_center</span>
+</div>
+<span class="font-label-xs text-primary group-hover:text-secondary transition-colors">Amazon</span>
+</button>
+<!-- Company Card 6 -->
+<button class="bento-card rounded-xl p-card-padding flex flex-col items-center justify-center gap-4 aspect-square group" onclick="this.classList.toggle('selected')">
+<div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-2 border border-dashed border-outline-variant">
+<span class="material-symbols-outlined text-4xl text-outline-variant">add</span>
+</div>
+<span class="font-label-xs text-on-surface-variant group-hover:text-primary transition-colors">Other</span>
+</button>
+</div>
+</main>
+<!-- Footer Action -->
+<footer class="w-full px-margin-mobile md:px-margin-desktop py-8 flex justify-center fade-in-up" style="animation-delay: 0.4s;">
+<button class="bg-primary text-on-primary rounded-full px-8 py-4 font-label-xs uppercase tracking-widest hover:scale-95 transition-transform duration-150 flex items-center gap-2 shadow-sm">
+            Next Step
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</footer>
+</body></html>

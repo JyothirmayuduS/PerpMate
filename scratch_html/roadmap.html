@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Placement Roadmap | PrepMate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fdf8f8",
+                        "on-secondary-fixed-variant": "#8a1c00",
+                        "on-secondary-fixed": "#3d0700",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#ff5c36",
+                        "surface-container-high": "#ebe7e6",
+                        "secondary-fixed-dim": "#ffb4a3",
+                        "on-tertiary-container": "#009668",
+                        "secondary": "#b52701",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-primary-container": "#858383",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e5e2e1",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#002113",
+                        "inverse-surface": "#313030",
+                        "primary-fixed": "#e5e2e1",
+                        "surface": "#fdf8f8",
+                        "primary": "#000000",
+                        "on-tertiary-fixed": "#002113",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1c1b1b",
+                        "tertiary-fixed": "#6ffbbe",
+                        "outline-variant": "#c4c7c7",
+                        "secondary-fixed": "#ffdad2",
+                        "surface-dim": "#ddd9d8",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#444748",
+                        "on-background": "#1c1b1b",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-tint": "#5f5e5e",
+                        "surface-variant": "#e5e2e1",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f7f3f2",
+                        "tertiary": "#000000",
+                        "outline": "#747878",
+                        "inverse-primary": "#c8c6c5",
+                        "primary-container": "#1c1b1b",
+                        "on-primary-fixed": "#1c1b1b",
+                        "inverse-on-surface": "#f4f0ef",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#5a0f00",
+                        "surface-container": "#f1edec",
+                        "surface-bright": "#fdf8f8",
+                        "on-primary-fixed-variant": "#474646"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "card-padding": "24px",
+                        "section-gap": "80px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "label-xs": ["Inter"],
+                        "stat-xl": ["Bricolage Grotesque"],
+                        "headline-xl": ["Bricolage Grotesque"],
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "display-lg": ["Bricolage Grotesque"],
+                        "body-base": ["Inter"],
+                        "display-lg-mobile": ["Bricolage Grotesque"]
+                    },
+                    "fontSize": {
+                        "label-xs": ["11px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "stat-xl": ["36px", { "lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "body-base": ["15px", { "lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .timeline-line {
+            width: 2px;
+            background-color: #ECEAE5;
+            position: absolute;
+            top: 24px;
+            bottom: 24px;
+            left: 24px;
+            z-index: 0;
+        }
+        @media (min-width: 768px) {
+            .timeline-line {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        .bento-shadow {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .bento-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base antialiased flex">
+<!-- SideNavBar -->
+<nav class="hidden md:flex fixed left-0 top-0 h-full flex-col justify-between py-margin-desktop px-4 bg-surface w-64 border-r border-outline-variant shadow-sm z-50">
+<div>
+<div class="mb-12 px-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary font-headline-lg text-headline-lg">P</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg font-extrabold text-primary">PrepMate</h1>
+<p class="font-label-xs text-label-xs text-on-surface-variant">Placement Ready</p>
+</div>
+</div>
+<div class="space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors duration-200 hover:bg-surface-container-high rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-base text-body-base font-semibold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors duration-200 hover:bg-surface-container-high rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="exercise">exercise</span>
+<span class="font-body-base text-body-base font-semibold">Practice</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors duration-200 hover:bg-surface-container-high rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-body-base text-body-base font-semibold">Doubts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary text-on-primary rounded-full transition-all duration-200 shadow-md" href="#">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+<span class="font-body-base text-body-base font-semibold">Roadmap</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors duration-200 hover:bg-surface-container-high rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-body-base text-body-base font-semibold">Leaderboard</span>
+</a>
+</div>
+</div>
+<div class="space-y-4">
+<button class="w-full bg-primary text-on-primary py-3 rounded-full font-label-xs text-label-xs tracking-widest hover:scale-95 transition-transform duration-150">Start Practice</button>
+<div class="space-y-2 border-t border-outline-variant pt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors duration-200 hover:bg-surface-container-high rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-base text-body-base font-semibold">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors duration-200 hover:bg-surface-container-high rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-body-base text-body-base font-semibold">Logout</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop min-h-screen">
+<header class="mb-12 max-w-4xl mx-auto">
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">Your Placement Journey</h2>
+<p class="font-body-base text-body-base text-on-surface-variant max-w-2xl">Master the critical skills required for top tech placements. Follow the roadmap, complete the milestones, and secure your dream job.</p>
+</header>
+<div class="relative max-w-4xl mx-auto py-12">
+<!-- Central Line -->
+<div class="timeline-line hidden md:block"></div>
+<!-- Milestone 1: Completed -->
+<div class="relative flex md:justify-between items-center w-full mb-16 group">
+<div class="hidden md:block w-5/12"></div>
+<div class="absolute left-6 md:left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center border-4 border-background z-10 shadow-sm">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant" data-icon="check_circle" data-weight="fill">check_circle</span>
+</div>
+<div class="w-full md:w-5/12 pl-20 md:pl-0 flex md:justify-start">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding bento-shadow w-full">
+<div class="flex items-center gap-2 mb-2 text-on-tertiary-fixed-variant font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="task_alt">task_alt</span> COMPLETED
+                        </div>
+<h3 class="font-headline-lg text-headline-lg text-primary mb-2">Aptitude Basics</h3>
+<p class="font-body-base text-body-base text-on-surface-variant mb-6">Master quantitative aptitude, logical reasoning, and verbal ability required for initial screening rounds.</p>
+<button class="bg-surface-container-high text-on-surface-variant px-4 py-2 rounded-lg font-label-xs text-label-xs border border-outline-variant hover:bg-surface-container-highest transition-colors">Review Material</button>
+</div>
+</div>
+</div>
+<!-- Milestone 2: Active -->
+<div class="relative flex flex-row-reverse md:justify-between items-center w-full mb-16 group">
+<div class="hidden md:block w-5/12"></div>
+<div class="absolute left-6 md:left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center border-4 border-background z-10 shadow-md">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</div>
+<div class="w-full md:w-5/12 pl-20 md:pr-0 md:pl-0 flex md:justify-end">
+<div class="bg-surface-container-lowest border border-secondary-container rounded-xl p-card-padding bento-shadow bento-hover transition-all w-full">
+<div class="flex items-center gap-2 mb-2 text-secondary font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="trending_up">trending_up</span> IN PROGRESS (45%)
+                        </div>
+<h3 class="font-headline-lg text-headline-lg text-primary mb-2">DS Foundations</h3>
+<p class="font-body-base text-body-base text-on-surface-variant mb-6">Deep dive into Arrays, Strings, Linked Lists, Trees, and Graphs. Essential for technical interviews.</p>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mb-6 overflow-hidden">
+<div class="bg-secondary-container h-full rounded-full w-[45%]"></div>
+</div>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-lg font-label-xs text-label-xs hover:scale-95 transition-transform duration-150 w-full sm:w-auto">Jump In</button>
+</div>
+</div>
+</div>
+<!-- Milestone 3: Locked -->
+<div class="relative flex md:justify-between items-center w-full mb-16 group opacity-75">
+<div class="hidden md:block w-5/12"></div>
+<div class="absolute left-6 md:left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center border-4 border-background z-10">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="lock">lock</span>
+</div>
+<div class="w-full md:w-5/12 pl-20 md:pl-0 flex md:justify-start">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding bento-shadow w-full">
+<div class="flex items-center gap-2 mb-2 text-on-surface-variant font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="lock">lock</span> LOCKED
+                        </div>
+<h3 class="font-headline-lg text-headline-lg text-primary mb-2">System Design</h3>
+<p class="font-body-base text-body-base text-on-surface-variant mb-6">Learn to build scalable systems. High-level design (HLD) and low-level design (LLD) concepts for product companies.</p>
+<button class="border border-outline-variant text-on-surface-variant px-4 py-2 rounded-lg font-label-xs text-label-xs opacity-50 cursor-not-allowed">Prerequisite Required</button>
+</div>
+</div>
+</div>
+<!-- Milestone 4: Locked -->
+<div class="relative flex flex-row-reverse md:justify-between items-center w-full group opacity-75">
+<div class="hidden md:block w-5/12"></div>
+<div class="absolute left-6 md:left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center border-4 border-background z-10">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="lock">lock</span>
+</div>
+<div class="w-full md:w-5/12 pl-20 md:pr-0 md:pl-0 flex md:justify-end">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding bento-shadow w-full">
+<div class="flex items-center gap-2 mb-2 text-on-surface-variant font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="lock">lock</span> LOCKED
+                        </div>
+<h3 class="font-headline-lg text-headline-lg text-primary mb-2">Mock Interviews</h3>
+<p class="font-body-base text-body-base text-on-surface-variant mb-6">Simulated technical and HR rounds with industry experts to refine your presentation and problem-solving under pressure.</p>
+<button class="border border-outline-variant text-on-surface-variant px-4 py-2 rounded-lg font-label-xs text-label-xs opacity-50 cursor-not-allowed">Prerequisite Required</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe bg-surface/80 backdrop-blur-md border-t border-outline-variant shadow-lg rounded-t-xl h-20">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-xs text-label-xs">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="exercise">exercise</span>
+<span class="font-label-xs text-label-xs">Practice</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="forum">forum</span>
+<span class="font-label-xs text-label-xs">Doubts</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-2 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="route">route</span>
+<span class="font-label-xs text-label-xs">Roadmap</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="military_tech">military_tech</span>
+<span class="font-label-xs text-label-xs">Rank</span>
+</a>
+</nav>
+</body></html>

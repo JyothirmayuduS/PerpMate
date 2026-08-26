@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mock Tests - PrepMate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed": "#e5e2e1",
+                      "surface": "#fdf8f8",
+                      "inverse-on-surface": "#f4f0ef",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-container": "#002113",
+                      "on-surface-variant": "#444748",
+                      "error": "#ba1a1a",
+                      "inverse-primary": "#c8c6c5",
+                      "on-primary-container": "#858383",
+                      "tertiary": "#000000",
+                      "on-secondary-container": "#5a0f00",
+                      "on-error-container": "#93000a",
+                      "surface-tint": "#5f5e5e",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed-variant": "#8a1c00",
+                      "on-primary-fixed": "#1c1b1b",
+                      "surface-container-low": "#f7f3f2",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "surface-variant": "#e5e2e1",
+                      "on-tertiary-container": "#009668",
+                      "outline-variant": "#c4c7c7",
+                      "outline": "#747878",
+                      "on-tertiary-fixed": "#002113",
+                      "secondary": "#b52701",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#1c1b1b",
+                      "secondary-fixed-dim": "#ffb4a3",
+                      "inverse-surface": "#313030",
+                      "on-secondary-fixed": "#3d0700",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "surface-container-highest": "#e5e2e1",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#1c1b1b",
+                      "on-tertiary": "#ffffff",
+                      "surface-container": "#f1edec",
+                      "on-primary-fixed-variant": "#474646",
+                      "on-primary": "#ffffff",
+                      "surface-bright": "#fdf8f8",
+                      "secondary-container": "#ff5c36",
+                      "surface-dim": "#ddd9d8",
+                      "primary": "#000000",
+                      "tertiary-fixed": "#6ffbbe",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "surface-container-high": "#ebe7e6",
+                      "on-background": "#1c1b1b",
+                      "background": "#fdf8f8",
+                      "secondary-fixed": "#ffdad2"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "section-gap": "80px",
+                      "margin-desktop": "40px",
+                      "margin-mobile": "20px",
+                      "card-padding": "24px"
+              },
+              "fontFamily": {
+                      "display-lg-mobile": [
+                              "Bricolage Grotesque"
+                      ],
+                      "headline-xl": [
+                              "Bricolage Grotesque"
+                      ],
+                      "body-base": [
+                              "Inter"
+                      ],
+                      "label-xs": [
+                              "Inter"
+                      ],
+                      "stat-xl": [
+                              "Bricolage Grotesque"
+                      ],
+                      "display-lg": [
+                              "Bricolage Grotesque"
+                      ],
+                      "headline-lg": [
+                              "Bricolage Grotesque"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg-mobile": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-base": [
+                              "15px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-xs": [
+                              "11px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "stat-xl": [
+                              "36px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+        
+        .bento-card {
+            background-color: #FFFFFF;
+            border: 1px solid #ECEAE5;
+            padding: 24px;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            transition: all 0.2s ease;
+        }
+        
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+        
+        body {
+            background-color: #F7F6F3;
+        }
+    </style>
+</head>
+<body class="font-body-base text-body-base text-on-surface flex min-h-screen">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-screen p-6 gap-y-4 docked left-0 w-64 bg-surface border-r border-outline-variant fixed top-0 bottom-0 z-40">
+<div class="mb-8">
+<h1 class="font-display-lg text-headline-lg font-black text-primary">PrepMate</h1>
+</div>
+<div class="flex items-center gap-3 mb-8 p-3 rounded-lg bg-surface-container-low border border-outline-variant">
+<img class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A small circular avatar profile picture of an Asian male student in a bright modern environment. High quality, professional portrait style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEqQWYaTXWAswgTK22OwvMfu_nxv7R0XyEMCqO8Ln4HaLBFvlJQwcUrh-JGFvnsCsegb8yoLfecb4gLLmL8rE5wwDVCGObQMd3lcl6F3kU6BYgvj0hVE04qWeAfrpjoqtLx1lFlIfww0bySpP4OBkuEQHlcUGZU4iRvxTltGU12WSzgoagwEQaRcKyJX1_ShLGyNvy7yPEdovRYEvp178CNf_11gvA50DVUDWNoTBIX00DPl97-hiT"/>
+<div>
+<p class="font-label-xs text-label-xs text-primary font-bold">Student Profile</p>
+<p class="font-label-xs text-label-xs text-on-surface-variant">Level 12 • 2450 XP</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-bold py-3 rounded-lg mb-6 scale-95 transition-transform duration-150 active:scale-90 hover:bg-inverse-surface shadow-sm text-center">
+            Start Mock Test
+        </button>
+<div class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-xs text-label-xs font-bold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg bg-secondary-container text-on-secondary-container font-bold transition-all shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-label-xs text-label-xs font-bold">Tests</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">exercise</span>
+<span class="font-label-xs text-label-xs font-bold">Practice Hub</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-xs text-label-xs font-bold">Community</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-xs text-label-xs font-bold">Roadmap</span>
+</a>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-2">
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-xs text-label-xs font-bold">Settings</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-xs text-label-xs font-bold">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop max-w-container-max mx-auto w-full">
+<!-- Header -->
+<header class="mb-section-gap flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-outline-variant pb-8">
+<div class="max-w-2xl">
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4 tracking-tight">Mock Tests</h2>
+<p class="font-body-base text-body-base text-on-surface-variant text-lg leading-relaxed">Real exam simulations for top companies. Prepare strategically with timed, accurate patterns.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-full text-on-surface focus:border-primary focus:ring-0 outline-none w-64 transition-colors font-body-base" placeholder="Search tests..." type="text"/>
+</div>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-gutter">
+<!-- Hero / Featured Card (Spans 8 cols) -->
+<div class="bento-card col-span-1 md:col-span-6 lg:col-span-8 bg-surface-container-lowest flex flex-col justify-between overflow-hidden relative group">
+<div class="relative z-10 flex flex-col h-full">
+<div class="flex justify-between items-start mb-12">
+<span class="bg-secondary text-on-secondary px-3 py-1 rounded-full font-label-xs text-label-xs uppercase tracking-wider inline-block border border-secondary shadow-sm">Live Event</span>
+<span class="material-symbols-outlined text-secondary">workspace_premium</span>
+</div>
+<div class="mt-auto">
+<h3 class="font-headline-xl text-headline-xl text-primary mb-2">TCS NQT National Qualifier 2024</h3>
+<p class="text-on-surface-variant font-body-base mb-6 max-w-lg">Full-length simulation strictly following the latest analytical and cognitive pattern. Thousands are competing now.</p>
+<div class="flex flex-wrap items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">schedule</span>
+<span class="font-body-base font-bold text-primary">180 Mins</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">format_list_numbered</span>
+<span class="font-body-base font-bold text-primary">92 Questions</span>
+</div>
+<button class="ml-auto bg-primary text-on-primary font-bold py-3 px-6 rounded-lg scale-95 transition-transform duration-150 active:scale-90 hover:bg-inverse-surface shadow-sm">
+                                Attempt Now
+                            </button>
+</div>
+</div>
+</div>
+<!-- Subtle background pattern injection point -->
+<div class="absolute right-0 top-0 w-1/2 h-full opacity-10 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary via-transparent to-transparent"></div>
+</div>
+<!-- Stats/Progress (Spans 4 cols) -->
+<div class="bento-card col-span-1 md:col-span-6 lg:col-span-4 bg-surface-container-lowest flex flex-col">
+<h4 class="font-headline-lg text-headline-lg text-primary mb-6">Your Performance</h4>
+<div class="flex-1 flex flex-col gap-6 justify-center">
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-base text-on-surface-variant">Avg. Accuracy</span>
+<span class="font-body-base font-bold text-primary">78%</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 78%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-base text-on-surface-variant">Tests Completed</span>
+<span class="font-body-base font-bold text-primary">12 / 50</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-2">
+<div class="bg-secondary-container h-2 rounded-full" style="width: 24%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section Title -->
+<div class="col-span-1 md:col-span-6 lg:col-span-12 mt-8 mb-4 border-b border-outline-variant pb-2">
+<h3 class="font-headline-lg text-headline-lg text-primary">Company-Specific Mocks</h3>
+</div>
+<!-- Standard Cards (Span 4 cols each) -->
+<div class="bento-card col-span-1 md:col-span-3 lg:col-span-4 flex flex-col group hover:border-primary transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary" style="font-size: 28px;">business</span>
+</div>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded text-xs font-bold font-label-xs uppercase tracking-wide">Popular</span>
+</div>
+<h4 class="font-headline-lg text-headline-lg text-primary mb-2 text-xl">Infosys SP Specialist</h4>
+<p class="text-on-surface-variant font-body-base text-sm mb-6 flex-1">Focus on advanced coding and system design concepts.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-outline" style="font-size: 16px;">schedule</span>
+<span class="text-sm font-bold text-primary">90 mins</span>
+</div>
+<span class="text-secondary font-bold text-sm">Starts in 45m</span>
+</div>
+</div>
+<div class="bento-card col-span-1 md:col-span-3 lg:col-span-4 flex flex-col group hover:border-primary transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary" style="font-size: 28px;">laptop_mac</span>
+</div>
+</div>
+<h4 class="font-headline-lg text-headline-lg text-primary mb-2 text-xl">Accenture Advanced</h4>
+<p class="text-on-surface-variant font-body-base text-sm mb-6 flex-1">Detailed technical and communication round simulation.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-outline" style="font-size: 16px;">schedule</span>
+<span class="text-sm font-bold text-primary">120 mins</span>
+</div>
+<button class="text-primary font-bold text-sm hover:text-secondary transition-colors">Attempt Now</button>
+</div>
+</div>
+<div class="bento-card col-span-1 md:col-span-6 lg:col-span-4 flex flex-col group hover:border-primary transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary" style="font-size: 28px;">integration_instructions</span>
+</div>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded text-xs font-bold font-label-xs uppercase tracking-wide">New</span>
+</div>
+<h4 class="font-headline-lg text-headline-lg text-primary mb-2 text-xl">Cognizant GenC Elevate</h4>
+<p class="text-on-surface-variant font-body-base text-sm mb-6 flex-1">Database and cloud fundamentals focus.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-outline" style="font-size: 16px;">schedule</span>
+<span class="text-sm font-bold text-primary">100 mins</span>
+</div>
+<button class="text-primary font-bold text-sm hover:text-secondary transition-colors">Attempt Now</button>
+</div>
+</div>
+<!-- Topic Wise Section (List View inside Bento) -->
+<div class="bento-card col-span-1 md:col-span-6 lg:col-span-12 mt-8">
+<div class="flex justify-between items-end border-b border-outline-variant pb-4 mb-6">
+<h3 class="font-headline-lg text-headline-lg text-primary">Topic-Wise Mocks</h3>
+<a class="text-secondary font-bold text-sm hover:underline" href="#">View All Topics</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- List Item -->
+<div class="flex items-center justify-between p-4 border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary">data_object</span>
+</div>
+<div>
+<h5 class="font-body-base font-bold text-primary">Data Structures &amp; Algo</h5>
+<p class="text-xs text-on-surface-variant">45 Mins • 30 Qs</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center hover:border-primary hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">arrow_forward</span>
+</button>
+</div>
+<!-- List Item -->
+<div class="flex items-center justify-between p-4 border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary">psychology</span>
+</div>
+<div>
+<h5 class="font-body-base font-bold text-primary">Logical Reasoning Aptitude</h5>
+<p class="text-xs text-on-surface-variant">30 Mins • 40 Qs</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center hover:border-primary hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 md:hidden bg-surface border-t border-outline-variant shadow-sm rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined mb-1" style="font-size: 24px;">home</span>
+<span class="font-label-xs text-[10px] tracking-wider uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined mb-1" style="font-size: 24px;">fitness_center</span>
+<span class="font-label-xs text-[10px] tracking-wider uppercase">Practice</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary font-bold" href="#">
+<span class="material-symbols-outlined mb-1" style="font-size: 24px; font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-label-xs text-[10px] tracking-wider uppercase">Tests</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined mb-1" style="font-size: 24px;">route</span>
+<span class="font-label-xs text-[10px] tracking-wider uppercase">Roadmap</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined mb-1" style="font-size: 24px;">person</span>
+<span class="font-label-xs text-[10px] tracking-wider uppercase">Profile</span>
+</a>
+</nav>
+</body></html>

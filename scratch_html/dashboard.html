@@ -1,0 +1,388 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PrepMate Dashboard</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Inter:wght@400..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fdf8f8",
+                        "on-secondary-fixed-variant": "#8a1c00",
+                        "on-secondary-fixed": "#3d0700",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#ff5c36",
+                        "surface-container-high": "#ebe7e6",
+                        "secondary-fixed-dim": "#ffb4a3",
+                        "on-tertiary-container": "#009668",
+                        "secondary": "#b52701",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-primary-container": "#858383",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e5e2e1",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#002113",
+                        "inverse-surface": "#313030",
+                        "primary-fixed": "#e5e2e1",
+                        "surface": "#fdf8f8",
+                        "primary": "#000000",
+                        "on-tertiary-fixed": "#002113",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1c1b1b",
+                        "tertiary-fixed": "#6ffbbe",
+                        "outline-variant": "#c4c7c7",
+                        "secondary-fixed": "#ffdad2",
+                        "surface-dim": "#ddd9d8",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#444748",
+                        "on-background": "#1c1b1b",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-tint": "#5f5e5e",
+                        "surface-variant": "#e5e2e1",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f7f3f2",
+                        "tertiary": "#000000",
+                        "outline": "#747878",
+                        "inverse-primary": "#c8c6c5",
+                        "primary-container": "#1c1b1b",
+                        "on-primary-fixed": "#1c1b1b",
+                        "inverse-on-surface": "#f4f0ef",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#5a0f00",
+                        "surface-container": "#f1edec",
+                        "surface-bright": "#fdf8f8",
+                        "on-primary-fixed-variant": "#474646"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "card-padding": "24px",
+                        "section-gap": "80px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "label-xs": ["Inter"],
+                        "stat-xl": ["Bricolage Grotesque"],
+                        "headline-xl": ["Bricolage Grotesque"],
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "display-lg": ["Bricolage Grotesque"],
+                        "body-base": ["Inter"],
+                        "display-lg-mobile": ["Bricolage Grotesque"]
+                    },
+                    "fontSize": {
+                        "label-xs": ["11px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "stat-xl": ["36px", { "lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "body-base": ["15px", { "lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #F7F6F3;
+        }
+        .bento-card {
+            background-color: #FFFFFF;
+            border: 1px solid #ECEAE5;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+        
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body class="font-body-base text-body-base text-on-surface antialiased overflow-x-hidden flex">
+<!-- Desktop SideNav -->
+<nav class="hidden md:flex flex-col justify-between py-margin-desktop px-4 bg-surface dark:bg-surface-container border-r border-outline-variant dark:border-outline shadow-sm dark:shadow-none h-screen w-64 fixed left-0 top-0 z-40">
+<div>
+<div class="px-4 mb-8">
+<h1 class="font-headline-lg text-headline-lg font-extrabold text-primary dark:text-on-primary tracking-tight">PrepMate</h1>
+<p class="font-label-xs text-label-xs text-on-surface-variant mt-1 uppercase tracking-wider" style="color: rgb(138, 135, 129);">Placement Ready</p>
+</div>
+<div class="space-y-2">
+<!-- Dashboard (Active) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-primary dark:bg-primary-fixed text-on-primary dark:text-on-primary-fixed rounded-full transition-all duration-200 scale-95 font-body-base text-body-base group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="">Dashboard</span>
+</a>
+<!-- Practice -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary dark:hover:text-on-primary hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 rounded-full font-body-base text-body-base group" href="#" style="color: rgb(138, 135, 129);">
+<span class="material-symbols-outlined" data-icon="exercise">exercise</span>
+<span class="">Practice</span>
+</a>
+<!-- Doubts -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary dark:hover:text-on-primary hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 rounded-full font-body-base text-body-base group" href="#" style="color: rgb(138, 135, 129);">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="">Doubts</span>
+</a>
+<!-- Roadmap -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary dark:hover:text-on-primary hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 rounded-full font-body-base text-body-base group" href="#" style="color: rgb(138, 135, 129);">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+<span class="">Roadmap</span>
+</a>
+<!-- Leaderboard -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary dark:hover:text-on-primary hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 rounded-full font-body-base text-body-base group" href="#" style="color: rgb(138, 135, 129);">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="">Leaderboard</span>
+</a>
+</div>
+<div class="mt-8 px-4">
+<button class="w-full py-3 px-4 bg-primary text-on-primary rounded-full font-label-xs text-label-xs uppercase tracking-wider hover:scale-95 transition-transform duration-150 shadow-md">
+                    Start Practice
+                </button>
+</div>
+</div>
+<div class="space-y-2 mt-auto pt-8">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary dark:hover:text-on-primary hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 rounded-full font-body-base text-body-base group" href="#" style="color: rgb(138, 135, 129);">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary dark:hover:text-on-primary hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 rounded-full font-body-base text-body-base group" href="#" style="color: rgb(138, 135, 129);">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Mobile Top Header (Since we don't have TopAppBar for non-destinations or we use Bottom Nav on mobile, but we need a brand header on mobile if no TopAppBar) -->
+<div class="md:hidden fixed top-0 w-full h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant z-40 flex items-center justify-between px-4">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-extrabold text-primary tracking-tight">PrepMate</h1>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" data-alt="A small circular avatar placeholder image showing a minimalistic user silhouette against a soft light gray background. Designed for a modern SaaS interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9td17FokIXVNoGH9foriKWnYjgc7ZuipVdU_JLRjLZWnNmIJfuZ6gfXYucZ8EVzfFcBkTlVexsj98BrhV6ORPAT5hx3Ztivnh7WiHrbb35BWJ5S652eO4mYSYg1dGiIjAYxuyGmrdeWF7ir7uA7liRlV1ltIgfpU1olrM0hcWUh1zlJi2VfDajdbibHIkaqmdlrz6D0TbgnuaK7oJgwl6cuECOVkVdeACueaA35TGY6flCqfLX815">
+</div>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-64 mt-16 md:mt-0 p-margin-mobile md:p-margin-desktop max-w-container-max min-h-screen">
+<!-- Header Section -->
+<header class="mb-10 fade-in-up">
+<h2 class="font-headline-xl text-headline-xl text-primary mb-2">Good evening, Rahul</h2>
+<p class="font-body-base text-body-base text-on-surface-variant" style="color: rgb(138, 135, 129);">Wednesday, October 25th • You're on track for your placement goals.</p>
+</header>
+<!-- Bento Grid Container -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+<!-- Row 1: Streak Card (Spans full width) -->
+<div class="col-span-1 md:col-span-12 bento-card rounded-2xl flex flex-col md:flex-row items-center justify-between fade-in-up delay-100 p-6">
+<div class="flex items-center gap-6 mb-4 md:mb-0">
+<div class="w-20 h-20 rounded-full bg-error-container flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[40px]" data-icon="local_fire_department" data-weight="fill" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div>
+<p class="font-label-xs text-label-xs text-on-surface-variant uppercase mb-1" style="color: rgb(138, 135, 129);">Current Streak</p>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-secondary-container leading-none">12</span>
+<span class="font-body-base text-body-base text-on-surface-variant" style="color: rgb(138, 135, 129);">Days</span>
+</div><div class="flex gap-2 mt-4"><div class="w-2 h-2 rounded-full bg-secondary-container"></div><div class="w-2 h-2 rounded-full bg-secondary-container"></div><div class="w-2 h-2 rounded-full bg-secondary-container"></div><div class="w-2 h-2 rounded-full bg-secondary-container"></div><div class="w-2 h-2 rounded-full bg-secondary-container"></div><div class="w-2 h-2 rounded-full bg-surface-container-high animate-pulse border border-secondary-container"></div><div class="w-2 h-2 rounded-full bg-surface-container-high"></div></div>
+</div>
+</div>
+<div class="text-right flex flex-col items-end">
+<p class="font-body-base text-body-base font-medium text-primary mb-2">Keep the fire burning!</p>
+<p class="font-body-base text-body-base text-on-surface-variant max-w-sm text-sm" style="color: rgb(138, 135, 129);">You are 3 days away from your next milestone badge. Practice today to keep your streak alive.</p>
+</div>
+</div>
+<!-- Row 2 -->
+<!-- Today's Focus (Spans 8 columns on desktop) -->
+<div class="col-span-1 md:col-span-8 bento-card rounded-2xl flex flex-col fade-in-up delay-200 p-6">
+<div class="flex justify-between items-start mb-6">
+<h3 class="font-label-xs text-label-xs text-on-surface-variant uppercase" style="color: rgb(138, 135, 129);">TODAY'S FOCUS</h3>
+<button class="text-primary hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+<div class="space-y-4 flex-1">
+<!-- Task 1 -->
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer group border border-transparent hover:border-outline-variant">
+<div class="flex items-center gap-4">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary focus:ring-offset-0 bg-transparent transition-all" type="checkbox">
+<span class="font-body-base text-body-base font-medium text-primary group-hover:text-primary-container transition-colors">Master Linked Lists</span>
+</div>
+<span class="font-label-xs text-label-xs bg-error-container text-on-error-container px-2 py-1 rounded-full">+50 pts</span>
+</label>
+<!-- Task 2 -->
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer group border border-transparent hover:border-outline-variant">
+<div class="flex items-center gap-4">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary focus:ring-offset-0 bg-transparent transition-all" type="checkbox">
+<span class="font-body-base text-body-base font-medium text-primary group-hover:text-primary-container transition-colors">Mock Interview Prep</span>
+</div>
+<span class="font-label-xs text-label-xs bg-error-container text-on-error-container px-2 py-1 rounded-full">+75 pts</span>
+</label>
+<!-- Task 3 -->
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer group border border-transparent hover:border-outline-variant">
+<div class="flex items-center gap-4">
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary focus:ring-offset-0 bg-transparent transition-all" type="checkbox">
+<span class="font-body-base text-body-base font-medium text-on-surface-variant line-through group-hover:text-primary transition-colors" style="color: rgb(138, 135, 129);">Review Arrays</span>
+</div>
+<span class="font-label-xs text-label-xs bg-surface-container-highest text-on-surface-variant px-2 py-1 rounded-full" style="color: rgb(138, 135, 129);">Done</span>
+</label>
+</div>
+<button class="mt-6 w-full md:w-auto self-start py-3 px-6 bg-primary text-on-primary rounded-lg font-body-base text-body-base font-medium flex items-center gap-2 hover:scale-95 transition-transform duration-150">
+                    Start Today's Session
+                    <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Rank Card (Spans 4 columns on desktop) -->
+<div class="col-span-1 md:col-span-4 bento-card rounded-2xl flex flex-col items-center justify-center text-center fade-in-up delay-300 relative overflow-hidden group p-6">
+<!-- Decorative background blob -->
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-error-container/30 rounded-full blur-2xl group-hover:bg-error-container/50 transition-colors duration-500"></div>
+<h3 class="font-label-xs text-label-xs text-on-surface-variant uppercase w-full text-left mb-auto" style="color: rgb(138, 135, 129);">RANK</h3>
+<div class="my-8 flex flex-col items-center">
+<span class="font-display-lg text-display-lg text-primary leading-none">#23</span><p class="text-[12px] mt-1" style="color: rgb(138, 135, 129);">180 pts to reach #22</p><div class="w-32 h-1 bg-surface-container-high rounded-full mt-2 overflow-hidden"><div class="h-full bg-primary rounded-full" style="width: 60%;"></div></div>
+<span class="font-body-base text-body-base text-on-surface-variant mt-2" style="color: rgb(138, 135, 129);">of 480 students</span>
+</div>
+<div class="mt-auto w-full flex items-center justify-center gap-1 text-on-tertiary-container bg-tertiary-fixed-dim/20 py-2 rounded-lg font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+<span class="">▲ 4 this week</span>
+</div>
+</div>
+<!-- Row 3 -->
+<!-- Needs Attention (Spans 6 columns) -->
+<div class="col-span-1 md:col-span-6 bento-card rounded-2xl fade-in-up delay-400 p-6">
+<h3 class="font-label-xs text-label-xs text-on-surface-variant uppercase mb-6" style="color: rgb(138, 135, 129);">NEEDS ATTENTION</h3>
+<div class="space-y-6">
+<!-- Topic 1 -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body-base text-body-base font-medium text-primary">Recursion</span>
+<span class="font-label-xs text-label-xs text-secondary-container">42%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full" style="width: 42%; background-color: rgb(255, 92, 53);"></div>
+</div>
+<a class="inline-flex items-center gap-1 mt-2 font-label-xs text-label-xs text-on-surface-variant hover:text-primary transition-colors" href="#" style="color: rgb(138, 135, 129);">
+                            Practice <span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Topic 2 -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body-base text-body-base font-medium text-primary">Trees</span>
+<span class="font-label-xs text-label-xs text-on-secondary-container">65%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-on-secondary-fixed-variant rounded-full" style="width: 65%; background-color: rgb(245, 158, 11);"></div>
+</div>
+<a class="inline-flex items-center gap-1 mt-2 font-label-xs text-label-xs text-on-surface-variant hover:text-primary transition-colors" href="#" style="color: rgb(138, 135, 129);">
+                            Practice <span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- College Leaderboard (Spans 6 columns) -->
+<div class="col-span-1 md:col-span-6 bento-card rounded-2xl flex flex-col fade-in-up delay-400 p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-label-xs text-label-xs text-on-surface-variant uppercase" style="color: rgb(138, 135, 129);">COLLEGE LEADERBOARD</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="emoji_events" style="color: rgb(138, 135, 129);">emoji_events</span>
+</div>
+<div class="flex-1 space-y-1">
+<!-- Leader 1 -->
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<span class="font-label-xs text-label-xs text-on-surface-variant w-4" style="color: rgb(138, 135, 129);">1</span>
+<div class="w-8 h-8 rounded-full bg-primary-fixed-dim flex items-center justify-center font-label-xs text-label-xs text-primary">AK</div>
+<span class="font-body-base text-body-base font-medium text-primary">Arjun Kapoor</span>
+</div>
+<span class="font-body-base text-body-base font-medium text-primary">2450</span>
+</div>
+<!-- Leader 2 -->
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<span class="font-label-xs text-label-xs text-on-surface-variant w-4" style="color: rgb(138, 135, 129);">2</span>
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed-dim flex items-center justify-center font-label-xs text-label-xs text-on-tertiary-container">SM</div>
+<span class="font-body-base text-body-base font-medium text-primary">Priya Sharma</span>
+</div>
+<span class="font-body-base text-body-base font-medium text-primary">2390</span>
+</div>
+<!-- Current User (Highlighted) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-error-container/30 border border-error-container/50">
+<div class="flex items-center gap-3">
+<span class="font-label-xs text-label-xs text-secondary-container w-4">23</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img alt="Rahul" class="w-full h-full object-cover" data-alt="Small circular avatar placeholder of current user Rahul, minimalistic style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvNi9HcSxKhpzCUHNep8A6nw9-cO4TsEhh25YmYJ6ka5CxXxKH_c_GI-u-ql7N1z--13YgSnDI4luHgX8kT5400e0kaQAyrHqa0rFkOeDBNg3WACK6CProp_TU60ebSk_GmcxYXuFbYEu4MN0WIdC2m5bGhQBdiwNd4VR3-OcVBYos-Sx77-J0Xzmfe_60zd4oMyoqE3nQqVNl--L5Xn67rrLzsBZ2k152B-4fRqb5Ri4ZmgOaic4Q">
+</div>
+<span class="font-body-base text-body-base font-bold text-primary">Rahul (You)</span>
+</div>
+<span class="font-body-base text-body-base font-bold text-primary">1850</span>
+</div>
+</div>
+<a class="mt-4 text-center font-label-xs text-label-xs text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center gap-1 group" href="#" style="color: rgb(138, 135, 129);">
+                    View full leaderboard 
+                    <span class="material-symbols-outlined text-[14px] group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom NavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe md:hidden bg-surface/80 backdrop-blur-md border-t border-outline-variant shadow-lg rounded-t-xl h-16">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-1 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-xs text-[10px] mt-1">Home</span>
+</a>
+<!-- Practice -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl transition-colors" href="#" style="color: rgb(138, 135, 129);">
+<span class="material-symbols-outlined" data-icon="exercise">exercise</span>
+<span class="font-label-xs text-[10px] mt-1">Practice</span>
+</a>
+<!-- Doubts -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl transition-colors" href="#" style="color: rgb(138, 135, 129);">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-label-xs text-[10px] mt-1">Doubts</span>
+</a>
+<!-- Roadmap -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl transition-colors" href="#" style="color: rgb(138, 135, 129);">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+<span class="font-label-xs text-[10px] mt-1">Roadmap</span>
+</a>
+<!-- Rank -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:bg-surface-container-high rounded-xl transition-colors" href="#" style="color: rgb(138, 135, 129);">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+<span class="font-label-xs text-[10px] mt-1">Rank</span>
+</a>
+</nav>
+<!-- Spacer for mobile nav -->
+<div class="h-16 md:hidden"></div>
+
+
+</body></html>

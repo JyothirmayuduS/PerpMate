@@ -1,0 +1,152 @@
+[
+  {
+    "id": "scraped-quant-basic-1",
+    "topic": "Percentages",
+    "difficulty": "Easy",
+    "question": "What is 25% of 400?",
+    "options": [
+      "80",
+      "120",
+      "100",
+      "110"
+    ],
+    "correct_option": 2,
+    "explanation": "25% of 400 = (25/100) \u00d7 400 = 0.25 \u00d7 400 = 100.",
+    "source": "scraped-github"
+  },
+  {
+    "id": "scraped-quant-basic-2",
+    "topic": "Percentages",
+    "difficulty": "Easy",
+    "question": "Find 10% of 1500.",
+    "options": [
+      "120",
+      "180",
+      "160",
+      "150"
+    ],
+    "correct_option": 3,
+    "explanation": "10% of 1500 = (10/100) \u00d7 1500 = 0.1 \u00d7 1500 = 150.",
+    "source": "scraped-github"
+  },
+  {
+    "id": "scraped-quant-basic-3",
+    "topic": "Percentages",
+    "difficulty": "Easy",
+    "question": "If 20% of a number is 80, what is the number?",
+    "options": [
+      "410",
+      "320",
+      "480",
+      "400"
+    ],
+    "correct_option": 3,
+    "explanation": "Let the number be \\( x \\). Then, 20% of \\( x = 80 \\).  \n   \\( 0.2x = 80 \\), so \\( x = 80 / 0.2 = 400 \\).",
+    "source": "scraped-github"
+  },
+  {
+    "id": "scraped-quant-basic-4",
+    "topic": "Percentages",
+    "difficulty": "Easy",
+    "question": "What is 5% of 2000?",
+    "options": [
+      "110",
+      "100",
+      "120",
+      "80"
+    ],
+    "correct_option": 1,
+    "explanation": "5% of 2000 = (5/100) \u00d7 2000 = 0.05 \u00d7 2000 = 100.",
+    "source": "scraped-github"
+  },
+  {
+    "id": "scraped-quant-basic-5",
+    "topic": "Percentages",
+    "difficulty": "Easy",
+    "question": "If 15% of a number is 45, find the number.",
+    "options": [
+      "300",
+      "240",
+      "360",
+      "310"
+    ],
+    "correct_option": 0,
+    "explanation": "Let the number be \\( x \\). Then, \\( 0.15x = 45 \\).  \n   \\( x = 45 / 0.15 = 300 \\).",
+    "source": "scraped-github"
+  },
+  {
+    "id": "scraped-quant-basic-6",
+    "topic": "Percentages",
+    "difficulty": "Easy",
+    "question": "Calculate 40% of 250.",
+    "options": [
+      "120",
+      "100",
+      "110",
+      "80"
+    ],
+    "correct_option": 1,
+    "explanation": "40% of 250 = (40/100) \u00d7 250 = 0.4 \u00d7 250 = 100.",
+    "source": "scraped-github"
+  },
+  {
+    "id": "scraped-quant-basic-7",
+    "topic": "Percentages",
+    "difficulty": "Easy",
+    "question": "If a number increased by 20% gives 240, what is the original number?",
+    "options": [
+      "200",
+      "210",
+      "240",
+      "160"
+    ],
+    "correct_option": 0,
+    "explanation": "Let the original number be \\( x \\). Then, \\( x + 0.2x = 240 \\).  \n   \\( 1.2x = 240 \\), so \\( x = 240 / 1.2 = 200 \\).",
+    "source": "scraped-github"
+  },
+  {
+    "id": "scraped-quant-basic-8",
+    "topic": "Percentages",
+    "difficulty": "Easy",
+    "question": "What is 30% of 600?",
+    "options": [
+      "216",
+      "180",
+      "144",
+      "190"
+    ],
+    "correct_option": 1,
+    "explanation": "30% of 600 = (30/100) \u00d7 600 = 0.3 \u00d7 600 = 180.",
+    "source": "scraped-github"
+  },
+  {
+    "id": "scraped-quant-basic-9",
+    "topic": "Percentages",
+    "difficulty": "Easy",
+    "question": "If 50% of a number is 75, what is the number?",
+    "options": [
+      "160",
+      "150",
+      "120",
+      "180"
+    ],
+    "correct_option": 1,
+    "explanation": "Let the number be \\( x \\). Then, \\( 0.5x = 75 \\).  \n   \\( x = 75 / 0.5 = 150 \\).",
+    "source": "scraped-github"
+  },
+  {
+    "id": "scraped-quant-basic-10",
+    "topic": "Percentages",
+    "difficulty": "Easy",
+    "question": "Find 12.5% of 800.",
+    "options": [
+      "100\n\n## Profit and Loss",
+      "80\n\n## Profit and Loss",
+      "110\n\n## Profit and Loss",
+      "120\n\n## Profit and Loss"
+    ],
+    "correct_option": 0,
+    "explanation": "12.5% of 800 = (12.5/100) \u00d7 800 = 0.125 \u00d7 800 = 100.",
+    "source": "scraped-github"
+  }
+]

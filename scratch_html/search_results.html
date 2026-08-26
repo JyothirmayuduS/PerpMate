@@ -1,0 +1,374 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Search &amp; Discovery - PrepMate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#f1edec",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary": "#b52701",
+                        "on-secondary-container": "#5a0f00",
+                        "surface-bright": "#fdf8f8",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "primary": "#000000",
+                        "tertiary": "#000000",
+                        "outline-variant": "#c4c7c7",
+                        "background": "#fdf8f8",
+                        "inverse-primary": "#c8c6c5",
+                        "on-primary-container": "#858383",
+                        "on-secondary-fixed-variant": "#8a1c00",
+                        "primary-container": "#1c1b1b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f7f3f2",
+                        "on-surface-variant": "#444748",
+                        "secondary-fixed-dim": "#ffb4a3",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#474646",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-tertiary-container": "#009668",
+                        "surface-container-high": "#ebe7e6",
+                        "on-secondary-fixed": "#3d0700",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#f4f0ef",
+                        "surface-variant": "#e5e2e1",
+                        "on-primary-fixed": "#1c1b1b",
+                        "surface-tint": "#5f5e5e",
+                        "secondary-fixed": "#ffdad2",
+                        "error": "#ba1a1a",
+                        "surface": "#fdf8f8",
+                        "on-background": "#1c1b1b",
+                        "on-error-container": "#93000a",
+                        "outline": "#747878",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#e5e2e1",
+                        "on-surface": "#1c1b1b",
+                        "inverse-surface": "#313030",
+                        "secondary-container": "#ff5c36",
+                        "surface-container-highest": "#e5e2e1",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#002113",
+                        "tertiary-container": "#002113",
+                        "surface-dim": "#ddd9d8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "card-padding": "24px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "section-gap": "80px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Bricolage Grotesque"],
+                        "stat-xl": ["Bricolage Grotesque"],
+                        "display-lg-mobile": ["Bricolage Grotesque"],
+                        "body-base": ["Inter"],
+                        "label-xs": ["Inter"],
+                        "display-lg": ["Bricolage Grotesque"],
+                        "headline-lg": ["Bricolage Grotesque"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "stat-xl": ["36px", { "lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                        "body-base": ["15px", { "lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "label-xs": ["11px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        .bento-shadow {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .bento-hover {
+            transition: all 0.2s ease-in-out;
+        }
+        .bento-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base min-h-screen antialiased flex">
+<!-- SideNavBar (from JSON) -->
+<nav class="hidden md:flex flex-col bg-surface-container-lowest h-screen w-64 border-r border-outline-variant shadow-sm fixed left-0 top-0 p-6 z-30">
+<div class="mb-8">
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary">PrepMate</h1>
+<p class="font-body-base text-body-base text-on-surface-variant">Excellence in Prep</p>
+</div>
+<div class="flex-1 space-y-2">
+<!-- Non-exact match, but contextually this is Search/Discovery, not Dashboard/Practice directly. Will leave inactive for all as it's a transient search state, or maybe Practice is closest. Setting all inactive as Search is a global transient state. -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-bold bg-surface-container-high rounded-lg transition-all active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined icon-fill" data-icon="search">search</span>
+<span class="">Search</span> <!-- Semantic override for context -->
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="">Practice</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="alt_route">alt_route</span>
+<span class="">Roadmap</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="">Leaderboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="">Community</span>
+</a>
+</div>
+<div class="mt-auto">
+<button class="w-full bg-primary text-on-primary font-bold py-3 rounded-lg active:scale-95 transition-transform">
+                Upgrade to Pro
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<div class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar (from JSON) -->
+<header class="fixed top-0 right-0 left-0 md:left-64 flex justify-between items-center px-gutter py-4 z-40 bg-surface-container-lowest/80 border-b border-outline-variant backdrop-blur-md">
+<!-- Active Search Bar State -->
+<div class="flex-1 max-w-2xl relative">
+<div class="relative flex items-center w-full">
+<span class="material-symbols-outlined absolute left-4 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-outline-variant rounded-full py-3 pl-12 pr-4 focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-base text-primary" placeholder="Search topics, questions..." type="text" value="Dynamic Programming">
+<button class="absolute right-4 text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Search Suggestions / Filters (Frosted Glass Overlay) -->
+
+</div>
+<div class="flex items-center gap-4 ml-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200 p-2 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200 p-2 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden cursor-pointer">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A professional headshot of a user profile avatar. Clean white background, modern soft lighting. Editorial quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2IJHt-MZkFlStTffRoxcGhA4jn9-I8CunSg4CgCQO_1qGs3n_cFZ1iVwG08aIbueRbbXnvFcQxVup55P9sT9Klm7CxKm_xOhYtoVnBVKPEhw6jxkQ6z3KcfHYH_pPI4m4Y1vljbckFmQnOmkuDQnNWs2YeTQmSS2mbzEFn3aEJIbEJZZ-bAhd6XVTXLNPgmHLCjrj69ZX2hy4awlplA78tXF2zDUe-h03eiFGSni4TFqbxeYvOZFm">
+</div>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 mt-[88px] p-margin-mobile md:p-margin-desktop max-w-container-max mx-auto w-full space-y-12 pb-24">
+<div class="mb-8">
+<h2 class="font-headline-xl text-headline-xl text-primary mb-2">Search Results</h2>
+<p class="text-on-surface-variant font-body-base text-body-base">Showing top results for "<strong>Dynamic Programming</strong>"</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Category 1: Practice Questions (Span 8) -->
+<section class="md:col-span-8 space-y-4">
+<div class="flex justify-between items-center mb-4 border-b border-outline-variant pb-2">
+<h3 class="font-headline-lg text-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="code">code</span>
+                            Practice Questions
+                        </h3>
+<a class="text-sm font-medium text-secondary hover:underline flex items-center gap-1" href="#">
+                            View All (42) <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding bento-shadow bento-hover flex justify-between items-start">
+<div>
+<h4 class="font-bold text-primary mb-1">1143. Longest Common Subsequence</h4>
+<p class="text-sm text-on-surface-variant mb-3">Given two strings text1 and text2, return the length of their longest common subsequence...</p>
+<div class="flex items-center gap-3">
+<span class="px-2 py-1 rounded bg-surface-container-high text-xs font-medium text-primary border border-outline-variant">Medium</span>
+<span class="text-xs text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed-dim" data-icon="check_circle">check_circle</span> 58% Success</span>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+</button>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding bento-shadow bento-hover flex justify-between items-start">
+<div>
+<h4 class="font-bold text-primary mb-1">322. Coin Change</h4>
+<p class="text-sm text-on-surface-variant mb-3">You are given an integer array coins representing coins of different denominations and an integer...</p>
+<div class="flex items-center gap-3">
+<span class="px-2 py-1 rounded bg-secondary-fixed text-xs font-medium text-secondary border border-secondary-fixed-dim">Hard</span>
+<span class="text-xs text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed-dim" data-icon="check_circle">check_circle</span> 42% Success</span>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+</button>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding bento-shadow bento-hover flex justify-between items-start">
+<div>
+<h4 class="font-bold text-primary mb-1">70. Climbing Stairs</h4>
+<p class="text-sm text-on-surface-variant mb-3">You are climbing a staircase. It takes n steps to reach the top. Each time you can either...</p>
+<div class="flex items-center gap-3">
+<span class="px-2 py-1 rounded bg-tertiary-fixed text-xs font-medium text-on-tertiary-fixed-variant border border-tertiary-fixed-dim">Easy</span>
+<span class="text-xs text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed-dim" data-icon="check_circle">check_circle</span> 85% Success</span>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Category 2: Company Modules (Span 4) -->
+<section class="md:col-span-4 space-y-4">
+<div class="flex justify-between items-center mb-4 border-b border-outline-variant pb-2">
+<h3 class="font-headline-lg text-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="business">business</span>
+                            Modules
+                        </h3>
+<a class="text-sm font-medium text-secondary hover:underline flex items-center gap-1" href="#">
+                            All (5)
+                        </a>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 bento-shadow bento-hover">
+<div class="h-12 w-12 rounded-lg bg-surface-container-low mb-3 flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="menu_book">menu_book</span>
+</div>
+<h4 class="font-bold text-primary mb-1">DP Masterclass</h4>
+<p class="text-xs text-on-surface-variant mb-3">12 Chapters • 45 Questions</p>
+<div class="w-full bg-surface-variant rounded-full h-1.5 mb-2">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+<p class="text-xs text-right text-on-surface-variant font-medium">45% Complete</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 bento-shadow bento-hover">
+<div class="h-12 w-12 rounded-lg bg-surface-container-low mb-3 flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="menu_book">menu_book</span>
+</div>
+<h4 class="font-bold text-primary mb-1">Top 50 DP Patterns</h4>
+<p class="text-xs text-on-surface-variant mb-3">Curated list by FAANG Engineers</p>
+<button class="w-full py-2 border border-primary text-primary rounded-lg text-sm font-bold hover:bg-primary hover:text-on-primary transition-colors">
+                                Start Module
+                            </button>
+</div>
+</div>
+</section>
+<!-- Category 3: Interview Transcripts (Span 6) -->
+<section class="md:col-span-6 space-y-4 mt-8">
+<div class="flex justify-between items-center mb-4 border-b border-outline-variant pb-2">
+<h3 class="font-headline-lg text-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="article">article</span>
+                            Interview Transcripts
+                        </h3>
+<a class="text-sm font-medium text-secondary hover:underline flex items-center gap-1" href="#">
+                            View All (18)
+                        </a>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding bento-shadow bento-hover">
+<div class="flex items-center gap-3 mb-4">
+<div class="h-10 w-10 rounded-full bg-surface-container overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A small circular avatar of a tech professional smiling, white background, high-end editorial photo." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWOqZMQvwcS6Y52VkUWGEIwvkof71aeZIN20jhxGEhigk6T1NIhn3l3ck7Gor8NNOYqSdORnRy3vJFsxegc7hmxHTLi9u3SS6milLtuvJAr1LnfRpTRUd4uKKfGF8taD4Mw3EX2_DNcFeu9KMlSnxN9wnI6_6-soGFdNoyjOlpH04g5ypfZxaLR2MZ4bfpHKVWyO8QHvvgjI1L0FdbEDNm8gimT7c-lAqpUVJMMA7WxI5NuetmIb1r">
+</div>
+<div>
+<h4 class="font-bold text-primary text-sm">Sarah Jenkins</h4>
+<p class="text-xs text-on-surface-variant">L4 Software Engineer Interview</p>
+</div>
+<div class="ml-auto px-3 py-1 bg-surface-container-low border border-outline-variant rounded-full text-xs font-bold text-primary">
+                                    Google
+                                </div>
+</div>
+<h5 class="font-bold mb-2 text-primary">"The DP question that almost stumped me..."</h5>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-3">I was asked a variation of the knapsack problem. Initially, I struggled with state definition, but working backwards from the recursive tree helped...</p>
+<div class="flex gap-2">
+<span class="text-[10px] uppercase font-bold text-on-surface-variant tracking-wider bg-surface-container px-2 py-1 rounded">Offer Received</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding bento-shadow bento-hover">
+<div class="flex items-center gap-3 mb-4">
+<div class="h-10 w-10 rounded-full bg-surface-container overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A small circular avatar of a tech professional looking focused, minimalist white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2t2qWBxWZMN8h4gFwzZ2NmEUBd4aHuduph0lbE_FKxeF4a0Xvi_8q7pW7QW6O8NI7rVc5freXxfB4jKD6Xyvq5tLi3vBVJfns2WRq-I3xwi3TocmuaWcxHXovxEwZfUfm4adVz24muadMvvvx9MNbQHZgjKEKXpyN047Fq6wLbh7C_fpcTdd-Eo3sN3knQNdV4A93tC1EsrK5fsXzyX2ixWSbz_tQYizie_ODvn9s4vc_qMTSn8ck">
+</div>
+<div>
+<h4 class="font-bold text-primary text-sm">David Chen</h4>
+<p class="text-xs text-on-surface-variant">E5 Senior Engineer Interview</p>
+</div>
+<div class="ml-auto px-3 py-1 bg-surface-container-low border border-outline-variant rounded-full text-xs font-bold text-primary">
+                                    Meta
+                                </div>
+</div>
+<h5 class="font-bold mb-2 text-primary">"Optimizing Space in 1D DP"</h5>
+<p class="text-sm text-on-surface-variant line-clamp-2">The interviewer explicitly asked to optimize the O(N) space complexity down to O(1) for a sequence alignment problem...</p>
+</div>
+</div>
+</section>
+<!-- Category 4: Community Doubts (Span 6) -->
+<section class="md:col-span-6 space-y-4 mt-8">
+<div class="flex justify-between items-center mb-4 border-b border-outline-variant pb-2">
+<h3 class="font-headline-lg text-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="forum">forum</span>
+                            Community Doubts
+                        </h3>
+<a class="text-sm font-medium text-secondary hover:underline flex items-center gap-1" href="#">
+                            View All (120+)
+                        </a>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding bento-shadow bento-hover">
+<h4 class="font-bold text-primary mb-2 text-sm">How do you know when to use Memoization vs Tabulation?</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-3">I understand the concepts, but in an interview setting, I always freeze deciding whether to go top-down or bottom-up...</p>
+<div class="flex items-center gap-4 text-xs font-medium text-on-surface-variant border-t border-outline-variant pt-3 mt-3">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="thumb_up">thumb_up</span> 245</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="comment">comment</span> 32 Answers</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding bento-shadow bento-hover">
+<h4 class="font-bold text-primary mb-2 text-sm">Struggling with Multi-dimensional DP states</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-3">When problems require tracking 3 or more variables (like stock buying with cooldown and transaction fees), my state transitions get extremely messy...</p>
+<div class="flex items-center gap-4 text-xs font-medium text-on-surface-variant border-t border-outline-variant pt-3 mt-3">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="thumb_up">thumb_up</span> 189</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="comment">comment</span> 14 Answers</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+
+
+</body></html>

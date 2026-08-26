@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PrepMate - Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#e5e2e1",
+                    "surface": "#fdf8f8",
+                    "inverse-on-surface": "#f4f0ef",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#002113",
+                    "on-surface-variant": "#444748",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#c8c6c5",
+                    "on-primary-container": "#858383",
+                    "tertiary": "#000000",
+                    "on-secondary-container": "#5a0f00",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#5f5e5e",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed-variant": "#8a1c00",
+                    "on-primary-fixed": "#1c1b1b",
+                    "surface-container-low": "#f7f3f2",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "surface-variant": "#e5e2e1",
+                    "on-tertiary-container": "#009668",
+                    "outline-variant": "#c4c7c7",
+                    "outline": "#747878",
+                    "on-tertiary-fixed": "#002113",
+                    "secondary": "#b52701",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#1c1b1b",
+                    "secondary-fixed-dim": "#ffb4a3",
+                    "inverse-surface": "#313030",
+                    "on-secondary-fixed": "#3d0700",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface-container-highest": "#e5e2e1",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#1c1b1b",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#f1edec",
+                    "on-primary-fixed-variant": "#474646",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#fdf8f8",
+                    "secondary-container": "#ff5c36",
+                    "surface-dim": "#ddd9d8",
+                    "primary": "#000000",
+                    "tertiary-fixed": "#6ffbbe",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "surface-container-high": "#ebe7e6",
+                    "on-background": "#1c1b1b",
+                    "background": "#fdf8f8",
+                    "secondary-fixed": "#ffdad2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "section-gap": "80px",
+                    "margin-desktop": "40px",
+                    "margin-mobile": "20px",
+                    "card-padding": "24px"
+            },
+            "fontFamily": {
+                    "display-lg-mobile": [
+                            "Bricolage Grotesque"
+                    ],
+                    "headline-xl": [
+                            "Bricolage Grotesque"
+                    ],
+                    "body-base": [
+                            "Inter"
+                    ],
+                    "label-xs": [
+                            "Inter"
+                    ],
+                    "stat-xl": [
+                            "Bricolage Grotesque"
+                    ],
+                    "display-lg": [
+                            "Bricolage Grotesque"
+                    ],
+                    "headline-lg": [
+                            "Bricolage Grotesque"
+                    ]
+            },
+            "fontSize": {
+                    "display-lg-mobile": [
+                            "40px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.03em",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "headline-xl": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-base": [
+                            "15px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-xs": [
+                            "11px",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "0.1em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "stat-xl": [
+                            "36px",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "display-lg": [
+                            "64px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.04em",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #F7F6F3; }
+        .bento-card {
+            background-color: #ffffff;
+            border: 1px solid #ECEAE5;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            border-radius: 0.75rem; /* xl */
+            padding: 1.5rem; /* card-padding */
+            transition: all 0.2s ease-in-out;
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+        /* Custom progress bar styles */
+        .progress-track { background-color: #ECEAE5; border-radius: 9999px; overflow: hidden; height: 8px; }
+        .progress-fill { height: 100%; border-radius: 9999px; transition: width 1s ease-in-out; }
+        .progress-success { background-color: #10B981; }
+        .progress-active { background-color: #FF5C35; }
+    </style>
+</head>
+<body class="font-body-base text-on-surface antialiased flex bg-[#F7F6F3] min-h-screen">
+<!-- TopNavBar (Mobile Only) -->
+<header class="md:hidden bg-surface dark:bg-surface-container-lowest border-b border-outline-variant dark:border-outline docked full-width top-0 flex justify-between items-center px-margin-mobile h-20 w-full fixed z-40">
+<div class="font-display-lg-mobile text-display-lg-mobile font-extrabold text-primary dark:text-on-surface">PrepMate</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary dark:text-on-surface">notifications</span>
+<span class="material-symbols-outlined text-primary dark:text-on-surface">account_circle</span>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<nav class="bg-surface dark:bg-surface-dim text-primary dark:text-on-surface border-r border-outline-variant dark:border-outline docked left-0 h-full w-64 hidden md:flex flex-col h-screen p-6 gap-y-4 fixed z-40">
+<div class="mb-8">
+<h1 class="font-display-lg text-headline-lg font-black text-primary dark:text-on-surface">PrepMate</h1>
+</div>
+<div class="flex items-center gap-4 mb-8">
+<img class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A small, circular profile picture of a male college student smiling in a library setting. Soft, natural lighting. High contrast editorial style. Close up headshot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbeo7x11DyP--m9w29WnZbvrQlYEMx4LjcPOHYXWw3R58VZXiYyG1AwlUJ52tKOcqakEcXl4BUmmX_8QP7J_GJToycC3CpJhUZ84NqE-7GFV0_7ZN3j8Y9xXSlrGo4K9eRopcSBUFu3C5BESkIqugXFx7P9tsD4ENSZekkPZOAETq_0BA5_vjIrE-MpT8PRKhoDx1sX_AVItrwajllmcMfpu_nA4aQ-0aH28r0fam5GdMxMeplskJs"/>
+<div>
+<p class="font-label-xs text-label-xs font-bold">Student Profile Picture</p>
+<p class="font-label-xs text-label-xs text-on-surface-variant">Level 12 • 2450 XP</p>
+</div>
+</div>
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-xs text-label-xs">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">exercise</span>
+<span class="font-label-xs text-label-xs">Practice Hub</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-xs text-label-xs">Community</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-xs text-label-xs">Roadmap</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-xs text-label-xs">Leaderboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-xs text-label-xs">Profile</span>
+</a>
+</li>
+</ul>
+<button class="bg-primary text-on-primary font-label-xs text-label-xs py-3 rounded-lg font-bold scale-95 transition-transform duration-150 active:opacity-80 w-full mb-4">Start Mock Test</button>
+<ul class="space-y-2 mt-auto">
+<li>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-xs text-label-xs">Settings</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-xs text-label-xs">Support</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 pt-24 pb-20 md:pt-10 md:pb-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
+<!-- Header Profile Section -->
+<section class="mb-10 bento-card flex flex-col md:flex-row items-center md:items-start gap-6">
+<div class="relative">
+<img class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-surface shadow-sm" data-alt="A medium close up portrait of a college student in a library setting looking determined. High contrast, clean modern editorial style lighting. Focus on face." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqbreIuOrtGB5EXvib7iNuSab1yD6ERJr_SFcusSis5Gghx6dTgJVkxrQHjTUaq3Ec6XZcajnomCPLpbuBXv_mKfEdIOitXJlngZiPVpYNEB20qDQJfGzqnIl2y-xH5SHKJVvqQ5Sticx6n5PgVduvjGaBYsxBoFoTlvPnkP_fE8LBrObnXkS-VyWDp7XwIAnKGvL9Fmsjt_NsFd2vWLjygfFtt3f5Gr1YqeRrP_DA-97OY3VfYi1Z"/>
+<div class="absolute bottom-2 right-2 bg-secondary-container text-on-secondary-container rounded-full p-2 border-2 border-white shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">verified</span>
+</div>
+</div>
+<div class="flex-1 text-center md:text-left flex flex-col justify-center">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-bold text-primary mb-1">Alex Mercer</h2>
+<p class="font-body-base text-body-base text-on-surface-variant mb-4">Computer Science, Stanford University '25</p>
+<div class="bg-surface-container-low border border-outline-variant p-4 rounded-lg inline-block w-full md:w-auto">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-xs text-label-xs font-bold text-on-surface-variant uppercase tracking-wider">Placement Readiness Score</span>
+<span class="font-headline-xl text-headline-xl font-bold text-secondary">85<span class="text-lg text-on-surface-variant">/100</span></span>
+</div>
+<div class="progress-track w-full md:w-64">
+<div class="progress-fill progress-active" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-row md:flex-col gap-3 w-full md:w-auto mt-4 md:mt-0 justify-center">
+<button class="flex-1 md:flex-none bg-primary text-on-primary font-label-xs text-label-xs px-6 py-3 rounded-lg font-bold hover:scale-95 transition-transform border border-primary">Edit Profile</button>
+<button class="flex-1 md:flex-none bg-transparent text-primary font-label-xs text-label-xs px-6 py-3 rounded-lg font-bold hover:scale-95 transition-transform border border-primary">Share</button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- 1. Performance Trends (Accuracy over time) - Spans 8 cols -->
+<section class="bento-card col-span-1 md:col-span-8 flex flex-col">
+<div class="flex justify-between items-center mb-6 border-b border-outline-variant pb-4">
+<h3 class="font-headline-lg text-headline-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+                        Performance Trends
+                    </h3>
+<select class="bg-surface border border-outline-variant text-label-xs font-label-xs rounded px-3 py-1 text-on-surface-variant focus:border-primary focus:ring-0">
+<option>Last 30 Days</option>
+<option>Last 3 Months</option>
+<option>All Time</option>
+</select>
+</div>
+<!-- Placeholder for Chart -->
+<div class="flex-1 min-h-[250px] relative w-full rounded-lg overflow-hidden border border-outline-variant flex flex-col justify-end p-4 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-surface-container-lowest to-surface-container-low">
+<div class="absolute inset-0 flex items-end px-4 pb-4 gap-2 opacity-50">
+<!-- Abstract bar chart representation -->
+<div class="w-1/12 bg-outline-variant rounded-t-sm h-[30%]"></div>
+<div class="w-1/12 bg-outline-variant rounded-t-sm h-[45%]"></div>
+<div class="w-1/12 bg-outline-variant rounded-t-sm h-[40%]"></div>
+<div class="w-1/12 bg-outline-variant rounded-t-sm h-[60%]"></div>
+<div class="w-1/12 bg-outline-variant rounded-t-sm h-[55%]"></div>
+<div class="w-1/12 bg-outline-variant rounded-t-sm h-[75%]"></div>
+<div class="w-1/12 bg-outline-variant rounded-t-sm h-[70%]"></div>
+<div class="w-1/12 bg-outline-variant rounded-t-sm h-[85%]"></div>
+</div>
+<!-- SVG Overlay for line trend -->
+<svg class="absolute inset-0 w-full h-full preserve-3d pointer-events-none" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M 0,70 L 12.5,55 L 25,60 L 37.5,40 L 50,45 L 62.5,25 L 75,30 L 87.5,15 L 100,20" fill="none" stroke="#ff5c36" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path d="M 0,70 L 12.5,55 L 25,60 L 37.5,40 L 50,45 L 62.5,25 L 75,30 L 87.5,15 L 100,20 L 100,100 L 0,100 Z" fill="url(#trend-gradient)" opacity="0.2"></path>
+<defs>
+<lineargradient id="trend-gradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#ff5c36"></stop>
+<stop offset="100%" stop-color="#ffffff" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="z-10 relative self-end bg-surface border border-outline-variant p-2 rounded shadow-sm">
+<p class="font-label-xs text-label-xs text-on-surface-variant">Current Accuracy</p>
+<p class="font-stat-xl text-stat-xl font-bold text-primary">78%</p>
+</div>
+</div>
+</section>
+<!-- 2. Badges & Achievements - Spans 4 cols -->
+<section class="bento-card col-span-1 md:col-span-4 flex flex-col">
+<div class="flex justify-between items-center mb-6 border-b border-outline-variant pb-4">
+<h3 class="font-headline-lg text-headline-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[#009668]">workspace_premium</span>
+                        Achievements
+                    </h3>
+</div>
+<div class="flex-1 flex flex-col gap-4">
+<!-- Badge 1 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center border-2 border-secondary-container flex-shrink-0">
+<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div>
+<p class="font-label-xs text-label-xs font-bold text-primary">Problem Solver</p>
+<p class="font-body-base text-[13px] leading-tight text-on-surface-variant mt-1">Solved 100+ Data Structure problems.</p>
+</div>
+</div>
+<!-- Badge 2 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center border-2 border-on-tertiary-container flex-shrink-0">
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">code</span>
+</div>
+<div>
+<p class="font-label-xs text-label-xs font-bold text-primary">Code Ninja</p>
+<p class="font-body-base text-[13px] leading-tight text-on-surface-variant mt-1">Top 5% in weekly algorithmic contests.</p>
+</div>
+</div>
+<!-- Badge 3 (Locked/Rookie) -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-outline-variant border-dashed bg-surface opacity-70 grayscale">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center border-2 border-outline-variant flex-shrink-0">
+<span class="material-symbols-outlined text-outline">emoji_events</span>
+</div>
+<div>
+<p class="font-label-xs text-label-xs font-bold text-primary">Master Architect</p>
+<p class="font-body-base text-[13px] leading-tight text-outline mt-1">Complete system design module to unlock.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Recent Activity - Spans 12 cols -->
+<section class="bento-card col-span-1 md:col-span-12">
+<div class="flex justify-between items-center mb-6 border-b border-outline-variant pb-4">
+<h3 class="font-headline-lg text-headline-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                        Recent Activity
+                    </h3>
+<a class="font-label-xs text-label-xs text-secondary hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Activity Item 1 -->
+<div class="p-4 rounded-lg border border-outline-variant flex flex-col gap-2 hover:border-primary transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<span class="bg-[#e8f5e9] text-[#2e7d32] text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Solved</span>
+<span class="font-label-xs text-[10px] text-outline">2 hours ago</span>
+</div>
+<p class="font-body-base text-body-base font-bold text-primary group-hover:text-secondary transition-colors">Merge K Sorted Lists</p>
+<p class="font-body-base text-[13px] text-on-surface-variant">Linked Lists • Hard</p>
+<div class="mt-2 text-[12px] flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">timer</span> 14m 32s
+                        </div>
+</div>
+<!-- Activity Item 2 -->
+<div class="p-4 rounded-lg border border-outline-variant flex flex-col gap-2 hover:border-primary transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<span class="bg-[#e8f5e9] text-[#2e7d32] text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Solved</span>
+<span class="font-label-xs text-[10px] text-outline">Yesterday</span>
+</div>
+<p class="font-body-base text-body-base font-bold text-primary group-hover:text-secondary transition-colors">LRU Cache Design</p>
+<p class="font-body-base text-[13px] text-on-surface-variant">System Design • Medium</p>
+<div class="mt-2 text-[12px] flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">timer</span> 22m 10s
+                        </div>
+</div>
+<!-- Activity Item 3 -->
+<div class="p-4 rounded-lg border border-outline-variant flex flex-col gap-2 hover:border-primary transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<span class="bg-error-container text-on-error-container text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Attempted</span>
+<span class="font-label-xs text-[10px] text-outline">Yesterday</span>
+</div>
+<p class="font-body-base text-body-base font-bold text-primary group-hover:text-secondary transition-colors">Trapping Rain Water</p>
+<p class="font-body-base text-[13px] text-on-surface-variant">Arrays • Hard</p>
+<div class="mt-2 text-[12px] flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">error</span> Compilation Error
+                        </div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="bg-surface dark:bg-surface-container-highest border-t border-outline-variant shadow-sm docked full-width bottom-0 rounded-t-xl fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant active:bg-surface-container-low scale-95 transition-transform duration-100" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-xs text-[10px] mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant active:bg-surface-container-low scale-95 transition-transform duration-100" href="#">
+<span class="material-symbols-outlined">fitness_center</span>
+<span class="font-label-xs text-[10px] mt-1">Practice</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant active:bg-surface-container-low scale-95 transition-transform duration-100" href="#">
+<span class="material-symbols-outlined">timer</span>
+<span class="font-label-xs text-[10px] mt-1">Tests</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant active:bg-surface-container-low scale-95 transition-transform duration-100" href="#">
+<span class="material-symbols-outlined">route</span>
+<span class="font-label-xs text-[10px] mt-1">Roadmap</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-container font-bold scale-95 transition-transform duration-100" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-xs text-[10px] mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

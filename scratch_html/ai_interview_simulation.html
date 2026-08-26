@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PrepMate - Interview Simulation</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#f1edec",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "secondary": "#b52701",
+                    "on-secondary-container": "#5a0f00",
+                    "surface-bright": "#fdf8f8",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "primary": "#000000",
+                    "tertiary": "#000000",
+                    "outline-variant": "#c4c7c7",
+                    "background": "#fdf8f8",
+                    "inverse-primary": "#c8c6c5",
+                    "on-primary-container": "#858383",
+                    "on-secondary-fixed-variant": "#8a1c00",
+                    "primary-container": "#1c1b1b",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f7f3f2",
+                    "on-surface-variant": "#444748",
+                    "secondary-fixed-dim": "#ffb4a3",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#474646",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-tertiary-container": "#009668",
+                    "surface-container-high": "#ebe7e6",
+                    "on-secondary-fixed": "#3d0700",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#f4f0ef",
+                    "surface-variant": "#e5e2e1",
+                    "on-primary-fixed": "#1c1b1b",
+                    "surface-tint": "#5f5e5e",
+                    "secondary-fixed": "#ffdad2",
+                    "error": "#ba1a1a",
+                    "surface": "#fdf8f8",
+                    "on-background": "#1c1b1b",
+                    "on-error-container": "#93000a",
+                    "outline": "#747878",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#e5e2e1",
+                    "on-surface": "#1c1b1b",
+                    "inverse-surface": "#313030",
+                    "secondary-container": "#ff5c36",
+                    "surface-container-highest": "#e5e2e1",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#002113",
+                    "tertiary-container": "#002113",
+                    "surface-dim": "#ddd9d8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "card-padding": "24px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "section-gap": "80px",
+                    "margin-desktop": "40px",
+                    "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                    "headline-xl": [
+                            "Bricolage Grotesque"
+                    ],
+                    "stat-xl": [
+                            "Bricolage Grotesque"
+                    ],
+                    "display-lg-mobile": [
+                            "Bricolage Grotesque"
+                    ],
+                    "body-base": [
+                            "Inter"
+                    ],
+                    "label-xs": [
+                            "Inter"
+                    ],
+                    "display-lg": [
+                            "Bricolage Grotesque"
+                    ],
+                    "headline-lg": [
+                            "Bricolage Grotesque"
+                    ]
+            },
+            "fontSize": {
+                    "headline-xl": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "stat-xl": [
+                            "36px",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "display-lg-mobile": [
+                            "40px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.03em",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "body-base": [
+                            "15px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-xs": [
+                            "11px",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "0.1em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "64px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.04em",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        body { background-color: #f7f3f2; }
+    </style>
+</head>
+<body class="font-body-base text-body-base text-on-background h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation (Shell suppressed for this focused transactional view, but keeping a minimal header for context as requested by 'immersive dark mode' prompt, adapting to light mode theme) -->
+<header class="flex justify-between items-center px-6 py-4 bg-surface-container-lowest border-b border-outline-variant shadow-sm z-50">
+<div class="flex items-center gap-3">
+<span class="font-headline-lg text-headline-lg font-bold text-primary">PrepMate</span>
+<span class="px-2 py-1 bg-surface-container-low text-on-surface-variant font-label-xs text-label-xs rounded-full ml-4">MOCK INTERVIEW IN PROGRESS</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant font-label-xs text-label-xs">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+<span>REC</span>
+</div>
+<span>00:14:32</span>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 flex overflow-hidden p-6 gap-6 relative">
+<!-- Left Column: Video Feeds -->
+<div class="w-1/2 flex flex-col gap-6 h-full">
+<!-- User Camera Feed (Top Left) -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm relative overflow-hidden flex flex-col">
+<div class="absolute top-4 left-4 bg-surface-container-lowest/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-outline-variant text-label-xs font-label-xs flex items-center gap-2 z-10 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">person</span>
+                    You
+                </div>
+<div class="flex-1 relative w-full h-full">
+<img class="absolute inset-0 w-full h-full object-cover rounded-b-xl" data-alt="A medium shot of a professional individual sitting in a well-lit home office, looking intently into the camera as if in an interview. The lighting is soft and natural, emphasizing a modern, editorial aesthetic with high contrast and a predominantly light mode palette. The background is slightly blurred but shows a neat, minimal workspace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEH2juJ4NNgRb-3q90rPMXQc73MIBtMGdvWUVFBnRef5Y4TlM32kcupBkFnzFuLb4iQzwrZJ5RpndHK6eGq2h97sVyy2m81DXN1RHBiTJWiYFUUzwhEzwJwTNkZ0cAiWgN6C95DDfpKSS4XVdv4Iuwzf77ab0wRmuNBPUspi2jbBtOXCzfQXYE3N5awL-MEPgnKl89swUZYrzuL5LigsE60RtsgkIDvOatSIj-uhag19BlIYqe03Ij"/>
+</div>
+</div>
+<!-- AI Interviewer (Bottom Left) -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm relative overflow-hidden flex flex-col p-6 items-center justify-center">
+<div class="absolute top-4 left-4 bg-surface-container-lowest/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-outline-variant text-label-xs font-label-xs flex items-center gap-2 z-10 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span>
+                    AI Interviewer
+                </div>
+<!-- Simulated Waveform / Avatar -->
+<div class="w-32 h-32 rounded-full bg-surface-container-low flex items-center justify-center border-4 border-outline-variant shadow-[0_0_40px_rgba(0,0,0,0.05)] relative">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">record_voice_over</span>
+<!-- Simple CSS ring animation for 'talking' -->
+<div class="absolute inset-0 rounded-full border-2 border-primary opacity-20 animate-ping"></div>
+</div>
+<p class="mt-6 font-body-base text-body-base text-on-surface-variant text-center max-w-sm">
+                    "That's a solid explanation of closures. Now, how would you apply that concept to optimize rendering in a React component?"
+                </p>
+</div>
+</div>
+<!-- Right Column: Transcript & Analysis -->
+<div class="w-1/2 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm flex flex-col overflow-hidden relative">
+<!-- Header -->
+<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+<h3 class="font-label-xs text-label-xs uppercase tracking-widest text-on-surface-variant">Live Transcript &amp; Sentiment</h3>
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-md transition-colors flex items-center gap-2 text-label-xs font-label-xs border border-outline-variant">
+<span class="material-symbols-outlined text-[16px]">code</span>
+                    Toggle Code Editor
+                </button>
+</div>
+<!-- Scrollable Transcript Area -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6 relative">
+<!-- Peak Moment Chip (Floating) -->
+<div class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-surface-container-lowest border border-outline-variant shadow-[0_8px_20px_rgba(0,0,0,0.06)] px-4 py-2 rounded-full flex items-center gap-3 z-10 hover:-translate-y-[2px] transition-transform cursor-default">
+<span class="material-symbols-outlined text-tertiary-fixed-dim">star</span>
+<span class="font-label-xs text-label-xs">Best Moment: Clear explanation of Big O notation</span>
+</div>
+<!-- Spacer for floating chip -->
+<div class="h-8"></div>
+<!-- Message 1 (Interviewer) -->
+<div class="flex gap-4 max-w-[85%]">
+<div class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center shrink-0 border border-outline-variant">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span>
+</div>
+<div>
+<div class="bg-surface-bright p-4 rounded-2xl rounded-tl-sm border border-outline-variant">
+<p>Can you walk me through the time complexity of the sorting algorithm you just mentioned?</p>
+</div>
+<span class="text-[10px] text-on-surface-variant mt-1 ml-1 block">14:28</span>
+</div>
+</div>
+<!-- Message 2 (User) -->
+<div class="flex gap-4 max-w-[85%] self-end flex-row-reverse">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 text-on-primary">
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<div class="flex flex-col items-end">
+<div class="bg-surface-container-lowest p-4 rounded-2xl rounded-tr-sm border border-outline-variant shadow-sm">
+<p>Sure. Since we're using QuickSort, the average time complexity is O(n log n). The partitioning step takes O(n) time, and we do this recursively log n times on average.</p>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="px-2 py-1 bg-surface-container-low text-on-surface-variant rounded-md text-[10px] font-semibold border border-outline-variant">Confident</span>
+<span class="px-2 py-1 bg-surface-container-low text-on-surface-variant rounded-md text-[10px] font-semibold border border-outline-variant">Strong Technical Detail</span>
+<span class="text-[10px] text-on-surface-variant ml-1 block">14:30</span>
+</div>
+</div>
+</div>
+<!-- Message 3 (Interviewer) - Typing -->
+<div class="flex gap-4 max-w-[85%] mt-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center shrink-0 border border-outline-variant">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span>
+</div>
+<div>
+<div class="bg-surface-bright p-4 rounded-2xl rounded-tl-sm border border-outline-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-outline rounded-full animate-bounce"></span>
+<span class="w-1.5 h-1.5 bg-outline rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
+<span class="w-1.5 h-1.5 bg-outline rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Control Bar -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant px-6 py-4 flex justify-between items-center z-50">
+<div class="flex gap-4">
+<button class="px-6 py-3 border border-outline-variant rounded-lg font-label-xs text-label-xs uppercase tracking-wider text-on-surface hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">mic_off</span>
+                Mute
+            </button>
+<button class="px-6 py-3 border border-outline-variant rounded-lg font-label-xs text-label-xs uppercase tracking-wider text-on-surface hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">videocam_off</span>
+                Stop Video
+            </button>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 bg-surface-container-lowest border border-primary text-primary rounded-lg font-label-xs text-label-xs uppercase tracking-wider hover:-translate-y-[2px] shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+                Request Hint
+            </button>
+<button class="px-8 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-label-xs text-label-xs uppercase tracking-wider font-bold hover:scale-95 transition-transform flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">call_end</span>
+                End Session
+            </button>
+</div>
+</footer>
+</body></html>

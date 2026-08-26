@@ -1,0 +1,152 @@
+[
+  {
+    "id": "faang-dsa-array-1",
+    "topic": "Arrays & Strings",
+    "difficulty": "Hard",
+    "question": "What is the optimal time complexity for the problem: 'Cyclically rotate an array by one'?",
+    "options": [
+      "O(1)",
+      "O(N^2)",
+      "O(log N)",
+      "O(N)"
+    ],
+    "correct_option": 1,
+    "explanation": "The optimal approach for 'Cyclically rotate an array by one' typically involves iterating through the elements, resulting in a time complexity of O(N^2).",
+    "source": "faang-repo"
+  },
+  {
+    "id": "faang-dsa-array-2",
+    "topic": "Arrays & Strings",
+    "difficulty": "Hard",
+    "question": "What is the optimal time complexity for the problem: 'Minimize the Height'?",
+    "options": [
+      "O(N log N)",
+      "O(log N)",
+      "O(N)",
+      "O(N^2)"
+    ],
+    "correct_option": 3,
+    "explanation": "The optimal approach for 'Minimize the Height' typically involves iterating through the elements, resulting in a time complexity of O(N^2).",
+    "source": "faang-repo"
+  },
+  {
+    "id": "faang-dsa-array-3",
+    "topic": "Arrays & Strings",
+    "difficulty": "Medium",
+    "question": "What is the optimal time complexity for the problem: 'Common elements'?",
+    "options": [
+      "O(1)",
+      "O(log N)",
+      "O(N)",
+      "O(N^2)"
+    ],
+    "correct_option": 2,
+    "explanation": "The optimal approach for 'Common elements' typically involves iterating through the elements, resulting in a time complexity of O(N).",
+    "source": "faang-repo"
+  },
+  {
+    "id": "faang-dsa-array-4",
+    "topic": "Arrays & Strings",
+    "difficulty": "Easy",
+    "question": "What is the optimal time complexity for the problem: 'Union of two arrays'?",
+    "options": [
+      "O(log N)",
+      "O(N log N)",
+      "O(1)",
+      "O(N)"
+    ],
+    "correct_option": 1,
+    "explanation": "The optimal approach for 'Union of two arrays' typically involves iterating through the elements, resulting in a time complexity of O(N log N).",
+    "source": "faang-repo"
+  },
+  {
+    "id": "faang-dsa-array-5",
+    "topic": "Arrays & Strings",
+    "difficulty": "Medium",
+    "question": "What is the optimal time complexity for the problem: 'Three way partitioning'?",
+    "options": [
+      "O(N log N)",
+      "O(1)",
+      "O(N^2)",
+      "O(N)"
+    ],
+    "correct_option": 0,
+    "explanation": "The optimal approach for 'Three way partitioning' typically involves iterating through the elements, resulting in a time complexity of O(N log N).",
+    "source": "faang-repo"
+  },
+  {
+    "id": "faang-dsa-array-6",
+    "topic": "Arrays & Strings",
+    "difficulty": "Medium",
+    "question": "What is the optimal time complexity for the problem: 'Best Time to Buy and Sell Stock'?",
+    "options": [
+      "O(N)",
+      "O(log N)",
+      "O(N^2)",
+      "O(N log N)"
+    ],
+    "correct_option": 0,
+    "explanation": "The optimal approach for 'Best Time to Buy and Sell Stock' typically involves iterating through the elements, resulting in a time complexity of O(N).",
+    "source": "faang-repo"
+  },
+  {
+    "id": "faang-dsa-array-7",
+    "topic": "Arrays & Strings",
+    "difficulty": "Easy",
+    "question": "What is the optimal time complexity for the problem: 'Rearrange Array in altenating posotive and negative'?",
+    "options": [
+      "O(N^2)",
+      "O(N log N)",
+      "O(log N)",
+      "O(N)"
+    ],
+    "correct_option": 3,
+    "explanation": "The optimal approach for 'Rearrange Array in altenating posotive and negative' typically involves iterating through the elements, resulting in a time complexity of O(N).",
+    "source": "faang-repo"
+  },
+  {
+    "id": "faang-dsa-array-8",
+    "topic": "Arrays & Strings",
+    "difficulty": "Hard",
+    "question": "What is the optimal time complexity for the problem: 'Chocolate Distribution Problem'?",
+    "options": [
+      "O(N^2)",
+      "O(1)",
+      "O(N log N)",
+      "O(N)"
+    ],
+    "correct_option": 0,
+    "explanation": "The optimal approach for 'Chocolate Distribution Problem' typically involves iterating through the elements, resulting in a time complexity of O(N^2).",
+    "source": "faang-repo"
+  },
+  {
+    "id": "faang-dsa-array-9",
+    "topic": "Arrays & Strings",
+    "difficulty": "Medium",
+    "question": "What is the optimal time complexity for the problem: 'Sort an Array 012'?",
+    "options": [
+      "O(N)",
+      "O(N^2)",
+      "O(N log N)",
+      "O(log N)"
+    ],
+    "correct_option": 1,
+    "explanation": "The optimal approach for 'Sort an Array 012' typically involves iterating through the elements, resulting in a time complexity of O(N^2).",
+    "source": "faang-repo"
+  },
+  {
+    "id": "faang-dsa-array-10",
+    "topic": "Arrays & Strings",
+    "difficulty": "Easy",
+    "question": "What is the optimal time complexity for the problem: 'Largest consecutive SubArray'?",
+    "options": [
+      "O(1)",
+      "O(N^2)",
+      "O(N)",
+      "O(N log N)"
+    ],
+    "correct_option": 1,
+    "explanation": "The optimal approach for 'Largest consecutive SubArray' typically involves iterating through the elements, resulting in a time complexity of O(N^2).",
+    "source": "faang-repo"
+  }
+]

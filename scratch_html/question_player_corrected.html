@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PrepMate - Practice Question</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#009668",
+                      "on-primary": "#ffffff",
+                      "surface-tint": "#5f5e5e",
+                      "background": "#fdf8f8",
+                      "on-surface-variant": "#444748",
+                      "tertiary-fixed": "#6ffbbe",
+                      "surface-container-low": "#f7f3f2",
+                      "on-primary-fixed": "#1c1b1b",
+                      "error": "#ba1a1a",
+                      "surface-container": "#f1edec",
+                      "tertiary-container": "#002113",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed": "#e5e2e1",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#8a1c00",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "inverse-surface": "#313030",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "primary": "#000000",
+                      "outline-variant": "#c4c7c7",
+                      "surface-dim": "#ddd9d8",
+                      "on-secondary-container": "#5a0f00",
+                      "on-primary-fixed-variant": "#474646",
+                      "secondary-fixed": "#ffdad2",
+                      "surface-bright": "#fdf8f8",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "outline": "#747878",
+                      "secondary": "#b52701",
+                      "on-error": "#ffffff",
+                      "on-background": "#1c1b1b",
+                      "secondary-container": "#ff5c36",
+                      "secondary-fixed-dim": "#ffb4a3",
+                      "inverse-primary": "#c8c6c5",
+                      "primary-container": "#1c1b1b",
+                      "surface": "#fdf8f8",
+                      "on-surface": "#1c1b1b",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "tertiary": "#000000",
+                      "inverse-on-surface": "#f4f0ef",
+                      "surface-variant": "#e5e2e1",
+                      "on-primary-container": "#858383",
+                      "on-secondary-fixed": "#3d0700",
+                      "on-tertiary-fixed": "#002113",
+                      "surface-container-high": "#ebe7e6",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-highest": "#e5e2e1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1280px",
+                      "margin-desktop": "40px",
+                      "card-padding": "24px",
+                      "margin-mobile": "20px",
+                      "section-gap": "80px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "label-xs": [
+                              "Inter"
+                      ],
+                      "body-base": [
+                              "Inter"
+                      ],
+                      "display-lg-mobile": [
+                              "Bricolage Grotesque"
+                      ],
+                      "headline-xl": [
+                              "Bricolage Grotesque"
+                      ],
+                      "headline-lg": [
+                              "Bricolage Grotesque"
+                      ],
+                      "stat-xl": [
+                              "Bricolage Grotesque"
+                      ],
+                      "display-lg": [
+                              "Bricolage Grotesque"
+                      ]
+              },
+              "fontSize": {
+                      "label-xs": [
+                              "11px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-base": [
+                              "15px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "stat-xl": [
+                              "36px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Subtle Entrance Animation */
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base antialiased flex w-full min-h-screen overflow-x-hidden">
+<!-- SideNavBar (Predicted Component) -->
+<nav class="h-screen w-64 fixed left-0 top-0 hidden md:flex flex-col p-6 gap-4 bg-surface border-r border-outline-variant z-40">
+<!-- Header -->
+<div class="flex items-center gap-3 mb-8">
+<img alt="User Profile" class="w-10 h-10 rounded bg-surface-container object-cover" data-alt="A minimalist, geometric logo mark for an elite education platform. The icon is sharply defined in high-contrast black and white, conveying a sense of premium quality, precision, and modern SaaS aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAejhuGFFg8qwYu3k5iqsg9pm1y8qKo7TA07f8MAAWRApJAiFUy49PowErQh_IYXJaC_rPQvZv5L5iH-GU5lyxakGPbjNqd4yrTabdxNqKuN6mCgnt2XlTQ-D6otDTDf4fUDu7r32Ar9bdXfoV-tW2fT8HsTIvKvsy1KvMQI_J1769tj1FcyH1iATfUc2tVFEklnfbZHaNNX7YaaXb2rUliGyKFahvx8RDyhEC3GfhTToVnNrzC0iYt"/>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight text-[24px]">PrepMate</h1>
+<p class="font-label-xs text-label-xs text-on-surface-variant uppercase mt-1">Elite Placement Prep</p>
+</div>
+</div>
+<!-- Main Navigation -->
+<div class="flex flex-col gap-2 flex-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:translate-x-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-base text-body-base font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined fill-icon">exercise</span>
+<span class="font-body-base text-body-base">Practice Hub</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:translate-x-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-body-base text-body-base font-medium">Community</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:translate-x-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-body-base text-body-base font-medium">Roadmap</span>
+</a>
+</div>
+<!-- CTA & Footer -->
+<div class="flex flex-col gap-4 mt-auto">
+<button class="w-full py-3 bg-surface-container text-primary border border-outline-variant rounded-lg font-body-base font-medium hover:bg-surface-container-high hover:-translate-y-[1px] transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center justify-center gap-2">
+<span>Upgrade to Pro</span>
+<span class="material-symbols-outlined text-[18px]">workspace_premium</span>
+</button>
+<div class="h-[1px] w-full bg-outline-variant/50 my-2"></div>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-body-base text-body-base font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-body-base text-body-base font-medium">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Canvas Area -->
+<main class="flex-1 ml-0 md:ml-64 flex flex-col p-margin-mobile md:p-margin-desktop min-h-screen bg-background">
+<!-- Focus Area Container -->
+<div class="flex-1 flex items-center justify-center w-full">
+<!-- The Bento Card (Question Player) -->
+<div class="w-full max-w-4xl bg-surface-container-lowest border border-outline-variant rounded-[20px] shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-6 md:p-10 flex flex-col gap-8 animate-fade-in-up">
+<!-- Top Bar -->
+<div class="flex justify-between items-center w-full border-b border-outline-variant/50 pb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline text-[28px]">format_list_numbered</span>
+<h2 class="font-stat-xl text-stat-xl text-primary font-bold tracking-tight">Q 7 of 20</h2>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-surface border border-outline-variant rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">timer</span>
+<span class="font-label-xs text-label-xs text-primary tabular-nums tracking-widest font-bold" id="timer">04:22</span>
+</div>
+</div>
+<!-- Question Content -->
+<div class="py-4">
+<p class="font-headline-lg text-[28px] md:text-headline-lg text-on-surface leading-tight font-bold">
+                        A train 150m long passes a pole in 15 seconds and another train of the same length travelling in the opposite direction in 12 seconds. The speed of the second train is:
+                    </p>
+</div>
+<!-- Options Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+<!-- Option A -->
+<button class="group flex items-start gap-4 p-5 rounded-xl border border-outline-variant bg-surface-container-lowest hover:border-outline hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-[2px] transition-all duration-200 text-left w-full cursor-pointer">
+<div class="w-10 h-10 shrink-0 flex items-center justify-center rounded-lg bg-surface border border-outline-variant text-on-surface-variant font-bold font-body-base group-hover:bg-primary group-hover:text-on-primary group-hover:border-primary transition-colors">
+                            A
+                        </div>
+<div class="pt-2 font-body-base text-body-base text-on-surface leading-relaxed">
+                            43.2 km/hr
+                        </div>
+</button>
+<!-- Option B (Selected & Incorrect State) -->
+<button class="group flex items-start gap-4 p-5 rounded-xl border-2 border-error bg-error-container/20 shadow-none text-left w-full cursor-default relative overflow-hidden">
+<!-- Selection indicator line -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="w-10 h-10 shrink-0 flex items-center justify-center rounded-lg bg-error text-on-error font-bold font-body-base">
+                            B
+                        </div>
+<div class="pt-2 font-body-base text-body-base text-on-surface font-medium leading-relaxed">
+                            50.4 km/hr
+                        </div>
+</button>
+<!-- Option C (Correct Answer) -->
+<button class="group flex items-start gap-4 p-5 rounded-xl border-2 border-[#009668] bg-[#009668]/10 shadow-none text-left w-full cursor-default relative overflow-hidden">
+<!-- Success indicator line -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#009668]"></div>
+<div class="w-10 h-10 shrink-0 flex items-center justify-center rounded-lg bg-[#009668] text-white font-bold font-body-base">
+                            C
+                        </div>
+<div class="pt-2 font-body-base text-body-base text-on-surface font-medium leading-relaxed">
+                            54 km/hr
+                        </div>
+</button>
+<!-- Option D -->
+<button class="group flex items-start gap-4 p-5 rounded-xl border border-outline-variant bg-surface-container-lowest hover:border-outline hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-[2px] transition-all duration-200 text-left w-full cursor-pointer">
+<div class="w-10 h-10 shrink-0 flex items-center justify-center rounded-lg bg-surface border border-outline-variant text-on-surface-variant font-bold font-body-base group-hover:bg-primary group-hover:text-on-primary group-hover:border-primary transition-colors">
+                            D
+                        </div>
+<div class="pt-2 font-body-base text-body-base text-on-surface leading-relaxed">
+                            60 km/hr
+                        </div>
+</button>
+</div>
+<!-- Instant Feedback Panel (Incorrect State) -->
+<div class="mt-2 p-6 rounded-xl border border-error bg-error-container/30 flex flex-col gap-4 animate-fade-in-up" style="animation-delay: 0.1s; animation-fill-mode: both;">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined fill-icon text-error text-[24px]">cancel</span>
+<h3 class="font-headline-lg text-[20px] text-error font-bold m-0">Incorrect</h3>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-5 border border-error/20 shadow-sm relative">
+<div class="absolute -top-3 left-6 w-4 h-4 bg-surface-container-lowest border-t border-l border-error/20 rotate-45"></div>
+<h4 class="font-headline-lg text-[14px] font-bold text-on-surface mb-2 uppercase tracking-wide">Explanation</h4>
+<p class="font-mono text-[14px] md:text-[15px] text-on-surface-variant leading-relaxed">
+                            Speed of first train = 150/15 = 10 m/s.<br/>
+                            Relative speed = (10 + x) m/s. Total distance = 300m.<br/>
+                            300/(10+x) = 12 → x = 15 m/s = 54 km/hr.<br/><br/>
+<span class="font-body-base text-body-base">Hence, the answer is <strong>54 km/hr</strong>.</span>
+</p>
+</div>
+</div>
+<!-- Footer Navigation -->
+<div class="mt-4 pt-6 border-t border-outline-variant flex items-center justify-between w-full">
+<!-- Progress Dots -->
+<div class="flex items-center gap-2">
+<!-- Answered -->
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<!-- Current -->
+<div class="w-3.5 h-3.5 rounded-full border-[2.5px] border-primary bg-surface-container-lowest shadow-sm relative before:absolute before:inset-[2px] before:bg-primary before:rounded-full"></div>
+<!-- Remaining -->
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<span class="ml-2 font-label-xs text-label-xs text-on-surface-variant">...</span>
+</div>
+<!-- Primary Action -->
+<button class="px-8 py-4 bg-primary text-on-primary rounded-xl font-body-base text-[16px] font-bold flex items-center gap-3 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.15)] active:scale-95 transition-all duration-200">
+<span>Next Question</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple script to increment the timer for atmospheric effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const timerElement = document.getElementById('timer');
+            let [minutes, seconds] = timerElement.innerText.split(':').map(Number);
+            
+            setInterval(() => {
+                seconds++;
+                if (seconds >= 60) {
+                    seconds = 0;
+                    minutes++;
+                }
+                const formattedMin = String(minutes).padStart(2, '0');
+                const formattedSec = String(seconds).padStart(2, '0');
+                timerElement.innerText = `${formattedMin}:${formattedSec}`;
+            }, 1000);
+        });
+    </script>
+</body></html>
