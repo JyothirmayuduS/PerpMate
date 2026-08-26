@@ -451,7 +451,11 @@ export default function QuestionPlayer({ params }: { params: Promise<{ id: strin
                           <ListOrdered className="w-4 h-4 text-primary" /> Step-by-Step Solution
                         </h4>
                         <div className="font-sans text-xs text-on-surface-variant leading-relaxed whitespace-pre-wrap overflow-x-auto pb-2">
-                          <MathFormula block={true} math={question.explanation} />
+                          {question.explanation.includes('\\') ? (
+                            <MathFormula block={true} math={question.explanation} />
+                          ) : (
+                            <span>{question.explanation}</span>
+                          )}
                         </div>
                       </div>
 
