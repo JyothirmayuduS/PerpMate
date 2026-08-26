@@ -36,7 +36,6 @@ export default function PracticeHub() {
   const router = useRouter();
   const { user, practiceProgress } = useStore();
   const [activeTab, setActiveTab] = useState("quant");
-  const [expandedTopic, setExpandedTopic] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -108,24 +107,18 @@ export default function PracticeHub() {
         {/* Topics List - Accordion Style */}
         <div className="space-y-4">
           {currentSection.topics.map((topic) => {
-            const isExpanded = expandedTopic === topic.id;
             const progress = practiceProgress[topic.id] || 0;
             const solvedCount = Math.round((progress / 100) * topic.questions.length);
 
             return (
-              <div 
+              <Link 
                 key={topic.id}
-                className={`bg-surface-container-lowest border rounded-2xl overflow-hidden transition-all duration-300 ${
-                  isExpanded ? "border-primary shadow-md" : "border-outline-variant hover:border-primary/50"
-                }`}
+                href={`/practice/topic/${topic.id}`}
+                className="bg-surface-container-lowest border rounded-2xl overflow-hidden transition-all duration-300 border-outline-variant hover:border-primary/50 group block hover:shadow-md"
               >
-                {/* Topic Header (Clickable) */}
-                <div 
-                  onClick={() => setExpandedTopic(isExpanded ? null : topic.id)}
-                  className="p-5 md:p-6 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4"
-                >
+                <div className="p-5 md:p-6 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
                       {(() => {
                         const TopicIcon = iconMap[topic.icon] || Sparkles;
                         return <TopicIcon className="w-6 h-6 text-primary" />;
@@ -157,97 +150,11 @@ export default function PracticeHub() {
                         <p className="font-sans text-xs font-bold text-primary">{progress}%</p>
                         <p className="font-sans text-[10px] text-on-surface-variant">{solvedCount}/{topic.questions.length}</p>
                       </div>
-                      <ChevronRight className={`w-5 h-5 text-on-surface-variant transition-transform duration-300 ${isExpanded ? "rotate-90" : ""}`} />
+                      <ChevronRight className="w-5 h-5 text-on-surface-variant transition-transform duration-300 group-hover:translate-x-1 group-hover:text-primary" />
                     </div>
                   </div>
                 </div>
-
-                {/* Expanded Content - Question List */}
-                <div 
-                  className={`grid transition-all duration-300 ease-in-out ${
-                    isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <div className="p-5 md:p-6 pt-0 border-t border-outline-variant/50 bg-surface-container-lowest/50">
-                      
-                      <div className="flex items-center justify-between mb-4 mt-4">
-                        <h5 className="font-sans text-xs font-bold text-on-surface-variant uppercase tracking-wider">
-                          Practice Questions ({topic.questions.length})
-                        </h5>
-                        <div className="flex items-center gap-2">
-                           <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                           <span className="text-[10px] text-on-surface-variant">Easy</span>
-                           <span className="w-2 h-2 rounded-full bg-amber-400 ml-2"></span>
-                           <span className="text-[10px] text-on-surface-variant">Medium</span>
-                           <span className="w-2 h-2 rounded-full bg-orange-500 ml-2"></span>
-                           <span className="text-[10px] text-on-surface-variant">Hard</span>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {topic.questions.map((q, i) => {
-                          // Simple mock logic for gating hard questions based on progress
-                          const isHard = q.difficulty === "Hard" || q.difficulty === "Difficult";
-                          const isLocked = isHard && progress < 40; // Arbitrary lock logic
-                          
-                          let diffColor = "bg-emerald-500";
-                          if (q.difficulty === "Medium") diffColor = "bg-amber-400";
-                          if (q.difficulty === "Difficult") diffColor = "bg-orange-500";
-                          if (q.difficulty === "Hard") diffColor = "bg-red-500";
-
-                          return (
-                            <Link
-                              key={q.id}
-                              href={isLocked ? "#" : `/practice/question/${q.id}`}
-                              className={`flex items-center justify-between p-4 rounded-xl border transition-all ${
-                                isLocked 
-                                  ? "bg-surface-container border-outline-variant/30 opacity-70 cursor-not-allowed" 
-                                  : "bg-surface border-outline-variant hover:border-primary/40 hover:shadow-sm cursor-pointer group"
-                              }`}
-                            >
-                              <div className="flex items-center gap-3">
-                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${
-                                  isLocked ? "bg-surface-container-high text-on-surface-variant" : "bg-surface-container text-primary"
-                                }`}>
-                                  {i + 1}
-                                </div>
-                                <div>
-                                  <div className="flex items-center gap-2 mb-1">
-                                    <span className={`w-1.5 h-1.5 rounded-full ${diffColor}`}></span>
-                                    <span className="font-sans text-[10px] font-bold text-on-surface-variant">{q.difficulty}</span>
-                                  </div>
-                                  <p className={`font-sans text-sm font-medium line-clamp-1 ${isLocked ? "text-on-surface-variant" : "text-primary group-hover:text-primary"}`}>
-                                    {q.text}
-                                  </p>
-                                </div>
-                              </div>
-                              
-                              {isLocked ? (
-                                <Lock className="w-4 h-4 text-on-surface-variant" />
-                              ) : (
-                                <div className="flex items-center gap-1 text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                                  <span className="text-[10px] font-bold">Solve</span>
-                                  <ArrowRight className="w-3.5 h-3.5" />
-                                </div>
-                              )}
-                            </Link>
-                          );
-                        })}
-                      </div>
-
-                      {progress < 40 && topic.questions.some(q => q.difficulty === "Hard" || q.difficulty === "Difficult") && (
-                        <div className="mt-4 p-3 bg-surface-container rounded-lg border border-outline-variant/50 flex items-start gap-2">
-                          <Lock className="w-4 h-4 text-on-surface-variant shrink-0 mt-0.5" />
-                          <p className="font-sans text-[10px] text-on-surface-variant leading-relaxed">
-                            <strong>Gamified Progression:</strong> Hard and Difficult questions are locked. Solve Easy and Medium questions to build your foundation and unlock higher difficulties.
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </Link>
             );
           })}
         </div>
