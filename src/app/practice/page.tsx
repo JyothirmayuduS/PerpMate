@@ -53,7 +53,7 @@ export default function PracticeHub() {
       <SideNav />
 
       {/* Main Content Area */}
-      <main className="flex-1 md:ml-64 p-6 md:p-10 max-w-7xl mx-auto pb-24">
+      <main className="flex-1 md:ml-64 p-6 pt-24 md:p-10 max-w-7xl mx-auto pb-24">
         
         {/* Header */}
         <header className="mb-10 mt-12 md:mt-0">

@@ -172,7 +172,7 @@ export default function RoadmapPage() {
     <div className="min-h-screen bg-background text-on-surface">
       <SideNav />
 
-      <main className="md:ml-64 p-6 md:p-10 pb-24 max-w-5xl mx-auto">
+      <main className="md:ml-64 p-6 pt-24 md:p-10 pb-24 max-w-5xl mx-auto">
 
         {/* ── Header ── */}
         <header className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8 mt-12 md:mt-0">

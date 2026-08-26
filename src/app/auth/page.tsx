@@ -1,249 +1,154 @@
-"use client";
+import { login, signup, loginWithGoogle } from './actions'
+import { ArrowRight, Sparkles, Mail, Lock, User } from 'lucide-react'
+import Link from 'next/link'
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useStore } from "@/store/useStore";
-import { BookOpen, AlertCircle } from "lucide-react";
-
-const authSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }).optional(),
-});
-
-type AuthFormData = z.infer<typeof authSchema>;
-
-export default function AuthPage() {
-  const router = useRouter();
-  const loginUser = useStore((state) => state.login);
-  const user = useStore((state) => state.user);
-  const [isSignUp, setIsSignUp] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<AuthFormData>({
-    resolver: zodResolver(authSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      name: "",
-    },
-  });
-
-  const onSubmit = async (data: AuthFormData) => {
-    try {
-      setErrorMsg("");
-      loginUser(data.email, data.name);
-      
-      // Check if user is already onboarded
-      const currentUser = useStore.getState().user;
-      if (currentUser && currentUser.onboarded) {
-        router.push("/dashboard");
-      } else {
-        router.push("/onboarding");
-      }
-    } catch (err: any) {
-      setErrorMsg(err.message || "An authentication error occurred.");
-    }
-  };
-
-  const handleSocialAuth = (provider: string) => {
-    loginUser(`mock.${provider.toLowerCase()}@college.edu`, `${provider} User`);
-    router.push("/onboarding");
-  };
+export default function AuthPage({
+  searchParams,
+}: {
+  searchParams: { error?: string, mode?: string }
+}) {
+  const isSignUp = searchParams.mode === 'signup'
 
   return (
-    <div className="min-h-screen text-on-surface font-sans flex flex-col md:flex-row bg-background">
-      {/* Left Pane: Topographic Visual Background */}
-      <div className="hidden md:flex flex-1 relative overflow-hidden bg-primary items-center justify-center p-12">
-        <div 
-          className="absolute inset-0 z-0 opacity-80" 
-          style={{
-            backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCdkQpdiHW6dpOYGalPE_OH9s5k-KWhdRNa9iu70M5a9zjKKevGix9JNsPiXMcryetNAu2VtfyKbcYDJsnzFnvkOPPrBMs3B3UhIi2blfzhXZrGsnJxEkJmB7JB7sVOZQ2l0dB5vXNnkJFjYqvwPhfNMnunhZUTe7uI3WfwFQNePDRQLTtV-R3YhIlloHJQGuxf-mX3mYL5qmM5SCJ5W9klJywZrcGlLpK2W7roIC8anq0dgb0CY7-t')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="z-10 relative text-on-primary max-w-lg">
-          <h1 className="font-display font-extrabold text-5xl mb-6 leading-tight">
-            Master the Path.
+    <div className="min-h-screen bg-surface flex flex-col justify-center items-center p-4 relative overflow-hidden">
+      {/* Background Orbs */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#009668]/20 blur-[120px] pointer-events-none" />
+
+      <Link href="/" className="absolute top-8 left-8 flex items-center gap-2 group">
+        <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center rotate-12 group-hover:rotate-0 transition-transform">
+          <Sparkles className="w-4 h-4 text-white" />
+        </div>
+        <span className="font-display font-black text-xl tracking-tight text-on-surface">
+          PrepMate
+        </span>
+      </Link>
+
+      <div className="w-full max-w-md bg-surface-container-lowest/80 backdrop-blur-xl border border-outline-variant/50 rounded-3xl p-8 shadow-2xl relative z-10">
+        <div className="text-center mb-8">
+          <h1 className="font-display text-3xl font-black text-on-surface mb-2">
+            {isSignUp ? "Create an Account" : "Welcome Back"}
           </h1>
-          <p className="font-sans text-base text-on-primary/80 leading-relaxed">
-            Elevate your preparation with a platform designed for precision, focus, and ultimate success. Join the elite.
+          <p className="font-sans text-on-surface-variant text-sm">
+            {isSignUp ? "Start your placement journey today." : "Log in to continue your progress."}
           </p>
         </div>
-      </div>
 
-      {/* Right Pane: Authentication Form */}
-      <div className="flex-1 flex flex-col justify-center px-6 py-12 md:px-16 lg:px-24 bg-surface-container-lowest">
-        <div className="w-full max-w-md mx-auto">
-          {/* Brand Header */}
-          <div className="mb-10">
-            <div className="flex items-center gap-2 mb-8">
-              <BookOpen className="text-primary w-8 h-8" />
-              <span className="font-display text-2xl font-bold tracking-tight">PrepMate</span>
-            </div>
-            <h2 className="font-display text-3xl font-extrabold text-primary mb-3">
-              Your journey to FAANG starts here.
-            </h2>
-            <p className="font-sans text-sm text-on-surface-variant">
-              {isSignUp ? "Create an account to begin." : "Sign in to continue your preparation."}
-            </p>
+        {searchParams.error && (
+          <div className="mb-6 p-4 bg-error-container/30 border border-error/50 rounded-xl">
+            <p className="text-error text-sm font-bold text-center">{searchParams.error}</p>
           </div>
+        )}
 
-          {/* Error Message */}
-          {errorMsg && (
-            <div className="mb-6 p-4 bg-error-container/30 border border-error/20 text-error rounded-xl flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
-              <p className="text-xs font-semibold">{errorMsg}</p>
+        <form className="flex flex-col gap-5">
+          {isSignUp && (
+            <div className="flex flex-col gap-2">
+              <label className="font-sans text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                Full Name
+              </label>
+              <div className="relative">
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-on-surface-variant" />
+                <input
+                  name="name"
+                  type="text"
+                  required
+                  placeholder="Rahul Kumar"
+                  className="w-full h-12 pl-12 pr-4 bg-surface-container rounded-xl border-none outline-none focus:ring-2 focus:ring-primary text-sm font-medium text-on-surface transition-shadow"
+                />
+              </div>
             </div>
           )}
 
-          {/* Social Authentications */}
-          <div className="flex flex-col gap-4 mb-8">
-            <button 
-              onClick={() => handleSocialAuth("Google")}
-              className="w-full flex items-center justify-center gap-3 bg-surface-container-lowest border border-outline-variant py-3 rounded-lg hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] transition-all duration-200 active:scale-95 font-sans text-sm font-semibold cursor-pointer"
-            >
-              <img 
-                alt="Google" 
-                className="w-5 h-5" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK6NjNEivLFJGht9QRDohjLoVhi5Tvyz-RHQWnvmWaBsBTKREodDcGE2d3TgDfE0_-ha6QtmuCktJmaFiPP-2aKjPB_S-qRMDCPvhhlbwKGIhUypDYFqYYcuYJNlgvuSsHLfwvfcGKxyO5K6H7x1CxVBeLtWdWEBbk_gyWbPRTqozulFVUI3kdtW-zsLsweXMp4OLVTx2MMBgVJoQQa8sdgBo_TOuBJwP6NOISXI60yp9I_RjY7pjQ"
+          <div className="flex flex-col gap-2">
+            <label className="font-sans text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+              Email Address
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-on-surface-variant" />
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="rahul@college.edu"
+                className="w-full h-12 pl-12 pr-4 bg-surface-container rounded-xl border-none outline-none focus:ring-2 focus:ring-primary text-sm font-medium text-on-surface transition-shadow"
               />
-              Continue with Google
-            </button>
-            <button 
-              onClick={() => handleSocialAuth("LinkedIn")}
-              className="w-full flex items-center justify-center gap-3 bg-surface-container-lowest border border-outline-variant py-3 rounded-lg hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] transition-all duration-200 active:scale-95 font-sans text-sm font-semibold cursor-pointer"
-            >
-              <img 
-                alt="LinkedIn" 
-                className="w-5 h-5" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYhAPluHDGF-_nWLAPjkVpmpEi2IAG1-BujvVFQLwU0NEwk9kTCm25wsOQEMAAYvlUjJZ2Y5G_joAqpaFin5I0Blsl3kr8ZIZrBaZGgTCByYZUe2ooT9G8RUzQgcvLbVXOxxk31v-k0dE9e_AMQxaLoUl9SlUtWcmNBcSRzSYMAantXmPP7PAguEY1MmcmO-yWnW8dEveAztZuZJdKr9bCBlQqA83C9T8tIdl3gNyYmQHDocy3vO0e"
-              />
-              Continue with LinkedIn
-            </button>
-          </div>
-
-          <div className="flex items-center gap-4 mb-8">
-            <div className="flex-1 h-px bg-outline-variant"></div>
-            <span className="font-sans text-[10px] text-on-surface-variant uppercase tracking-widest font-semibold">Or</span>
-            <div className="flex-1 h-px bg-outline-variant"></div>
-          </div>
-
-          {/* Email / Password Auth Form */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            {isSignUp && (
-              <div>
-                <label className="block font-sans text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-2" htmlFor="name">
-                  Full Name
-                </label>
-                <input 
-                  id="name"
-                  type="text" 
-                  placeholder="Rahul Kumar" 
-                  className={`w-full bg-background border rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors font-sans text-sm ${
-                    errors.name ? "border-error" : "border-outline-variant"
-                  }`}
-                  {...register("name", { required: isSignUp })}
-                />
-                {errors.name && (
-                  <p className="mt-1.5 text-xs text-error font-medium">{errors.name.message}</p>
-                )}
-              </div>
-            )}
-
-            <div>
-              <label className="block font-sans text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-2" htmlFor="email">
-                Email Address
-              </label>
-              <input 
-                id="email"
-                type="email" 
-                placeholder="name@example.edu" 
-                className={`w-full bg-background border rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors font-sans text-sm ${
-                  errors.email ? "border-error" : "border-outline-variant"
-                }`}
-                {...register("email")}
-              />
-              {errors.email && (
-                <p className="mt-1.5 text-xs text-error font-medium">{errors.email.message}</p>
-              )}
             </div>
-
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <label className="block font-sans text-[10px] font-bold text-on-surface-variant uppercase tracking-wider" htmlFor="password">
-                  Password
-                </label>
-                {!isSignUp && (
-                  <button type="button" className="font-sans text-[10px] text-primary hover:underline font-semibold uppercase tracking-wider">
-                    Forgot password?
-                  </button>
-                )}
-              </div>
-              <input 
-                id="password"
-                type="password" 
-                placeholder="••••••••" 
-                className={`w-full bg-background border rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors font-sans text-sm ${
-                  errors.password ? "border-error" : "border-outline-variant"
-                }`}
-                {...register("password")}
-              />
-              {errors.password && (
-                <p className="mt-1.5 text-xs text-error font-medium">{errors.password.message}</p>
-              )}
-            </div>
-
-            <button 
-              type="submit" 
-              disabled={isSubmitting}
-              className="w-full bg-primary text-on-primary py-4 rounded-lg font-sans text-sm font-bold hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] transition-all duration-200 active:scale-98 mt-6 cursor-pointer flex items-center justify-center"
-            >
-              {isSubmitting ? "Processing..." : isSignUp ? "Create Account" : "Sign In"}
-            </button>
-          </form>
-
-          {/* Toggle form state */}
-          <div className="mt-10 text-center">
-            <p className="font-sans text-xs text-on-surface-variant flex items-center justify-center gap-2">
-              <span className="material-symbols-outlined text-secondary text-lg" data-icon="workspace_premium" data-weight="fill">workspace_premium</span>
-              Joined by 50,000+ students from top IITs &amp; NITs.
-            </p>
-            <p className="font-sans text-sm text-on-surface-variant mt-4">
-              {isSignUp ? (
-                <>
-                  Already have an account?{" "}
-                  <button 
-                    onClick={() => { setIsSignUp(false); reset(); }}
-                    className="text-primary font-bold hover:underline"
-                  >
-                    Sign In
-                  </button>
-                </>
-              ) : (
-                <>
-                  Don't have an account?{" "}
-                  <button 
-                    onClick={() => { setIsSignUp(true); reset(); }}
-                    className="text-primary font-bold hover:underline"
-                  >
-                    Sign up
-                  </button>
-                </>
-              )}
-            </p>
           </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="font-sans text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+              Password
+            </label>
+            <div className="relative">
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-on-surface-variant" />
+              <input
+                name="password"
+                type="password"
+                required
+                placeholder="••••••••"
+                className="w-full h-12 pl-12 pr-4 bg-surface-container rounded-xl border-none outline-none focus:ring-2 focus:ring-primary text-sm font-medium text-on-surface transition-shadow"
+              />
+            </div>
+          </div>
+
+          <button
+            formAction={isSignUp ? signup : login}
+            className="mt-4 h-14 bg-primary text-on-primary rounded-xl font-sans text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:scale-[0.98] transition-transform active:scale-95 shadow-lg shadow-primary/25"
+          >
+            <span>{isSignUp ? "Sign Up" : "Log In"}</span>
+            <ArrowRight className="w-5 h-5" />
+          </button>
+        </form>
+
+        <div className="relative mt-8 mb-8">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-outline-variant/60"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="bg-surface-container-lowest px-4 text-on-surface-variant font-medium">Or continue with</span>
+          </div>
+        </div>
+
+        <form>
+          <button
+            formAction={loginWithGoogle}
+            className="w-full h-14 bg-surface text-on-surface border border-outline-variant rounded-xl font-sans text-sm font-bold flex items-center justify-center gap-3 hover:bg-surface-container-lowest transition-colors active:scale-95"
+          >
+            <svg viewBox="0 0 24 24" className="w-5 h-5">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                fill="#EA4335"
+              />
+              <path d="M1 1h22v22H1z" fill="none" />
+            </svg>
+            Google
+          </button>
+        </form>
+
+        <div className="mt-8 text-center">
+          <p className="font-sans text-sm text-on-surface-variant">
+            {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+            <Link
+              href={isSignUp ? "/auth" : "/auth?mode=signup"}
+              className="text-primary font-bold hover:underline"
+            >
+              {isSignUp ? "Log in" : "Sign up"}
+            </Link>
+          </p>
         </div>
       </div>
     </div>
-  );
+  )
 }

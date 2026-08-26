@@ -41,7 +41,7 @@ export default function Dashboard() {
       <SideNav />
 
       {/* Main Canvas Area */}
-      <main className="flex-1 ml-0 md:ml-64 p-6 md:p-10 max-w-7xl min-h-screen pb-24 md:pb-10">
+      <main className="flex-1 ml-0 md:ml-64 p-6 pt-24 md:p-10 max-w-7xl min-h-screen pb-24 md:pb-10">
         {/* Header Section */}
         <header className="mb-10 mt-12 md:mt-0">
           <h2 className="font-display text-4xl font-extrabold text-primary mb-2">

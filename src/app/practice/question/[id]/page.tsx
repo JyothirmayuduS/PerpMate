@@ -7,10 +7,12 @@ import SideNav from "@/components/layout/SideNav";
 import {
   ArrowLeft, ArrowRight, CheckCircle2, XCircle, Clock, ListOrdered,
   BookOpen, Info, ChevronDown, ChevronUp, ExternalLink, X,
-  Sparkles, RefreshCw, AlertTriangle, Building2, Flame
+  Sparkles, RefreshCw, AlertTriangle, Building2, Flame,
+  Lightbulb, Calculator, Brain
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import MathFormula from "@/components/MathFormula";
 
 // ─── Difficulty Config ─────────────────────────────────────────────────────────
 
@@ -234,8 +236,12 @@ export default function QuestionPlayer({ params }: { params: Promise<{ id: strin
     }
   };
 
-  const questionIdx = questions.findIndex((q) => q.id === id);
-  const totalQ = questions.length;
+  const sectionQuestions = questions.filter(q => q.topic === question.topic);
+  const questionIdx = sectionQuestions.findIndex((q) => q.id === id);
+  const totalQ = sectionQuestions.length;
+  
+  const hasNextQuestion = questionIdx !== -1 && questionIdx < totalQ - 1;
+  const nextQuestionId = hasNextQuestion ? sectionQuestions[questionIdx + 1].id : null;
 
   const diff = question.difficulty;
   const dConf = diff ? diffConfig[diff] : null;
@@ -246,7 +252,7 @@ export default function QuestionPlayer({ params }: { params: Promise<{ id: strin
       <SideNav />
 
       <main className="ml-0 md:ml-64 min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 mt-10 md:mt-0">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 mt-20 md:mt-0">
 
 
 
@@ -409,13 +415,58 @@ export default function QuestionPlayer({ params }: { params: Promise<{ id: strin
                       )}
                     </div>
 
-                    <div className="bg-surface-container-lowest text-primary rounded-xl p-5 border border-outline-variant/60 shadow-sm">
-                      <h4 className="font-sans text-[10px] font-bold text-on-surface-variant mb-2 uppercase tracking-wide">
-                        Step-by-Step Solution
-                      </h4>
-                      <p className="font-sans text-xs text-on-surface-variant leading-relaxed whitespace-pre-wrap">
-                        {question.explanation}
-                      </p>
+                    <div className="bg-surface-container-lowest text-primary rounded-xl p-5 border border-outline-variant/60 shadow-sm space-y-4">
+                      
+                      {/* Simple Explanation / Concept */}
+                      {question.simple_explanation && (
+                        <div>
+                          <h4 className="font-sans text-[10px] font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide flex items-center gap-1.5">
+                            <Lightbulb className="w-4 h-4 text-primary" /> The Concept
+                          </h4>
+                          <p className="font-sans text-xs text-on-surface-variant leading-relaxed">
+                            {question.simple_explanation}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Formulas Used */}
+                      {question.formulas && question.formulas.length > 0 && (
+                        <div>
+                          <h4 className="font-sans text-[10px] font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide flex items-center gap-1.5">
+                            <Calculator className="w-4 h-4 text-primary" /> Formulas Used
+                          </h4>
+                          <div className="bg-primary/5 border border-primary/10 rounded-lg p-3 space-y-2">
+                            {question.formulas.map((formula, idx) => (
+                              <div key={idx} className="font-mono text-[11px] font-semibold text-primary/90">
+                                {formula}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Step-by-Step Solution (Math) */}
+                      <div>
+                        <h4 className="font-sans text-[10px] font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide flex items-center gap-1.5">
+                          <ListOrdered className="w-4 h-4 text-primary" /> Step-by-Step Solution
+                        </h4>
+                        <div className="font-sans text-xs text-on-surface-variant leading-relaxed whitespace-pre-wrap overflow-x-auto pb-2">
+                          <MathFormula block={true} math={question.explanation} />
+                        </div>
+                      </div>
+
+                      {/* Pro Tips */}
+                      {question.tips && (
+                        <div className="bg-amber-50 border border-amber-200/60 rounded-lg p-3">
+                          <h4 className="font-sans text-[10px] font-bold text-amber-700 mb-1 uppercase tracking-wide flex items-center gap-1.5">
+                            <Brain className="w-4 h-4 text-amber-600" /> Pro Tip
+                          </h4>
+                          <p className="font-sans text-xs text-amber-800/90 leading-relaxed font-medium">
+                            {question.tips}
+                          </p>
+                        </div>
+                      )}
+
                     </div>
                   </div>
                 )}
@@ -444,10 +495,10 @@ export default function QuestionPlayer({ params }: { params: Promise<{ id: strin
                     </button>
                   ) : (
                     <Link
-                      href="/practice"
+                      href={hasNextQuestion ? `/practice/question/${nextQuestionId}` : "/practice"}
                       className="px-7 py-3 bg-primary text-on-primary rounded-xl font-sans text-xs font-bold uppercase tracking-wider flex items-center gap-2 hover:scale-[0.98] transition-transform active:scale-95 cursor-pointer"
                     >
-                      <span>Back to Hub</span>
+                      <span>{hasNextQuestion ? "Next Question" : "Back to Hub"}</span>
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   )}

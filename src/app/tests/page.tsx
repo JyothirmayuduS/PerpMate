@@ -24,7 +24,7 @@ export default function MockTestsHub() {
       <SideNav />
 
       {/* Main Content Area */}
-      <main className="flex-1 md:ml-64 p-6 md:p-10 max-w-5xl mx-auto pb-24">
+      <main className="flex-1 md:ml-64 p-6 pt-24 md:p-10 max-w-5xl mx-auto pb-24">
         
         {/* Header Section */}
         <header className="mb-10 mt-12 md:mt-0 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-outline-variant pb-8">

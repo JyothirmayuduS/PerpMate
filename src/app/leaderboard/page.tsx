@@ -99,7 +99,7 @@ export default function LeaderboardPage() {
       <SideNav />
 
       {/* Main Content Area */}
-      <main className="flex-1 md:ml-64 p-6 md:p-10 max-w-7xl mx-auto pb-24">
+      <main className="flex-1 md:ml-64 p-6 pt-24 md:p-10 max-w-7xl mx-auto pb-24">
         
         {/* Header Section */}
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 mt-12 md:mt-0">

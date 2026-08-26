@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useStore, MockTest } from "@/store/useStore";
 import SideNav from "@/components/layout/SideNav";
@@ -40,6 +40,42 @@ export default function ActiveTestTaker({ params }: { params: Promise<{ id: stri
       router.push("/tests");
     }
   }, [id, mockTests, user, router]);
+  const handleSubmitTest = useCallback(() => {
+    // Calculate final scores
+    let correct = 0;
+    questions.forEach((q, idx) => {
+      if (selectedAnswers[idx] === q.correctOption) {
+        correct++;
+      }
+    });
+
+    const percent = Math.round((correct / questions.length) * 100);
+    const xpGained = correct === questions.length ? test!.xpAward : Math.round((correct / questions.length) * test!.xpAward);
+
+    setCorrectCount(correct);
+    setScorePercent(percent);
+    setXpEarned(xpGained);
+    setTestState("summary");
+
+    // Add attempt in store
+    addAttempt({
+      testId: test!.id,
+      testTitle: test!.title,
+      scorePercent: percent,
+      correctAnswers: correct,
+      totalQuestions: questions.length,
+      xpGained,
+      date: new Date().toISOString().split("T")[0]
+    });
+
+    // Burst confetti!
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+  }, [questions, selectedAnswers, test, addAttempt]);
+
 
   // Timer countdown hook
   useEffect(() => {
@@ -54,7 +90,7 @@ export default function ActiveTestTaker({ params }: { params: Promise<{ id: stri
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [timeLeft, testState]);
+  }, [timeLeft, testState, handleSubmitTest]);
 
   if (!user || !test) return null;
 
@@ -75,41 +111,7 @@ export default function ActiveTestTaker({ params }: { params: Promise<{ id: stri
     });
   };
 
-  const handleSubmitTest = () => {
-    // Calculate final scores
-    let correct = 0;
-    questions.forEach((q, idx) => {
-      if (selectedAnswers[idx] === q.correctOption) {
-        correct++;
-      }
-    });
 
-    const percent = Math.round((correct / questions.length) * 100);
-    const xpGained = correct === questions.length ? test.xpAward : Math.round((correct / questions.length) * test.xpAward);
-
-    setCorrectCount(correct);
-    setScorePercent(percent);
-    setXpEarned(xpGained);
-    setTestState("summary");
-
-    // Add attempt in store
-    addAttempt({
-      testId: test.id,
-      testTitle: test.title,
-      scorePercent: percent,
-      correctAnswers: correct,
-      totalQuestions: questions.length,
-      xpGained,
-      date: new Date().toISOString().split("T")[0]
-    });
-
-    // Burst confetti!
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
-  };
 
   return (
     <div className="min-h-screen bg-background text-on-surface">

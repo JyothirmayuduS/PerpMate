@@ -560,7 +560,7 @@ const scrapedTimeAndDistance: Question[] = [
       D: "60 km/h"
     },
     correctOption: "D",
-    explanation: "Speed = Distance / Time = 300 / 5 = 60 km/h.",
+    explanation: "\\text{Speed} = \\frac{\\text{Distance}}{\\text{Time}} = \\frac{300}{5} = 60 km/h",
     prerequisites: []
   },
   {
@@ -577,7 +577,7 @@ const scrapedTimeAndDistance: Question[] = [
       D: "2 hours"
     },
     correctOption: "C",
-    explanation: "Time = Distance / Speed = 120 / 40 = 3 hours.",
+    explanation: "\\text{Time} = \\frac{\\text{Distance}}{\\text{Speed}} = \\frac{120}{40} = 3 hours",
     prerequisites: []
   },
   {
@@ -594,7 +594,7 @@ const scrapedTimeAndDistance: Question[] = [
       D: "60 km"
     },
     correctOption: "D",
-    explanation: "Distance = Speed × Time = 15 × 4 = 60 km.",
+    explanation: "\\text{Distance} = \\text{Speed} \\times \\text{Time} = 15 \\times 4 = 60 km",
     prerequisites: []
   },
   {
@@ -611,7 +611,7 @@ const scrapedTimeAndDistance: Question[] = [
       D: "60 km/h"
     },
     correctOption: "A",
-    explanation: "Speed = 200 / 4 = 50 km/h.",
+    explanation: "\\text{Speed} = \\frac{200}{4} = 50 km/h",
     prerequisites: []
   },
   {
@@ -628,7 +628,7 @@ const scrapedTimeAndDistance: Question[] = [
       D: "3 km/h"
     },
     correctOption: "A",
-    explanation: "Speed = 24 / 6 = 4 km/h.",
+    explanation: "\\text{Speed} = \\frac{24}{6} = 4 km/h",
     prerequisites: []
   },
   {
@@ -645,7 +645,7 @@ const scrapedTimeAndDistance: Question[] = [
       D: "1 hours"
     },
     correctOption: "C",
-    explanation: "Time = 180 / 60 = 3 hours.",
+    explanation: "\\text{Time} = \\frac{180}{60} = 3 hours",
     prerequisites: []
   },
   {
@@ -662,7 +662,7 @@ const scrapedTimeAndDistance: Question[] = [
       D: "4 hours"
     },
     correctOption: "A",
-    explanation: "Time = 50 / 25 = 2 hours.",
+    explanation: "\\text{Time} = \\frac{50}{25} = 2 hours",
     prerequisites: []
   },
   {
@@ -679,7 +679,7 @@ const scrapedTimeAndDistance: Question[] = [
       D: "4 km/h"
     },
     correctOption: "B",
-    explanation: "Speed = 12 / 2 = 6 km/h.",
+    explanation: "\\text{Speed} = \\frac{12}{2} = 6 km/h",
     prerequisites: []
   },
   {
@@ -696,7 +696,7 @@ const scrapedTimeAndDistance: Question[] = [
       D: "60 km/h"
     },
     correctOption: "A",
-    explanation: "Speed = 400 / 8 = 50 km/h.",
+    explanation: "\\text{Speed} = \\frac{400}{8} = 50 km/h",
     prerequisites: []
   },
   {
@@ -715,7 +715,91 @@ const scrapedTimeAndDistance: Question[] = [
     correctOption: "C",
     explanation: "Distance = 80 × 3 = 240 km.",
     prerequisites: []
-  }
+  },  {
+    id: "advanced-td-1",
+    topic: "Time and Distance",
+    difficulty: "Medium",
+    difficulty_level: 2,
+    company_tag: ["Amazon", "TCS"],
+    text: "Two trains starting at the same time from 2 stations 200 km apart and going in opposite directions cross each other at a distance of 110 km from one of the stations. What is the ratio of their speeds?",
+    options: {
+      A: "11:9",
+      B: "9:11",
+      C: "11:20",
+      D: "9:20"
+    },
+    correctOption: "A",
+    explanation: "\\text{Distance covered by train 1} = 110 \\text{ km}. \\\\ \\text{Distance covered by train 2} = 200 - 110 = 90 \\text{ km}. \\\\ \\text{Since time is constant, Ratio of Speeds} = \\frac{D_1}{D_2} = \\frac{110}{90} = 11:9",
+    prerequisites: [{ slug: "relative-speed", title: "Relative Speed", summary: "When two objects move in opposite directions, their relative speed is the sum of their individual speeds." }],
+    simple_explanation: "When two objects move towards each other, their speeds add up. Think of it like two cars driving straight at each other; they will meet much faster than if only one was moving.",
+    formulas: ["Relative Speed = Speed 1 + Speed 2 (Opposite Directions)", "Speed Ratio = Distance 1 / Distance 2 (when time is constant)"],
+    tips: "If time is the same for both, the ratio of their speeds is exactly equal to the ratio of the distances they covered!",
+
+  },
+  {
+    id: "advanced-td-2",
+    topic: "Time and Distance",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["Google", "Infosys"],
+    text: "A train 150 m long passes a person, walking at 2 kmph in the same direction, in 3 seconds. What is the speed of the train?",
+    options: {
+      A: "182 km/h",
+      B: "180 km/h",
+      C: "178 km/h",
+      D: "170 km/h"
+    },
+    correctOption: "A",
+    explanation: "\\text{Let speed of train be } x \\text{ km/h}. \\\\ \\text{Relative speed} = (x - 2) \\text{ km/h} = (x - 2) \\times \\frac{5}{18} \\text{ m/s}. \\\\ \\text{Distance} = 150 \\text{ m}, \\text{Time} = 3 \\text{ s}. \\\\ 150 = (x - 2) \\times \\frac{5}{18} \\times 3 \\\\ (x - 2) = \\frac{150 \\times 18}{15} = 180 \\\\ x = 182 \\text{ km/h}",
+    prerequisites: [{ slug: "trains-same-direction", title: "Trains in same direction", summary: "When two objects move in the same direction, their relative speed is the difference between their speeds." }],
+    simple_explanation: "The train is overtaking a moving person. Since they are moving in the same direction, the train has to 'catch up' to the person's speed first, which is why we subtract their speeds.",
+    formulas: ["Relative Speed = Speed 1 - Speed 2 (Same Direction)", "Speed = Distance / Time", "m/s = km/hr × (5/18)"],
+    tips: "Always convert km/hr to m/s when time is given in seconds and distance in meters! Remember: 5/18 for m/s, and 18/5 for km/hr.",
+
+  },
+  {
+    id: "advanced-td-3",
+    topic: "Time and Distance",
+    difficulty: "Medium",
+    difficulty_level: 2,
+    company_tag: ["Accenture"],
+    text: "A boy goes to his school from his house at a speed of 3 km/hr and returns at a speed of 2 km/hr. If he takes 5 hours in going and coming, what is the distance between his house and school?",
+    options: {
+      A: "5 km",
+      B: "6 km",
+      C: "7 km",
+      D: "8 km"
+    },
+    correctOption: "B",
+    explanation: "\\text{Let distance be } d. \\\\ \\frac{d}{3} + \\frac{d}{2} = 5 \\\\ \\frac{2d + 3d}{6} = 5 \\\\ 5d = 30 \\implies d = 6 \\text{ km}",
+    prerequisites: [{ slug: "average-speed-basics", title: "Average Speed", summary: "Average speed is calculated as Total Distance divided by Total Time." }],
+    simple_explanation: "The boy walks to school and comes back along the same path. The total time taken depends on the total distance and his speed in each direction.",
+    formulas: ["Time = Distance / Speed", "Total Time = T1 + T2"],
+    tips: "For equal distances, Average Speed = (2 × S1 × S2) / (S1 + S2). You can also use this formula directly instead of forming an equation!",
+
+  },
+  {
+    id: "advanced-td-4",
+    topic: "Time and Distance",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["Microsoft", "IBM"],
+    text: "A man can row upstream at 10 km/hr and downstream at 16 km/hr. Find the man's rate in still water and the rate of the current.",
+    options: {
+      A: "13 km/hr, 3 km/hr",
+      B: "12 km/hr, 4 km/hr",
+      C: "14 km/hr, 2 km/hr",
+      D: "11 km/hr, 5 km/hr"
+    },
+    correctOption: "A",
+    explanation: "\\text{Let speed in still water be } u \\text{ and current be } v. \\\\ u - v = 10 \\\\ u + v = 16 \\\\ \\text{Adding both: } 2u = 26 \\implies u = 13 \\text{ km/hr} \\\\ \\text{Substituting: } 13 + v = 16 \\implies v = 3 \\text{ km/hr}",
+    prerequisites: [{ slug: "boats-and-streams", title: "Boats and Streams", summary: "Upstream speed = Boat speed - Stream speed. Downstream = Boat speed + Stream speed." }],
+    simple_explanation: "Rowing upstream means fighting the current, so you go slower. Downstream means the river pushes you, so you go faster. Your true speed is exactly halfway between them.",
+    formulas: ["Speed in Still Water = (Downstream + Upstream) / 2", "Stream Speed = (Downstream - Upstream) / 2"],
+    tips: "Don't bother setting up equations! Just average the two speeds to find the boat's speed, and subtract them and divide by two to find the river's speed.",
+
+  },
+
 ];
 
 const scrapedRatiosAndProportions: Question[] = [
@@ -1595,7 +1679,7 @@ const scrapedMiscellaneous: Question[] = [
       D: "5 km"
     },
     correctOption: "D",
-    explanation: "Speed = 20 / 4 = 5 km/h.  \n    Distance in 1 hour = 5 km.",
+    explanation: "\\text{Speed} = \\frac{20}{4} = 5 km/h  \n    Distance in 1 hour = 5 km.",
     prerequisites: []
   },
   {
@@ -1680,7 +1764,7 @@ const scrapedMiscellaneous: Question[] = [
       D: "50 km/h"
     },
     correctOption: "D",
-    explanation: "Speed = 150 / 3 = 50 km/h.",
+    explanation: "\\text{Speed} = \\frac{150}{3} = 50 km/h",
     prerequisites: []
   },
   {

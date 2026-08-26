@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createClient } from "../../utils/supabase/client";
 
 export interface User {
   id: string;
@@ -77,6 +78,9 @@ export interface Question {
   difficulty_level?: 1 | 2 | 3 | 4;  // 1=Easy, 2=Medium, 3=Difficult, 4=Hard
   company_tag?: string[];
   prerequisites?: Prerequisite[];
+  simple_explanation?: string;
+  formulas?: string[];
+  tips?: string;
 }
 
 export interface MockTest {
@@ -121,6 +125,7 @@ interface AppState {
   updateXP: (amount: number) => void;
   updateProgress: (topic: string, newPercentage: number) => void;
   addAttempt: (attempt: MockTestAttempt) => void;
+  fetchInitialData: () => Promise<void>;
 }
 
 // Initial Seed Data
@@ -259,28 +264,18 @@ export const useStore = create<AppState>((set, get) => {
     questions: allAptitudeQuestions,
 
     login: (email, name) => {
-      const newUser: User = {
-        id: "usr-" + Math.random().toString(36).substring(2, 9),
-        name: name || email.split("@")[0],
-        email,
-        xp: 100,
-        level: 1,
-        streak: 1,
-        streakHistory: [true, false, false, false, false, false, false],
-        targetCompanies: [],
-        targetRole: "",
-        targetLevel: "Beginner",
-        studyYear: "3",
-        onboarded: false,
-      };
-      set({ user: newUser });
-      get().updateXP(0); // sync local storage
+      // This is now handled by Server Actions in /auth/actions.ts
+      // But we can keep it for legacy UI fallback
+      console.log('Login handled by Supabase Auth now')
     },
 
-    logout: () => {
+    logout: async () => {
+      const supabase = createClient();
+      if (supabase) await supabase.auth.signOut();
       set({ user: null });
       if (typeof window !== "undefined") {
         localStorage.removeItem("prepmate_store");
+        window.location.href = '/auth';
       }
     },
 
@@ -406,6 +401,15 @@ export const useStore = create<AppState>((set, get) => {
 
       set({ user: updatedUser });
 
+      // Async Sync to Supabase
+      const supabase = createClient();
+      if (supabase) {
+        supabase.from('profiles').update({
+          xp: newXp,
+          level: newLevel
+        }).eq('id', currentUser.id).then();
+      }
+
       // Save complete store to local storage
       if (typeof window !== "undefined") {
         const fullState = {
@@ -429,13 +433,23 @@ export const useStore = create<AppState>((set, get) => {
       };
       set({ practiceProgress: updatedProgress });
       get().updateXP(0);
+      
+      // Async Sync to Supabase
+      const supabase = createClient();
+      const user = get().user;
+      if (supabase && user) {
+        supabase.from('practice_progress').upsert({
+          user_id: user.id,
+          topic_id: key,
+          completion_percentage: updatedProgress[key]
+        }, { onConflict: 'user_id, topic_id' }).then();
+      }
     },
 
     addAttempt: (attempt) => {
       const updatedAttempts = [attempt, ...get().attempts];
       set({ attempts: updatedAttempts });
       
-      // Mark the mock test as completed in list
       const updatedMockTests = get().mockTests.map((test) => {
         if (test.id === attempt.testId) {
           return {
@@ -449,6 +463,71 @@ export const useStore = create<AppState>((set, get) => {
       set({ mockTests: updatedMockTests });
       
       get().updateXP(attempt.xpGained);
+      
+      // Async Sync to Supabase
+      const supabase = createClient();
+      const user = get().user;
+      if (supabase && user) {
+        supabase.from('mock_attempts').insert({
+          user_id: user.id,
+          test_id: attempt.testId,
+          test_title: attempt.testTitle,
+          score_percent: attempt.scorePercent,
+          correct_answers: attempt.correctAnswers,
+          total_questions: attempt.totalQuestions,
+          xp_gained: attempt.xpGained
+        }).then();
+      }
+    },
+    
+    fetchInitialData: async () => {
+      const supabase = createClient();
+      if (!supabase) return;
+
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      
+      if (authUser) {
+        // Fetch Profile
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', authUser.id)
+          .single();
+          
+        if (profile) {
+          set({
+            user: {
+              id: profile.id,
+              name: profile.name,
+              email: profile.email,
+              xp: profile.xp,
+              level: profile.level,
+              streak: profile.streak,
+              streakHistory: profile.streak_history,
+              targetCompanies: profile.target_companies,
+              targetRole: profile.target_role || '',
+              targetLevel: profile.target_level,
+              studyYear: profile.study_year,
+              onboarded: profile.onboarded,
+              avatarUrl: profile.avatar_url,
+            }
+          });
+        }
+        
+        // Fetch Practice Progress
+        const { data: progress } = await supabase
+          .from('practice_progress')
+          .select('topic_id, completion_percentage')
+          .eq('user_id', authUser.id);
+          
+        if (progress && progress.length > 0) {
+          const progressMap: Record<string, number> = {};
+          progress.forEach(p => {
+            progressMap[p.topic_id] = p.completion_percentage;
+          });
+          set({ practiceProgress: progressMap });
+        }
+      }
     }
   };
 });
