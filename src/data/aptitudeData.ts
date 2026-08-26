@@ -469,7 +469,7 @@ const scrapedTimeAndWork: Question[] = [
       D: "1/10"
     },
     correctOption: "D",
-    explanation: "Work done by A in 1 day = 1/10.",
+    explanation: "\\text{Work done by A in 1 day} = \\frac{1}{10}",
     prerequisites: []
   },
   {
@@ -486,7 +486,7 @@ const scrapedTimeAndWork: Question[] = [
       D: "1/15"
     },
     correctOption: "D",
-    explanation: "Work rate = 1/15.",
+    explanation: "\\text{Work rate} = \\frac{1}{15}",
     prerequisites: []
   },
   {
@@ -503,7 +503,7 @@ const scrapedTimeAndWork: Question[] = [
       D: "7 days"
     },
     correctOption: "C",
-    explanation: "Work rate of C = 1/20 per day.  \n    For 1/4 of the job: Time = (1/4) / (1/20) = 1/4 × 20 = 5 days.",
+    explanation: "\\text{Work rate of C} = \\frac{1}{20} \\text{ per day} \\\\ \\text{For 1/4 of the job: Time} = \\frac{1/4}{1/20} = \\frac{1}{4} \\times 20 = 5 \\text{ days}",
     prerequisites: []
   },
   {
@@ -520,7 +520,7 @@ const scrapedTimeAndWork: Question[] = [
       D: "None of the above"
     },
     correctOption: "A",
-    explanation: "Work rate = 1/12 per hour.  \n    Work done in 3 hours = 3 × (1/12) = 3/12 = 1/4.",
+    explanation: "\\text{Work rate} = \\frac{1}{12} \\text{ per hour} \\\\ \\text{Work done in 3 hours} = 3 \\times \\frac{1}{12} = \\frac{3}{12} = \\frac{1}{4}",
     prerequisites: []
   },
   {
@@ -537,7 +537,7 @@ const scrapedTimeAndWork: Question[] = [
       D: "24 units"
     },
     correctOption: "B",
-    explanation: "Production rate = 100 / 5 = 20 units per hour.",
+    explanation: "\\text{Production rate} = \\frac{100}{5} = 20 \\text{ units per hour}",
     prerequisites: []
   },
   {
@@ -554,7 +554,7 @@ const scrapedTimeAndWork: Question[] = [
       D: "6 days"
     },
     correctOption: "B",
-    explanation: "Work rate = 1/8 per day.  \n    For half the work: Time = (1/2) / (1/8) = 1/2 × 8 = 4 days.",
+    explanation: "\\text{Work rate} = \\frac{1}{8} \\text{ per day} \\\\ \\text{For half the work: Time} = \\frac{1/2}{1/8} = \\frac{1}{2} \\times 8 = 4 \\text{ days}",
     prerequisites: []
   },
   {
@@ -571,7 +571,7 @@ const scrapedTimeAndWork: Question[] = [
       D: "82 days"
     },
     correctOption: "A",
-    explanation: "Total work = 6 × 12 = 72 worker-days.  \n    1 worker’s time = 72 / 1 = 72 days.",
+    explanation: "\\text{Total work} = 6 \\times 12 = 72 \\text{ worker-days} \\\\ \\text{1 worker’s time} = \\frac{72}{1} = 72 \\text{ days}",
     prerequisites: []
   },
   {
@@ -588,7 +588,7 @@ const scrapedTimeAndWork: Question[] = [
       D: "None of the above"
     },
     correctOption: "B",
-    explanation: "Work rate = 1/30 per day.  \n    Work done in 10 days = 10 × (1/30) = 10/30 = 1/3.",
+    explanation: "\\text{Work rate} = \\frac{1}{30} \\text{ per day} \\\\ \\text{Work done in 10 days} = 10 \\times \\frac{1}{30} = \\frac{10}{30} = \\frac{1}{3}",
     prerequisites: []
   },
   {
@@ -605,7 +605,7 @@ const scrapedTimeAndWork: Question[] = [
       D: "8 days"
     },
     correctOption: "A",
-    explanation: "Work rate = 1/25 per day.  \n    Time for 2/5 of the work = (2/5) / (1/25) = 2/5 × 25 = 10 days.",
+    explanation: "\\text{Work rate} = \\frac{1}{25} \\text{ per day} \\\\ \\text{Time for 2/5 of the work} = \\frac{2/5}{1/25} = \\frac{2}{5} \\times 25 = 10 \\text{ days}",
     prerequisites: []
   },
   {
@@ -622,7 +622,7 @@ const scrapedTimeAndWork: Question[] = [
       D: "60 pages"
     },
     correctOption: "C",
-    explanation: "Printing rate = 200 / 4 = 50 pages per hour.",
+    explanation: "\\text{Printing rate} = \\frac{200}{4} = 50 \\text{ pages per hour}",
     prerequisites: []
   }
   ,{
