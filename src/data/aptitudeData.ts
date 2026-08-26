@@ -799,6 +799,106 @@ const scrapedTimeAndDistance: Question[] = [
     tips: "Don't bother setting up equations! Just average the two speeds to find the boat's speed, and subtract them and divide by two to find the river's speed.",
 
   },
+  {
+    id: "advanced-td-5",
+    topic: "Time and Distance",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["Goldman Sachs", "Amazon"],
+    text: "Two bullets were fired at a place at an interval of 11 minutes 45 seconds. A person approaching the firing point in his car hears the two sounds at an interval of 11 minutes 30 seconds. The speed of sound is 330 m/s. What is the speed of the car?",
+    options: {
+      A: "25.56 km/h",
+      B: "18.34 km/h",
+      C: "25.83 km/h",
+      D: "32.14 km/h"
+    },
+    correctOption: "C",
+    explanation: "\text{Let speed of car be } v \text{ m/s}. \\ \text{Distance traveled by car in 11m 30s} = \text{Distance traveled by sound in (11m 45s - 11m 30s)} \\ \text{Distance of car} = v \times 690 \text{ sec} \\ \text{Distance of sound} = 330 \times 15 \text{ sec} \\ v \times 690 = 330 \times 15 \implies v = \frac{330 \times 15}{690} = 7.1739 \text{ m/s} \\ \text{In km/h: } 7.1739 \times \frac{18}{5} \approx 25.83 \text{ km/h}",
+    prerequisites: [{ slug: "sound-speed", title: "Relative Speed with Sound", summary: "The distance covered by the listener in the interval heard is equal to the distance covered by sound in the difference of the two intervals." }],
+    simple_explanation: "The car is moving towards the sound, so the second sound reaches it faster! The distance the car covers in the shorter time interval is exactly equal to the distance the sound would have traveled in the 'saved' time (15 seconds).",
+    formulas: ["Distance = Speed × Time", "D_car = D_sound for the time difference"],
+    tips: "Always equate the distance! Distance car traveled in heard interval = Distance sound travels in the difference of intervals."
+  },
+  {
+    id: "advanced-td-6",
+    topic: "Time and Distance",
+    difficulty: "Difficult",
+    difficulty_level: 4,
+    company_tag: ["Google", "Directi"],
+    text: "A hare sees a dog 100 meters away and starts running away at 12 km/hr. A minute later, the dog sees her and starts chasing her at 16 km/hr. How soon will the dog catch her?",
+    options: {
+      A: "4.5 minutes",
+      B: "3.5 minutes",
+      C: "5.5 minutes",
+      D: "6 minutes"
+    },
+    correctOption: "A",
+    explanation: "\text{Hare speed = 12 km/hr = } \frac{12 \times 5}{18} = \frac{10}{3} \text{ m/s}. \\ \text{Dog speed = 16 km/hr = } \frac{16 \times 5}{18} = \frac{40}{9} \text{ m/s}. \\ \text{Distance run by hare in 1 min (60 sec)} = \frac{10}{3} \times 60 = 200 \text{ m}. \\ \text{Total distance between them} = 100 + 200 = 300 \text{ m}. \\ \text{Relative speed} = \frac{40}{9} - \frac{10}{3} = \frac{10}{9} \text{ m/s}. \\ \text{Time} = \frac{300}{10/9} = 270 \text{ seconds = 4.5 minutes.}",
+    prerequisites: [{ slug: "relative-speed", title: "Relative Speed", summary: "When objects move in the same direction, relative speed is the difference." }],
+    simple_explanation: "First, figure out how far away the hare gets before the dog even starts chasing! Then, figure out the 'closing speed' (how much faster the dog is than the hare). Divide that gap by the closing speed.",
+    formulas: ["Relative Speed = V_fast - V_slow", "Time to Catch = Headstart Distance / Relative Speed"],
+    tips: "Always make sure all your units match. Convert km/hr to m/s, and minutes to seconds before doing the math."
+  },
+  {
+    id: "advanced-td-7",
+    topic: "Time and Distance",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["Microsoft", "Cisco"],
+    text: "A person travels from P to Q at a speed of 40 km/h and returns by increasing his speed by 50%. What is his average speed for both the trips?",
+    options: {
+      A: "48 km/h",
+      B: "45 km/h",
+      C: "50 km/h",
+      D: "52 km/h"
+    },
+    correctOption: "A",
+    explanation: "\text{Going speed } (S_1) = 40 \text{ km/h}. \\ \text{Return speed } (S_2) = 40 + 50\% \text{ of } 40 = 40 + 20 = 60 \text{ km/h}. \\ \text{Since distances are equal, Average Speed} = \frac{2 S_1 S_2}{S_1 + S_2} \\ = \frac{2 \times 40 \times 60}{40 + 60} = \frac{4800}{100} = 48 \text{ km/h}.",
+    prerequisites: [{ slug: "average-speed-basics", title: "Average Speed", summary: "Average speed for equal distances is the harmonic mean of the speeds." }],
+    simple_explanation: "Because he spends more TIME driving at the slower speed than the faster speed, the average speed isn't exactly in the middle of 40 and 60 (which would be 50). It skews towards the slower speed!",
+    formulas: ["Average Speed = 2ab / (a + b) (For equal distances)"],
+    tips: "Never just take the mathematical average (like 40+60 / 2). For equal distances, always use the 2ab/(a+b) formula."
+  },
+  {
+    id: "advanced-td-8",
+    topic: "Time and Distance",
+    difficulty: "Difficult",
+    difficulty_level: 4,
+    company_tag: ["TCS Digital", "Infosys HackwithInfy"],
+    text: "Without stoppages, a train travels at an average speed of 75 km/h, and with stoppages, it covers the same distance at an average speed of 60 km/h. How many minutes per hour does the train stop?",
+    options: {
+      A: "10 min",
+      B: "12 min",
+      C: "14 min",
+      D: "15 min"
+    },
+    correctOption: "B",
+    explanation: "\text{Difference in speed} = 75 - 60 = 15 \text{ km/h}. \\ \text{This means the train loses 15 km in one hour due to stopping.} \\ \text{Time taken to cover 15 km at original speed } = \frac{15}{75} \text{ hours} \\ = \frac{1}{5} \text{ hours} = \frac{1}{5} \times 60 \text{ minutes} = 12 \text{ minutes.}",
+    prerequisites: [{ slug: "stoppages", title: "Train Stoppages", summary: "Stoppage time per hour = Difference in speed / Speed without stoppages." }],
+    simple_explanation: "The train 'lost' 15 km of distance in an hour because it was stopped. At its full speed (75 km/h), how long would it take to drive 15 km? That exact amount of time is how long it spent sitting at the station!",
+    formulas: ["Time stopped per hour = (Difference in Speeds / Speed Without Stoppages) × 60 minutes"],
+    tips: "Memorize the shortcut formula: (Fast Speed - Slow Speed) / Fast Speed × 60!"
+  },
+  {
+    id: "advanced-td-9",
+    topic: "Time and Distance",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["Accenture", "Capgemini"],
+    text: "A man covers half of his journey at 6 km/h and the remaining half at 3 km/h. His average speed is:",
+    options: {
+      A: "4.5 km/h",
+      B: "4 km/h",
+      C: "5 km/h",
+      D: "3.5 km/h"
+    },
+    correctOption: "B",
+    explanation: "\text{For equal distances (half and half),} \\ \text{Average Speed} = \frac{2xy}{x+y} \\ = \frac{2 \times 6 \times 3}{6 + 3} \\ = \frac{36}{9} = 4 \text{ km/h}",
+    prerequisites: [{ slug: "average-speed-basics", title: "Average Speed", summary: "Average speed for equal distances is the harmonic mean of the speeds." }],
+    simple_explanation: "Since he covered the exact same distance at both speeds, you can't just take the average of 6 and 3 (which is 4.5). Because he drove slower for the second half, he spent twice as much time driving 3 km/h. This pulls the average speed down to 4 km/h.",
+    formulas: ["Average Speed = 2xy / (x+y)"],
+    tips: "If the distances are equal, the average speed is always less than the exact middle of the two speeds."
+  }
 
 ];
 
