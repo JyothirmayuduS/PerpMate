@@ -197,6 +197,47 @@ const scrapedPercentages: Question[] = [
     explanation: "12.5% of 800 = (12.5/100) × 800 = 0.125 × 800 = 100.",
     prerequisites: []
   }
+  ,{
+    id: "advanced-pct-1",
+    topic: "Percentages",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["Amazon", "TCS Digital"],
+    text: "In an election between two candidates, 10% of the voters did not cast their votes, and 10% of the votes cast were found invalid. The successful candidate got 54% of the valid votes and won by a majority of 1620 votes. The number of voters enrolled on the voters' list was:",
+    options: {
+      A: "25000",
+      B: "33000",
+      C: "35000",
+      D: "40000"
+    },
+    correctOption: "A",
+    explanation: "\text{Let total enrolled voters be } 100x. \\ \text{Votes cast } = 90x. \\ \text{Valid votes } = 90\% \text{ of } 90x = 81x. \\ \text{Winner gets } 54\% \text{ of } 81x. \text{Loser gets } 46\% \text{ of } 81x. \\ \text{Majority } = (54 - 46)\% \text{ of } 81x = 8\% \text{ of } 81x = 0.08 \times 81x = 6.48x. \\ 6.48x = 1620 \implies x = 250. \\ \text{Total enrolled } = 100 \times 250 = 25000.",
+    prerequisites: [{ slug: "percentages-successive", title: "Successive Percentages", summary: "Calculating percentages on remainders sequentially." }],
+    simple_explanation: "Don't calculate the winner's exact votes! The winner got 54% of the valid pool, which means the loser got 46%. The difference is 8%. So, the winner won by exactly 8% of the VALID votes.",
+    formulas: ["Winning Margin = Winner% - Loser%"],
+    tips: "Assume total voters as 100x to avoid messy fractions. Valid pool = 81x. Margin = 8% of 81x."
+  },
+  {
+    id: "advanced-pct-2",
+    topic: "Percentages",
+    difficulty: "Difficult",
+    difficulty_level: 4,
+    company_tag: ["Google", "Directi"],
+    text: "A watermelon contains 90% water by weight. After some time, it dries up and now contains only 12% water. If its initial weight was 20 kg, what is its present weight?",
+    options: {
+      A: "2.27 kg",
+      B: "2.5 kg",
+      C: "3.18 kg",
+      D: "4.5 kg"
+    },
+    correctOption: "A",
+    explanation: "\text{Initial weight } = 20 \text{ kg}. \text{ Water } = 90\% = 18 \text{ kg}. \text{ Solid pulp } = 10\% = 2 \text{ kg}. \\ \text{When it dries, only water evaporates. The solid pulp remains exactly 2 kg.} \\ \text{Now, water is 12\%, so solid pulp is 88\% of the NEW total weight } (W). \\ 88\% \text{ of } W = 2 \text{ kg} \implies W = \frac{2}{0.88} = \frac{200}{88} = 2.27 \text{ kg}.",
+    prerequisites: [{ slug: "mixtures-constant-part", title: "Constant Part in Mixtures", summary: "Identify the part of the mixture that does not change." }],
+    simple_explanation: "The trick to drying fruit problems: WATER evaporates, but the SOLID pulp never changes! Find the weight of the solid pulp at the start, and realize it must be the exact same weight at the end.",
+    formulas: ["Solid Weight (Start) = Solid Weight (End)"],
+    tips: "Focus on what DOESN'T change. Equate the solid pulp percentage of the new weight to the old solid pulp weight."
+  }
+
 ];
 
 const scrapedProfitAndLoss: Question[] = [
@@ -370,6 +411,47 @@ const scrapedProfitAndLoss: Question[] = [
     explanation: "Profit % = (40 / 160) × 100 = 25%.",
     prerequisites: []
   }
+  ,{
+    id: "advanced-pl-1",
+    topic: "Profit and Loss",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["Amazon", "Flipkart"],
+    text: "A dishonest dealer professes to sell his goods at cost price, but he uses a weight of 900 grams for a kg weight. Find his gain percent.",
+    options: {
+      A: "10%",
+      B: "11.11%",
+      C: "9%",
+      D: "12.5%"
+    },
+    correctOption: "B",
+    explanation: "\text{He sells 900g but charges for 1000g.} \\ \text{Let CP of 1g = } 1. \\ \text{CP of goods sold (900g) = } 900. \\ \text{SP of goods sold (charged for 1000g) = } 1000. \\ \text{Profit = } 1000 - 900 = 100. \\ \text{Profit \%} = \frac{100}{900} \times 100 = 11.11\%",
+    prerequisites: [{ slug: "dishonest-dealer", title: "Dishonest Dealer", summary: "Profit depends on the actual goods given, not the claimed weight." }],
+    simple_explanation: "He claims he's not making a profit on the price, but he's stealing 100 grams from you! Since it only cost him 900 grams of product to get paid for 1000 grams, his profit is 100 grams ON a cost of 900 grams.",
+    formulas: ["Gain% = (Error / True Weight - Error) × 100"],
+    tips: "Always calculate profit over the ACTUAL weight given to the customer, not the 1kg weight!"
+  },
+  {
+    id: "advanced-pl-2",
+    topic: "Profit and Loss",
+    difficulty: "Difficult",
+    difficulty_level: 4,
+    company_tag: ["Goldman Sachs", "Morgan Stanley"],
+    text: "A shopkeeper marks up his goods by 20% and then gives a discount of 10%. Besides this, he uses a faulty balance which reads 1000g for 800g. What is his net profit percentage?",
+    options: {
+      A: "35%",
+      B: "38%",
+      C: "32%",
+      D: "40%"
+    },
+    correctOption: "A",
+    explanation: "\text{Let CP of 1000g be } 1000. \\ \text{He gives 800g. So his actual CP = 800.} \\ \text{He marks up 1000g by 20\% } \implies \text{Marked Price = 1200.} \\ \text{He gives 10\% discount on MP } \implies \text{SP = } 1200 - 120 = 1080. \\ \text{So, he spends 800 (CP) and earns 1080 (SP).} \\ \text{Profit = } 1080 - 800 = 280. \\ \text{Profit \%} = \frac{280}{800} \times 100 = 35\%.",
+    prerequisites: [{ slug: "successive-profit", title: "Combined Profit/Loss", summary: "Combine markup, discount, and weight cheating." }],
+    simple_explanation: "Break it down into MONEY SPENT vs MONEY EARNED. He physically hands over 800g of goods (Money Spent = 800). He charges the customer based on 1000g + markup - discount (Money Earned = 1080).",
+    formulas: ["Net Profit = (Total SP - Actual CP) / Actual CP × 100"],
+    tips: "Treat weight cheating and price markup as two separate steps. Always find the actual cost of what left the store, and the actual cash put in the register."
+  }
+
 ];
 
 const scrapedTimeAndWork: Question[] = [
@@ -543,6 +625,47 @@ const scrapedTimeAndWork: Question[] = [
     explanation: "Printing rate = 200 / 4 = 50 pages per hour.",
     prerequisites: []
   }
+  ,{
+    id: "advanced-tw-1",
+    topic: "Time and Work",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["TCS Ninja", "Infosys"],
+    text: "A and B working together can finish a job in T days. If A works alone, he takes T + 3 days to finish the work. If B works alone, he takes T + 12 days. Find T.",
+    options: {
+      A: "5",
+      B: "6",
+      C: "8",
+      D: "9"
+    },
+    correctOption: "B",
+    explanation: "\text{This is a standard Time & Work property. If A takes } T+a \text{ and B takes } T+b \text{ days,} \\ \text{Then } T = \sqrt{a \times b} \\ \text{Here, } a = 3 \text{ and } b = 12. \\ T = \sqrt{3 \times 12} = \sqrt{36} = 6 \text{ days.}",
+    prerequisites: [{ slug: "time-work-sqrt", title: "The Sqrt Trick", summary: "A shortcut for T+a and T+b problems." }],
+    simple_explanation: "This is a classic trap question that looks like a quadratic equation nightmare. But there is a mathematical trick: The time they take together is always the square root of the product of their 'extra' days!",
+    formulas: ["T = √(a × b)"],
+    tips: "Memorize this shortcut! If A takes T+a and B takes T+b, then T = √(ab)."
+  },
+  {
+    id: "advanced-tw-2",
+    topic: "Time and Work",
+    difficulty: "Difficult",
+    difficulty_level: 4,
+    company_tag: ["Microsoft", "Oracle"],
+    text: "3 men or 4 women can reap a field in 43 days. How long will 7 men and 5 women take to reap it?",
+    options: {
+      A: "12 days",
+      B: "14 days",
+      C: "15 days",
+      D: "16 days"
+    },
+    correctOption: "A",
+    explanation: "\text{3 Men = 4 Women } \implies 1 \text{ Man } = \frac{4}{3} \text{ Women.} \\ \text{We need to find time for (7 Men + 5 Women).} \\ \text{Convert to Women: } 7 \text{ Men } = 7 \times \frac{4}{3} = \frac{28}{3} \text{ Women.} \\ \text{Total Women } = \frac{28}{3} + 5 = \frac{43}{3} \text{ Women.} \\ \text{If 4 Women take 43 days, then } \frac{43}{3} \text{ Women will take } x \text{ days.} \\ M_1 D_1 = M_2 D_2 \implies 4 \times 43 = \frac{43}{3} \times x \implies x = 12 \text{ days.}",
+    prerequisites: [{ slug: "efficiency-ratios", title: "Men/Women Efficiency", summary: "Convert all workers to a single unit (either all men or all women) using given efficiency ratios." }],
+    simple_explanation: "You can't add apples and oranges! Convert the men into women (in terms of work power). Once everyone is 'women', it's just a simple M1D1 = M2D2 equation.",
+    formulas: ["M1 × D1 = M2 × D2 (Work Equivalence)"],
+    tips: "Always pick the unit that makes the math easier. Converting men to women or women to men works exactly the same!"
+  }
+
 ];
 
 const scrapedTimeAndDistance: Question[] = [
@@ -1073,6 +1196,47 @@ const scrapedRatiosAndProportions: Question[] = [
     explanation: "Let numbers be \\( 7x \\) and \\( 9x \\).  \n    \\( 9x - 7x = 14 \\), so \\( 2x = 14 \\), \\( x = 7 \\).  \n    Numbers are \\( 7x = 49 \\times 7 = 63 \\), \\( 9x = 63 \\).  \n    Smaller number = 49.",
     prerequisites: []
   }
+  ,{
+    id: "advanced-rp-1",
+    topic: "Ratios and Proportions",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["Accenture", "Cognizant"],
+    text: "A bag contains 50 P, 25 P and 10 P coins in the ratio 5: 9: 4, amounting to Rs. 206. Find the number of coins of 50 P.",
+    options: {
+      A: "150",
+      B: "200",
+      C: "300",
+      D: "360"
+    },
+    correctOption: "B",
+    explanation: "\text{Ratio of coins = } 5x : 9x : 4x. \\ \text{Value of 50 P coins = } 5x \times 0.50 = 2.5x \text{ Rs.} \\ \text{Value of 25 P coins = } 9x \times 0.25 = 2.25x \text{ Rs.} \\ \text{Value of 10 P coins = } 4x \times 0.10 = 0.40x \text{ Rs.} \\ \text{Total value = } 2.5x + 2.25x + 0.40x = 5.15x \text{ Rs.} \\ 5.15x = 206 \implies x = 40. \\ \text{Number of 50 P coins = } 5x = 5 \times 40 = 200.",
+    prerequisites: [{ slug: "coins-ratio", title: "Coin Ratios", summary: "Convert number of coins into monetary value to equate to the total amount." }],
+    simple_explanation: "The ratio is for the NUMBER of coins, not the VALUE. To find the value, multiply the number of coins by what the coin is worth (e.g., 0.50 rupees for 50 P).",
+    formulas: ["Total Value = (Ratio × Coin Value)"],
+    tips: "Convert everything to Rupees or everything to Paise to avoid decimal mistakes. 206 Rs = 20600 Paise."
+  },
+  {
+    id: "advanced-rp-2",
+    topic: "Ratios and Proportions",
+    difficulty: "Difficult",
+    difficulty_level: 4,
+    company_tag: ["Google", "Uber"],
+    text: "A vessel contains 60 liters of milk. 6 liters of milk is taken out and replaced with water. This process is repeated two more times. How much milk is left in the vessel?",
+    options: {
+      A: "43.74 L",
+      B: "42.50 L",
+      C: "45.12 L",
+      D: "41.80 L"
+    },
+    correctOption: "A",
+    explanation: "\text{Formula for repeated replacement: } \text{Final Quantity} = \text{Initial} \times \left(1 - \frac{\text{Replaced}}{\text{Total}}\right)^n \\ \text{Here, Initial } = 60, \text{ Replaced } = 6, n = 3 \text{ (once + two more times)}. \\ \text{Final Milk } = 60 \times \left(1 - \frac{6}{60}\right)^3 = 60 \times \left(\frac{9}{10}\right)^3 \\ = 60 \times \frac{729}{1000} = 6 \times 7.29 = 43.74 \text{ Liters.}",
+    prerequisites: [{ slug: "mixtures-replacement", title: "Repeated Replacement", summary: "Use the compound interest-like formula for replacing a liquid with water repeatedly." }],
+    simple_explanation: "Every time you remove a scoop, you are removing a certain percentage of the milk. The first time you remove 10% of the milk. The second time, you remove 10% of what's LEFT. It acts exactly like reverse compound interest!",
+    formulas: ["Final Amount = Initial × (1 - Removed/Total)^n"],
+    tips: "Don't calculate each step manually. Use the replacement formula, which is essentially decay: Initial × (Fraction Left)^n."
+  }
+
 ];
 
 const scrapedAverages: Question[] = [
@@ -1246,6 +1410,47 @@ const scrapedAverages: Question[] = [
     explanation: "Total weight = 4 × 50 = 200 kg.",
     prerequisites: []
   }
+  ,{
+    id: "advanced-avg-1",
+    topic: "Averages",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["TCS", "Wipro"],
+    text: "A batsman makes a score of 87 runs in the 17th inning and thus increases his average by 3. Find his average after 17 innings.",
+    options: {
+      A: "36",
+      B: "39",
+      C: "38",
+      D: "40"
+    },
+    correctOption: "B",
+    explanation: "\text{Let average after 16 innings be } x. \\ \text{Total runs after 16 innings = } 16x. \\ \text{In 17th inning, score = 87.} \\ \text{New average = } x + 3. \text{ Total runs = } 17(x + 3). \\ 16x + 87 = 17(x + 3) \\ 16x + 87 = 17x + 51 \implies x = 36. \\ \text{Average after 17th inning = } x + 3 = 39.",
+    prerequisites: [{ slug: "batting-average", title: "Batting Averages", summary: "Average = Total Runs / Innings." }],
+    simple_explanation: "To increase his average by 3 runs across 17 innings, he had to score '3 extra runs' for all 17 innings (17 × 3 = 51 runs). Since he scored 87, his previous average must have been 87 - 51 = 36. So his new average is 36 + 3 = 39!",
+    formulas: ["New Average = Old Average + Increase", "Extra Runs Needed = Total Innings × Increase"],
+    tips: "Shortcut: New Average = Score - (Previous Innings × Increase). 87 - (16 × 3) = 87 - 48 = 39!"
+  },
+  {
+    id: "advanced-avg-2",
+    topic: "Averages",
+    difficulty: "Difficult",
+    difficulty_level: 4,
+    company_tag: ["Amazon", "Cisco"],
+    text: "The average weight of 8 persons increases by 2.5 kg when a new person comes in place of one of them weighing 65 kg. What might be the weight of the new person?",
+    options: {
+      A: "80 kg",
+      B: "85 kg",
+      C: "75 kg",
+      D: "70 kg"
+    },
+    correctOption: "B",
+    explanation: "\text{Total increase in weight = } 8 \times 2.5 = 20 \text{ kg.} \\ \text{This means the new person brought 20 kg MORE than the person who left.} \\ \text{Weight of leaving person = 65 kg.} \\ \text{Weight of new person = } 65 + 20 = 85 \text{ kg.}",
+    prerequisites: [{ slug: "replacement-average", title: "Average Replacement", summary: "If average increases, the new person is heavier by (Total members × Increase)." }],
+    simple_explanation: "Don't calculate the total weight! If the average of 8 people goes up by 2.5 kg, it means a total of 20 kg (8 × 2.5) was magically added to the room. Since a 65 kg person was swapped, the new guy must weigh 65 + 20 = 85 kg.",
+    formulas: ["New Value = Old Value + (Total Items × Increase in Average)"],
+    tips: "Replacement problems never require you to know the original total! Just multiply the change in average by the number of items to find the weight difference."
+  }
+
 ];
 
 const scrapedSimpleInterest: Question[] = [
@@ -1419,6 +1624,47 @@ const scrapedSimpleInterest: Question[] = [
     explanation: "\\( 75 = (P \\times 3 \\times 5) / 100 \\), so \\( P75 = P \\times 15 / 100 \\).  \n    \\( P = (75 \\times 100) / 15 = 500 \\).",
     prerequisites: []
   }
+  ,{
+    id: "advanced-si-1",
+    topic: "Simple and Compound Interest",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["Infosys", "IBM"],
+    text: "The difference between simple interest and compound interest on a certain sum of money for 2 years at 10% per annum is Rs. 42. Find the sum.",
+    options: {
+      A: "4000",
+      B: "4200",
+      C: "4500",
+      D: "5000"
+    },
+    correctOption: "B",
+    explanation: "\text{Shortcut Formula for 2 years difference: } D = P \left(\frac{R}{100}\right)^2 \\ 42 = P \left(\frac{10}{100}\right)^2 = P \left(\frac{1}{10}\right)^2 = P \left(\frac{1}{100}\right) \\ P = 42 \times 100 = 4200 \text{ Rs.}",
+    prerequisites: [{ slug: "ci-si-diff-2yr", title: "CI and SI Difference (2 Yrs)", summary: "Difference between CI and SI for 2 years = P(R/100)^2" }],
+    simple_explanation: "For the first year, Simple Interest and Compound Interest are exactly the same! The difference in the second year only comes from the 'interest on the first year's interest'.",
+    formulas: ["Difference (2 Years) = P(R/100)^2"],
+    tips: "Memorize the 2-year and 3-year difference formulas! For 2 years: D = P(R/100)². For 3 years: D = P(R/100)² × (300+R)/100."
+  },
+  {
+    id: "advanced-si-2",
+    topic: "Simple and Compound Interest",
+    difficulty: "Difficult",
+    difficulty_level: 4,
+    company_tag: ["Morgan Stanley", "Google"],
+    text: "A sum of money doubles itself in 4 years at compound interest. In how many years will it become 8 times at the same rate?",
+    options: {
+      A: "12 years",
+      B: "16 years",
+      C: "8 years",
+      D: "24 years"
+    },
+    correctOption: "A",
+    explanation: "\text{Money doubles (2 times) in 4 years.} \\ \text{We need it to become 8 times. } 8 = 2^3. \\ \text{In compound interest, if it takes } T \text{ years to become } x \text{ times,} \\ \text{It will take } n \times T \text{ years to become } x^n \text{ times.} \\ \text{Here, } n = 3, T = 4. \text{ So time = } 3 \times 4 = 12 \text{ years.}",
+    prerequisites: [{ slug: "ci-multiples", title: "Compound Interest Multiples", summary: "In CI, money multiplies by the same factor in equal time intervals." }],
+    simple_explanation: "Compound interest is multiplication! It takes 4 years to multiply by 2. To get to 8x, you have to multiply by 2, then 2 again, then 2 again (2×2×2 = 8). That's three cycles of 4 years. 3 × 4 = 12 years.",
+    formulas: ["If P becomes x*P in T years, P becomes (x^n)*P in n*T years"],
+    tips: "Always express the target multiple (8) as a power of the base multiple (2). The power (3) multiplied by the time (4) is the answer!"
+  }
+
 ];
 
 const scrapedNumberSystems: Question[] = [
@@ -1592,6 +1838,47 @@ const scrapedNumberSystems: Question[] = [
     explanation: "8 × 6 = 48.",
     prerequisites: []
   }
+  ,{
+    id: "advanced-ns-1",
+    topic: "Number Systems",
+    difficulty: "Hard",
+    difficulty_level: 3,
+    company_tag: ["Amazon", "Microsoft"],
+    text: "Find the number of trailing zeroes in 100! (100 factorial).",
+    options: {
+      A: "21",
+      B: "22",
+      C: "24",
+      D: "25"
+    },
+    correctOption: "C",
+    explanation: "\text{Trailing zeroes are formed by pairs of 2s and 5s in prime factorization.} \\ \text{In any factorial, 5s are less frequent than 2s, so we just count the number of 5s.} \\ \text{Number of 5s in 100! = } \left\lfloor\frac{100}{5}\right\rfloor + \left\lfloor\frac{100}{25}\right\rfloor + \left\lfloor\frac{100}{125}\right\rfloor + \dots \\ = 20 + 4 + 0 = 24.",
+    prerequisites: [{ slug: "trailing-zeroes", title: "Trailing Zeroes in Factorials", summary: "Count the number of 5s in the prime factorization." }],
+    simple_explanation: "A trailing zero is created every time a 2 multiplies with a 5. Since a factorial has tons of even numbers (2s), the bottleneck is how many 5s there are. You get one 5 every five numbers, and a 'bonus' 5 every 25 numbers!",
+    formulas: ["Zeroes in N! = floor(N/5) + floor(N/25) + floor(N/125) + ..."],
+    tips: "Just keep dividing the number by 5 and adding the quotients until the quotient is zero!"
+  },
+  {
+    id: "advanced-ns-2",
+    topic: "Number Systems",
+    difficulty: "Difficult",
+    difficulty_level: 4,
+    company_tag: ["Google", "Goldman Sachs"],
+    text: "What is the remainder when 2^256 is divided by 17?",
+    options: {
+      A: "1",
+      B: "2",
+      C: "4",
+      D: "16"
+    },
+    correctOption: "A",
+    explanation: "\text{Use Fermat's Little Theorem or patterns.} \\ \text{We know } 2^4 = 16 \equiv -1 \pmod{17}. \\ \text{So, } 2^{256} = (2^4)^{64} \equiv (-1)^{64} \pmod{17}. \\ (-1)^{64} = 1. \text{ Therefore, the remainder is 1.}",
+    prerequisites: [{ slug: "modular-arithmetic", title: "Modular Arithmetic & Remainders", summary: "Find a power of the base that is close to a multiple of the divisor." }],
+    simple_explanation: "Don't calculate 2^256! Look for a power of 2 that is close to 17. 2^4 is 16, which is exactly 1 less than 17. So dividing 16 by 17 leaves a remainder of -1. Now raise -1 to the 64th power (since 256/4 = 64). An even power of -1 is just 1!",
+    formulas: ["a ≡ b (mod n)", "(a^k) ≡ (b^k) (mod n)"],
+    tips: "Always look for a power that gives a remainder of 1 or -1. It collapses massive exponents into nothing!"
+  }
+
 ];
 
 const scrapedMiscellaneous: Question[] = [
