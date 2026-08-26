@@ -470,7 +470,10 @@ const scrapedTimeAndWork: Question[] = [
     },
     correctOption: "D",
     explanation: "\\text{Work done by A in 1 day} = \\frac{1}{10}",
-    prerequisites: []
+    prerequisites: [{ slug: "work-rate", title: "Work Rate Basics", summary: "Work rate is the reciprocal of total time." }],
+    simple_explanation: "If you have 10 equal parts of a job to do in 10 days, you must complete exactly 1 part per day. So, 1 out of 10 parts is 1/10.",
+    formulas: ["Work done in 1 day = 1 / Total days"],
+    tips: "Always 'flip' (take the reciprocal of) the total days to find the 1-day work rate!"
   },
   {
     id: "scraped-scrapedTimeAndWork-2",
@@ -487,7 +490,10 @@ const scrapedTimeAndWork: Question[] = [
     },
     correctOption: "D",
     explanation: "\\text{Work rate} = \\frac{1}{15}",
-    prerequisites: []
+    prerequisites: [{ slug: "work-rate", title: "Work Rate Basics", summary: "Work rate is the reciprocal of total time." }],
+    simple_explanation: "Just like speed is Distance/Time, Work Rate is Work/Time. If the total work is 1 and the time is 15 days, the rate is 1/15.",
+    formulas: ["Work Rate = 1 / Time"],
+    tips: "Work rate is essentially your 'speed'. Higher time means lower speed (rate)."
   },
   {
     id: "scraped-scrapedTimeAndWork-3",
@@ -504,7 +510,10 @@ const scrapedTimeAndWork: Question[] = [
     },
     correctOption: "C",
     explanation: "\\text{Work rate of C} = \\frac{1}{20} \\text{ per day} \\\\ \\text{For 1/4 of the job: Time} = \\frac{1/4}{1/20} = \\frac{1}{4} \\times 20 = 5 \\text{ days}",
-    prerequisites: []
+    prerequisites: [{ slug: "partial-work", title: "Partial Work", summary: "Time is directly proportional to the amount of work." }],
+    simple_explanation: "If the whole job takes 20 days, then doing a quarter of the job will take exactly a quarter of the time. 1/4 of 20 is 5.",
+    formulas: ["Time for partial work = Fraction of work × Total time"],
+    tips: "Don't overcomplicate it with rates! If you're doing 1/4 of the work, it simply takes 1/4 of the total time."
   },
   {
     id: "scraped-scrapedTimeAndWork-4",
@@ -521,7 +530,10 @@ const scrapedTimeAndWork: Question[] = [
     },
     correctOption: "A",
     explanation: "\\text{Work rate} = \\frac{1}{12} \\text{ per hour} \\\\ \\text{Work done in 3 hours} = 3 \\times \\frac{1}{12} = \\frac{3}{12} = \\frac{1}{4}",
-    prerequisites: []
+    prerequisites: [{ slug: "work-fraction", title: "Work Fractions", summary: "Work Done = Work Rate × Time worked." }],
+    simple_explanation: "If he paints the whole wall in 12 hours, he paints 1/12th of it every hour. After 3 hours, he has painted 3/12ths, which simplifies to 1/4.",
+    formulas: ["Work Done = Time Worked / Total Time"],
+    tips: "To find the fraction of work done, just put the time worked over the total time needed!"
   },
   {
     id: "scraped-scrapedTimeAndWork-5",
@@ -538,7 +550,10 @@ const scrapedTimeAndWork: Question[] = [
     },
     correctOption: "B",
     explanation: "\\text{Production rate} = \\frac{100}{5} = 20 \\text{ units per hour}",
-    prerequisites: []
+    prerequisites: [{ slug: "unitary-method", title: "Unitary Method", summary: "Find the value of a single unit to solve for any amount." }],
+    simple_explanation: "This is basic division. If you make 100 things in 5 hours, you're making 20 things every hour.",
+    formulas: ["Rate = Total Units / Total Time"],
+    tips: "Production questions are exactly the same as Speed/Distance questions. Units = Distance, Hours = Time."
   },
   {
     id: "scraped-scrapedTimeAndWork-6",
@@ -555,7 +570,10 @@ const scrapedTimeAndWork: Question[] = [
     },
     correctOption: "B",
     explanation: "\\text{Work rate} = \\frac{1}{8} \\text{ per day} \\\\ \\text{For half the work: Time} = \\frac{1/2}{1/8} = \\frac{1}{2} \\times 8 = 4 \\text{ days}",
-    prerequisites: []
+    prerequisites: [{ slug: "partial-work", title: "Partial Work", summary: "Time is directly proportional to the amount of work." }],
+    simple_explanation: "Half the work takes half the time. Half of 8 days is 4 days.",
+    formulas: ["Time = Fraction of Work × Total Time"],
+    tips: "Always use common sense before writing down equations! Half work = half time."
   },
   {
     id: "scraped-scrapedTimeAndWork-7",
@@ -572,7 +590,10 @@ const scrapedTimeAndWork: Question[] = [
     },
     correctOption: "A",
     explanation: "\\text{Total work} = 6 \\times 12 = 72 \\text{ worker-days} \\\\ \\text{1 worker’s time} = \\frac{72}{1} = 72 \\text{ days}",
-    prerequisites: []
+    prerequisites: [{ slug: "man-days", title: "Man-Days Concept", summary: "Total Work = Number of Workers × Days." }],
+    simple_explanation: "If 6 people take 12 days, it means the job requires 72 'days of effort' (6x12). One person working alone has to put in all 72 days of effort themselves.",
+    formulas: ["Total Work (Man-days) = Men × Days", "M1 × D1 = M2 × D2"],
+    tips: "More workers = less time. Fewer workers = more time. This is an inverse relationship!"
   },
   {
     id: "scraped-scrapedTimeAndWork-8",
@@ -589,7 +610,10 @@ const scrapedTimeAndWork: Question[] = [
     },
     correctOption: "B",
     explanation: "\\text{Work rate} = \\frac{1}{30} \\text{ per day} \\\\ \\text{Work done in 10 days} = 10 \\times \\frac{1}{30} = \\frac{10}{30} = \\frac{1}{3}",
-    prerequisites: []
+    prerequisites: [{ slug: "work-fraction", title: "Work Fractions", summary: "Work Done = Work Rate × Time worked." }],
+    simple_explanation: "The job takes 30 days total. He worked for 10 days, which is exactly one-third of the total time (10 out of 30). Therefore, he completed one-third of the job.",
+    formulas: ["Fraction of work done = Days Worked / Total Days"],
+    tips: "Just put the days worked over the total days and simplify the fraction!"
   },
   {
     id: "scraped-scrapedTimeAndWork-9",
@@ -606,7 +630,10 @@ const scrapedTimeAndWork: Question[] = [
     },
     correctOption: "A",
     explanation: "\\text{Work rate} = \\frac{1}{25} \\text{ per day} \\\\ \\text{Time for 2/5 of the work} = \\frac{2/5}{1/25} = \\frac{2}{5} \\times 25 = 10 \\text{ days}",
-    prerequisites: []
+    prerequisites: [{ slug: "partial-work", title: "Partial Work", summary: "Time is directly proportional to the amount of work." }],
+    simple_explanation: "If you break the 25 days into 5 equal pieces, each piece is 5 days. Doing 2/5ths of the job means you need 2 of those pieces (2 x 5 = 10 days).",
+    formulas: ["Time required = Fraction of Work × Total Time"],
+    tips: "Multiply the fraction of work by the total time. 2/5 of 25 is 10."
   },
   {
     id: "scraped-scrapedTimeAndWork-10",
@@ -623,7 +650,10 @@ const scrapedTimeAndWork: Question[] = [
     },
     correctOption: "C",
     explanation: "\\text{Printing rate} = \\frac{200}{4} = 50 \\text{ pages per hour}",
-    prerequisites: []
+    prerequisites: [{ slug: "unitary-method", title: "Unitary Method", summary: "Find the value of a single unit to solve for any amount." }],
+    simple_explanation: "If the printer does 200 pages in 4 hours, divide 200 by 4 to see how much it does in just one hour.",
+    formulas: ["Rate = Total Output / Total Time"],
+    tips: "Treat pages like distance and hours like time. It's asking for 'pages per hour', which is exactly what 200/4 gives you."
   }
   ,{
     id: "advanced-tw-1",
