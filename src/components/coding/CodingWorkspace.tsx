@@ -59,17 +59,17 @@ function isUuid(value: string) {
 }
 
 type IterationTrace = { iteration: number; state: string; decision: string };
-type CodeBlock = { label: string; code: string; explanation: string };
+type CodeBlock = { label: string; code: string; explanation: string; lineNumber: number };
 
 function buildCodeBlocks(code: string): CodeBlock[] {
-  const lines = code.split("\n").map((line) => line.trim()).filter(Boolean);
-  const loop = lines.find((line) => /\b(for|while|foreach)\b/i.test(line)) || lines[1] || "Process the next input";
-  const update = lines.find((line) => /\b(count|total|sum|best|current|answer|result|push|append|set|dp|return)\b/i.test(line) && line !== loop) || lines[2] || "Update the current state";
-  const returns = [...lines].reverse().find((line) => /\breturn\b/i.test(line)) || "return the answer";
+  const lines = code.split("\n").map((line, index) => ({ text: line.trim(), lineNumber: index + 1 })).filter((line) => line.text);
+  const loop = lines.find((line) => /\b(for|while|foreach)\b/i.test(line.text)) || lines[1] || { text: "Process the next input", lineNumber: 1 };
+  const update = lines.find((line) => /\b(count|total|sum|best|current|answer|result|push|append|set|dp|return)\b/i.test(line.text) && line.text !== loop.text) || lines[2] || { text: "Update the current state", lineNumber: 1 };
+  const returns = [...lines].reverse().find((line) => /\breturn\b/i.test(line.text)) || { text: "return the answer", lineNumber: lines.length || 1 };
   return [
-    { label: "Repeating block", code: loop, explanation: "This block runs once for the current item, character, row, or node." },
-    { label: "State update", code: update, explanation: "This block changes the value that the next iteration will see." },
-    { label: "Finish and return", code: returns, explanation: "This block runs after the input is exhausted and produces the final answer." },
+    { label: "Repeating block", code: loop.text, lineNumber: loop.lineNumber, explanation: "This block runs once for the current item, character, row, or node." },
+    { label: "State update", code: update.text, lineNumber: update.lineNumber, explanation: "This block changes the value that the next iteration will see." },
+    { label: "Finish and return", code: returns.text, lineNumber: returns.lineNumber, explanation: "This block runs after the input is exhausted and produces the final answer." },
   ];
 }
 
@@ -565,6 +565,23 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                           </div>
                         );
                       })}
+                    </div>
+                    <div className="mt-4 rounded-xl border border-white/10 bg-[#111] overflow-hidden">
+                      <div className="border-b border-white/10 px-3 py-2 font-sans text-[9px] font-extrabold uppercase tracking-wider text-white/45">Source line pointer</div>
+                      <div className="max-h-64 overflow-y-auto p-2">
+                        {activeTemplate.solutionCode.split("\n").map((line, index) => {
+                          const lineNumber = index + 1;
+                          const activeLine = traceIndex === iterationTrace.length - 1 ? codeBlocks[2]?.lineNumber : codeBlocks[0]?.lineNumber;
+                          const isActive = lineNumber === activeLine;
+                          return (
+                            <div key={`${lineNumber}-${line}`} className={`flex gap-3 px-2 py-1 font-mono text-[10px] leading-5 transition-colors duration-500 ${isActive ? "bg-[#ff5c36]/20 text-[#ffd2c8]" : "text-white/45"}`}>
+                              <span className={`w-6 shrink-0 text-right ${isActive ? "text-[#ff8a70] font-bold" : "text-white/25"}`}>{lineNumber}</span>
+                              <span className="break-words whitespace-pre-wrap">{line || " "}</span>
+                              {isActive && <span className="ml-auto shrink-0 text-[#ff8a70]">← running</span>}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
 
