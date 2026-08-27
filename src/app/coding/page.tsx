@@ -68,7 +68,7 @@ function CodingPracticeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user } = useStore();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(() => searchParams.get("search") || "");
   const [selectedDifficulty, setSelectedDifficulty] = useState("All");
   const [selectedPattern, setSelectedPattern] = useState("All");
   const [selectedLanguage, setSelectedLanguage] = useState<"All" | CodingLanguage>("All");

@@ -38,6 +38,7 @@ import {
 import { runCompiledLanguageTests, runJavaScriptTests, type CodingRunResult } from "@/lib/codingRunner";
 import { useStore } from "@/store/useStore";
 import { createClient } from "../../../utils/supabase/client";
+import { codingModuleSlug } from "@/data/codingModules";
 
 type WorkspaceTab = "description" | "concept" | "complexity" | "testcases" | "hints" | "solution";
 
@@ -82,17 +83,14 @@ function buildCodeBlocks(code: string): CodeBlock[] {
 }
 
 function buildIterationTrace(question: CodingQuestion): IterationTrace[] {
+  const stepFor = (index: number, fallback: string) => question.learningSteps[index % question.learningSteps.length] || fallback;
   const firstInput = question.tests[0]?.input[0];
   if (Array.isArray(firstInput)) {
     const cells = firstInput.slice(0, 12).map((value) => displayValue(value));
     return cells.map((value, index) => ({
       iteration: index + 1,
-      state: `index ${index} → ${JSON.stringify(value)}`,
-      decision: question.pattern === "Character Scan"
-        ? `Check whether ${JSON.stringify(value)} matches the target group.`
-        : question.pattern === "Star Patterns"
-          ? `Build row ${index + 1} from its width and alignment rule.`
-          : `Apply ${question.pattern} state to this item, then continue.`,
+      state: `index ${index} → ${value}`,
+      decision: stepFor(index, `Apply ${question.pattern} state to this item, then continue.`),
       cells,
       focusIndex: index,
       variables: [
@@ -107,9 +105,7 @@ function buildIterationTrace(question: CodingQuestion): IterationTrace[] {
     return cells.map((character, index) => ({
       iteration: index + 1,
       state: `position ${index} → ${JSON.stringify(character)}`,
-      decision: question.pattern === "Character Scan"
-        ? `Normalize it, test membership, and update the counter.`
-        : `Compare it with the current ${question.pattern} state.`,
+      decision: stepFor(index, `Compare it with the current ${question.pattern} state.`),
       cells,
       focusIndex: index,
       variables: [
@@ -124,9 +120,7 @@ function buildIterationTrace(question: CodingQuestion): IterationTrace[] {
     return cells.map((value, index) => ({
       iteration: index + 1,
       state: value,
-      decision: question.pattern === "Star Patterns"
-        ? `Calculate spaces and stars for row ${index + 1}.`
-        : `Update the running ${question.pattern} state.`,
+      decision: stepFor(index, `Update the running ${question.pattern} state.`),
       cells,
       focusIndex: index,
       variables: [{ name: "row", value: String(index + 1) }],
@@ -694,9 +688,10 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                   <h3 className="font-display text-base font-bold text-primary mb-3">Know these first</h3>
                   <div className="flex flex-wrap gap-2">
                     {question.prerequisites.map((item) => (
-                      <span key={item} className="rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 font-sans text-[10px] font-bold text-primary">
-                        {item}
-                      </span>
+                      <Link key={item} href={`/coding/modules/${codingModuleSlug(item)}`} className="group rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 font-sans text-[10px] font-bold text-primary transition-colors hover:border-primary hover:bg-primary/5">
+                        <span>{item}</span>
+                        <ArrowRight className="ml-1 inline h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                      </Link>
                     ))}
                   </div>
                 </div>
