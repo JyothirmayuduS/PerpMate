@@ -16,6 +16,7 @@ import {
   Lightbulb,
   ListChecks,
   LoaderCircle,
+  Pause,
   Play,
   RotateCcw,
   Send,
@@ -119,6 +120,8 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
   const [code, setCode] = useState(() => activeTemplate.starterCode);
   const [isHydrated, setIsHydrated] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
+  const [traceIndex, setTraceIndex] = useState(0);
+  const [isTracePlaying, setIsTracePlaying] = useState(false);
   const [runResult, setRunResult] = useState<CodingRunResult | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [statusMessage, setStatusMessage] = useState("Ready to run your code");
@@ -130,6 +133,20 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
   const [copied, setCopied] = useState(false);
   const [solved, setSolved] = useState(false);
   const editorRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (!isTracePlaying) return;
+    const timer = window.setInterval(() => {
+      setTraceIndex((current) => {
+        if (current >= iterationTrace.length - 1) {
+          setIsTracePlaying(false);
+          return current;
+        }
+        return current + 1;
+      });
+    }, 1400);
+    return () => window.clearInterval(timer);
+  }, [isTracePlaying, iterationTrace.length]);
 
   useEffect(() => {
     if (!user) router.push("/auth");
@@ -304,6 +321,8 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
     setShowSolution(false);
     setStatusMessage("Ready to run your code");
   };
+
+  const activeTrace = iterationTrace[traceIndex] || iterationTrace[0];
 
   return (
     <div className="min-h-screen bg-background text-on-surface">
@@ -480,21 +499,32 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                     <p className="font-sans text-xs text-on-surface-variant leading-6 mb-4">
                       Watch what changes on each pass. The trace uses the first public example so you can pause, predict the next state, and then compare.
                     </p>
-                    <div className="overflow-x-auto rounded-xl border border-outline-variant">
-                      <div className="min-w-[560px]">
-                        <div className="grid grid-cols-[80px_1fr_2fr] gap-3 bg-surface-container px-4 py-2 font-sans text-[9px] font-extrabold uppercase tracking-wider text-on-surface-variant">
-                          <span>Pass</span><span>State</span><span>What happens</span>
+                    <div className="rounded-xl border border-secondary-container/30 bg-secondary-container/10 p-4 mb-3 transition-all duration-500">
+                      <div className="flex items-center justify-between gap-3 mb-3">
+                        <span className="font-sans text-[9px] font-extrabold uppercase tracking-wider text-secondary">Executing pass {activeTrace?.iteration || 1} of {iterationTrace.length}</span>
+                        <span className="font-mono text-[10px] font-bold text-primary">{Math.round(((traceIndex + 1) / iterationTrace.length) * 100)}%</span>
+                      </div>
+                      <div className="h-2 rounded-full bg-white overflow-hidden mb-4">
+                        <div className="h-full rounded-full bg-secondary-container transition-all duration-500" style={{ width: `${((traceIndex + 1) / iterationTrace.length) * 100}%` }} />
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="rounded-xl bg-primary p-4 font-mono text-xs text-on-primary">
+                          <p className="text-on-primary/45 mb-2">CURRENT STATE</p>
+                          <p className="break-words">{activeTrace?.state}</p>
                         </div>
-                        {iterationTrace.map((trace) => (
-                          <div key={trace.iteration} className="grid grid-cols-[80px_1fr_2fr] gap-3 border-t border-outline-variant px-4 py-3 font-sans text-xs text-primary">
-                            <span className="font-mono font-bold text-secondary-container">#{trace.iteration}</span>
-                            <span className="font-mono break-words">{trace.state}</span>
-                            <span className="leading-5">{trace.decision}</span>
-                          </div>
-                        ))}
+                        <div className="rounded-xl bg-white p-4 text-xs text-primary">
+                          <p className="text-on-surface-variant mb-2 font-extrabold uppercase tracking-wider text-[9px]">WHAT THE CODE DOES</p>
+                          <p className="leading-5">{activeTrace?.decision}</p>
+                        </div>
                       </div>
                     </div>
-                    <p className="font-sans text-[10px] text-on-surface-variant mt-3">Showing the first {iterationTrace.length} passes. For larger inputs, the same invariant repeats until the input is exhausted.</p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button type="button" onClick={() => { setTraceIndex(0); setIsTracePlaying(true); }} className="rounded-full bg-primary px-4 py-2 font-sans text-[10px] font-extrabold text-on-primary flex items-center gap-2 cursor-pointer"><Play className="h-3 w-3" /> Play animation</button>
+                      <button type="button" onClick={() => setIsTracePlaying((playing) => !playing)} className="rounded-full border border-outline-variant px-3 py-2 font-sans text-[10px] font-bold text-primary flex items-center gap-2 cursor-pointer">{isTracePlaying ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}{isTracePlaying ? "Pause" : "Resume"}</button>
+                      <button type="button" onClick={() => setTraceIndex((current) => Math.min(current + 1, iterationTrace.length - 1))} className="rounded-full border border-outline-variant px-3 py-2 font-sans text-[10px] font-bold text-primary cursor-pointer">Next pass →</button>
+                      <button type="button" onClick={() => { setTraceIndex(0); setIsTracePlaying(false); }} className="rounded-full border border-outline-variant px-3 py-2 font-sans text-[10px] font-bold text-primary cursor-pointer">Reset</button>
+                    </div>
+                    <p className="font-sans text-[10px] text-on-surface-variant mt-3">This animation traces the algorithm’s pattern state on the sample input. It helps you predict the next iteration before reading the final answer.</p>
                   </div>
 
                   <h3 className="font-display text-base font-bold text-primary mb-3">Know these first</h3>
