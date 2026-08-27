@@ -57,6 +57,17 @@ export default function CodingModulePage({ params }: { params: Promise<{ slug: s
             </section>
           </div>
 
+          <section className="mt-4 rounded-2xl border border-outline-variant bg-primary p-5 text-on-primary">
+            <div className="mb-3 flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-secondary-container" />
+              <h2 className="font-display text-lg font-bold">Worked example</h2>
+            </div>
+            <p className="font-mono text-xs leading-6 text-[#ffd2c8]">{learningModule.workedExample || "Take the smallest input, write the state before the first operation, and record the state after every operation."}</p>
+            <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-3 font-sans text-[10px] leading-5 text-white/65">
+              <strong className="text-white/85">Trace rule:</strong> after each step, say what changed, what stayed true, and what the next step is allowed to assume.
+            </div>
+          </section>
+
           <section className="mt-4 rounded-2xl bg-primary p-6 text-on-primary">
             <div className="mb-3 flex items-center gap-2">
               <Lightbulb className="h-4 w-4 text-secondary-container" />
@@ -111,6 +122,10 @@ export default function CodingModulePage({ params }: { params: Promise<{ slug: s
                   <span className="font-sans text-sm text-primary">{step}</span>
                 </div>
               ))}
+            </div>
+            <div className="mt-4 rounded-xl border border-secondary-container/30 bg-secondary-container/10 p-4">
+              <p className="font-sans text-[10px] font-extrabold uppercase tracking-wider text-secondary">Check yourself</p>
+              <p className="mt-2 font-sans text-sm leading-6 text-primary">{learningModule.checkYourself || "Can you explain the invariant and predict the next state before running the code?"}</p>
             </div>
           </section>
 
