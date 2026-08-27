@@ -64,11 +64,13 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
   const supportedLanguages = useMemo(() => getSupportedLanguages(question), [question]);
   const complexity = useMemo(() => getComplexityGuide(question), [question]);
   const [selectedLanguage, setSelectedLanguage] = useState<CodingLanguage>("javascript");
+  const [solutionLanguage, setSolutionLanguage] = useState<CodingLanguage>("javascript");
   const activeTemplate = getLanguageTemplate(question, selectedLanguage) || {
     starterCode: question.starterCode,
     solutionCode: question.solutionCode,
   };
   const languageMeta = codingLanguageMeta[selectedLanguage];
+  const solutionTemplate = getLanguageTemplate(question, solutionLanguage) || activeTemplate;
   const [code, setCode] = useState(() => activeTemplate.starterCode);
   const [isHydrated, setIsHydrated] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
@@ -99,6 +101,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
         solutionCode: question.solutionCode,
       };
       setSelectedLanguage(nextLanguage);
+      setSolutionLanguage(nextLanguage);
       setCode(window.localStorage.getItem(`prepmate_code_${question.id}_${nextLanguage}`) || nextTemplate.starterCode);
       try {
         const solvedQuestions = JSON.parse(window.localStorage.getItem("prepmate_coding_solved") || "[]") as string[];
@@ -237,7 +240,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
   };
 
   const copySolution = async () => {
-    await navigator.clipboard.writeText(activeTemplate.solutionCode);
+    await navigator.clipboard.writeText(solutionTemplate.solutionCode);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1500);
   };
@@ -247,6 +250,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
     if (!template) return;
     window.localStorage.setItem(`prepmate_code_${question.id}_${selectedLanguage}`, code);
     setSelectedLanguage(language);
+    setSolutionLanguage(language);
     setCode(
       window.localStorage.getItem(`prepmate_code_${question.id}_${language}`) ||
         template.starterCode,
@@ -395,6 +399,29 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                     ))}
                   </div>
 
+                  <div className="rounded-2xl border border-outline-variant bg-background p-5 mb-8">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Eye className="h-4 w-4 text-secondary-container" />
+                      <h3 className="font-display text-lg font-bold text-primary">Logic walkthrough</h3>
+                    </div>
+                    <p className="font-sans text-xs text-on-surface-variant leading-6 mb-4">
+                      Follow the state change from the sample input to the expected output. Use each checkpoint to explain your code aloud.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto_1fr_auto] items-center gap-3">
+                      <div className="rounded-xl bg-primary px-3 py-2 font-mono text-[10px] text-on-primary break-all">Input<br />{question.examples[0]?.input || "—"}</div>
+                      {question.learningSteps.slice(0, 3).map((step, index) => (
+                        <div key={step} className="contents">
+                          <ArrowRight className="hidden md:block h-4 w-4 text-secondary-container" />
+                          <div className="rounded-xl border border-secondary-container/30 bg-secondary-container/10 px-3 py-2 font-sans text-[10px] font-bold text-primary">
+                            {index + 1}. {step}
+                          </div>
+                        </div>
+                      ))}
+                      <ArrowRight className="hidden md:block h-4 w-4 text-secondary-container" />
+                      <div className="rounded-xl bg-emerald-50 px-3 py-2 font-mono text-[10px] text-emerald-800 break-all">Output<br />{question.examples[0]?.output || "—"}</div>
+                    </div>
+                  </div>
+
                   <h3 className="font-display text-base font-bold text-primary mb-3">Know these first</h3>
                   <div className="flex flex-wrap gap-2">
                     {question.prerequisites.map((item) => (
@@ -536,15 +563,29 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                     )}
                   </div>
                   {showSolution && (
-                    <div className="rounded-2xl bg-primary text-on-primary overflow-hidden">
+                    <div className="space-y-3">
+                      <div className="flex flex-wrap gap-2">
+                        {supportedLanguages.map((language) => (
+                          <button
+                            key={language}
+                            type="button"
+                            onClick={() => setSolutionLanguage(language)}
+                            className={`rounded-full border px-3 py-1.5 font-sans text-[10px] font-extrabold cursor-pointer transition-colors ${solutionLanguage === language ? "border-secondary-container bg-secondary-container text-primary" : "border-outline-variant text-on-surface-variant hover:border-primary"}`}
+                          >
+                            {codingLanguageMeta[language].label}
+                          </button>
+                        ))}
+                      </div>
+                      <div className="rounded-2xl bg-primary text-on-primary overflow-hidden">
                       <div className="border-b border-on-primary/10 px-4 py-3 flex items-center justify-between">
-                        <span className="font-sans text-[9px] font-bold uppercase tracking-wider text-on-primary/60">{languageMeta.label}</span>
+                        <span className="font-sans text-[9px] font-bold uppercase tracking-wider text-on-primary/60">{codingLanguageMeta[solutionLanguage].label} reference</span>
                         <button type="button" onClick={copySolution} className="text-on-primary/70 hover:text-on-primary flex items-center gap-1.5 font-sans text-[9px] font-bold cursor-pointer">
                           {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                           {copied ? "Copied" : "Copy"}
                         </button>
                       </div>
-                      <pre className="p-5 overflow-x-auto font-mono text-xs leading-6"><code>{activeTemplate.solutionCode}</code></pre>
+                      <pre className="p-5 overflow-x-auto font-mono text-xs leading-6"><code>{solutionTemplate.solutionCode}</code></pre>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -658,6 +699,19 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                         )}
                       </div>
                     ))}
+                  </div>
+                )}
+                {runResult && (
+                  <div className="mt-3 rounded-xl border border-[#ff5c36]/20 bg-[#ff5c36]/5 p-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Gauge className="h-3.5 w-3.5 text-[#ff8a70]" />
+                      <span className="font-sans text-[10px] font-extrabold uppercase tracking-wider text-[#ffb3a3]">Complexity coach</span>
+                    </div>
+                    <p className="font-sans text-[10px] leading-5 text-white/65">
+                      This run took {runResult.runtimeMs} ms. The expected optimized pattern is {complexity.optimized.time} time and {complexity.optimized.space} space; runtime is a measurement, while Big-O describes how the work grows as input grows.
+                    </p>
+                    <p className="font-sans text-[10px] leading-5 text-white/45 mt-1">Next improvement: {complexity.improvementSteps[0]}</p>
+                    <button type="button" onClick={() => setActiveTab("complexity")} className="mt-2 text-[10px] font-bold text-[#ff9b84] hover:text-white cursor-pointer">Open the step-by-step complexity coach →</button>
                   </div>
                 )}
               </div>
