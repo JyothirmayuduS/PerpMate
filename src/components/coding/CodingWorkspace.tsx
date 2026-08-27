@@ -204,11 +204,19 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
 
   const executeCustom = () => {
     try {
-      const parsed = JSON.parse(customCase) as { input?: unknown; expected?: unknown };
-      if (!Array.isArray(parsed.input)) throw new Error("Input must be a JSON array of function arguments.");
+      const parsed = JSON.parse(customCase) as { input?: unknown; expected?: unknown; label?: string } | Array<{ input?: unknown; expected?: unknown; label?: string }>;
+      const cases = Array.isArray(parsed) ? parsed : [parsed];
+      if (cases.length === 0 || cases.length > 10) throw new Error("Add between 1 and 10 custom test cases.");
+      if (cases.some((test) => !Array.isArray(test.input) || !Object.prototype.hasOwnProperty.call(test, "expected"))) {
+        throw new Error("Every test needs an input array and an expected value.");
+      }
       return executeTests([
-        { label: "Custom test", input: parsed.input, expected: parsed.expected ?? null },
-      ], false, "Running your custom test...");
+        ...cases.map((test, index) => ({
+          label: test.label?.trim() || `Custom test ${index + 1}`,
+          input: test.input as unknown[],
+          expected: test.expected,
+        })),
+      ], false, `Running ${cases.length} custom test${cases.length === 1 ? "" : "s"}...`);
     } catch (error) {
       setRunResult({ passed: 0, total: 1, runtimeMs: 0, results: [], error: error instanceof Error ? error.message : "Use valid JSON for the custom test." });
       setStatusMessage("Custom test needs valid JSON");
@@ -695,7 +703,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                   className="mt-2 w-full min-h-20 resize-y rounded-lg border border-white/10 bg-white/5 p-2.5 font-mono text-[10px] leading-5 text-white/75 outline-none focus:border-[#ff5c36]"
                   aria-label="Custom test case JSON"
                 />
-                <p className="mt-1 font-sans text-[9px] text-white/30">Use <span className="font-mono">{"{ \"input\": [...], \"expected\": ... }"}</span> to try edge cases like a hackathon judge.</p>
+                <p className="mt-1 font-sans text-[9px] text-white/30">Use one object or an array of objects: <span className="font-mono">{"{ \"input\": [...], \"expected\": ... }"}</span>. Add a <span className="font-mono">label</span> optionally.</p>
               </div>
             </div>
           </section>
