@@ -5,6 +5,7 @@
  */
 
 import { Question } from "@/store/useStore";
+import { practiceQuestionExpansion } from "@/data/practiceQuestionExpansion";
 
 export interface AptitudeTopic {
   id: string;
@@ -3042,7 +3043,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "car",
         desc: "Trains, boats, relative speed, upstream-downstream",
         company_focus: ["TCS", "Wipro", "Infosys"],
-        questions: [...scrapedTimeAndDistance, ...trainQuestions]
+        questions: [...scrapedTimeAndDistance, ...trainQuestions, ...(practiceQuestionExpansion["speed-distance"] || [])]
       },
       {
         id: "work-time",
@@ -3050,7 +3051,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "timer",
         desc: "Pipes & cisterns, men-days, efficiency",
         company_focus: ["TCS", "Infosys", "Capgemini"],
-        questions: scrapedTimeAndWork
+        questions: [...scrapedTimeAndWork, ...(practiceQuestionExpansion["work-time"] || [])]
       },
       {
         id: "percentages",
@@ -3058,7 +3059,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "percent",
         desc: "% change, elections, successive change",
         company_focus: ["TCS", "Amazon", "Google"],
-        questions: scrapedPercentages
+        questions: [...scrapedPercentages, ...(practiceQuestionExpansion.percentages || [])]
       },
       {
         id: "profit-loss",
@@ -3066,7 +3067,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "coins",
         desc: "Mark-up, discount, dishonest dealers",
         company_focus: ["TCS", "Wipro", "Infosys"],
-        questions: scrapedProfitAndLoss
+        questions: [...scrapedProfitAndLoss, ...(practiceQuestionExpansion["profit-loss"] || [])]
       },
       {
         id: "interest",
@@ -3074,7 +3075,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "landmark",
         desc: "SI, CI formulas, difference tricks",
         company_focus: ["TCS", "Infosys", "Amazon"],
-        questions: scrapedSimpleInterest
+        questions: [...scrapedSimpleInterest, ...(practiceQuestionExpansion.interest || [])]
       },
       {
         id: "averages",
@@ -3082,7 +3083,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "line-chart",
         desc: "Weighted averages, replacement, groups",
         company_focus: ["TCS", "Wipro", "Cognizant"],
-        questions: scrapedAverages
+        questions: [...scrapedAverages, ...(practiceQuestionExpansion.averages || [])]
       },
       {
         id: "ratio-proportion",
@@ -3090,7 +3091,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "scale",
         desc: "Ratio chaining, partnership, alligation",
         company_focus: ["TCS", "Wipro", "Amazon"],
-        questions: scrapedRatiosAndProportions
+        questions: [...scrapedRatiosAndProportions, ...(practiceQuestionExpansion["ratio-proportion"] || [])]
       },
       {
         id: "number-systems",
@@ -3098,7 +3099,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "hash",
         desc: "Divisibility, HCF, LCM, remainders, unit digits",
         company_focus: ["TCS", "Google", "Amazon"],
-        questions: scrapedNumberSystems
+        questions: [...scrapedNumberSystems, ...(practiceQuestionExpansion["number-systems"] || [])]
       },
       {
         id: "perm-comb",
@@ -3106,7 +3107,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "dice",
         desc: "P&C, probability, arrangements, selections",
         company_focus: ["Amazon", "Infosys", "TCS"],
-        questions: permCombQuestions
+        questions: [...permCombQuestions, ...(practiceQuestionExpansion["perm-comb"] || [])]
       }
     ]
   },
@@ -3125,7 +3126,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "arrow-right-left",
         desc: "Arithmetic, geometric, mixed sequences",
         company_focus: ["TCS", "Cognizant", "Capgemini"],
-        questions: seriesQuestions
+        questions: [...seriesQuestions, ...(practiceQuestionExpansion["number-series"] || [])]
       },
       {
         id: "clocks-calendar",
@@ -3133,7 +3134,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "clock",
         desc: "Angle between hands, day finding, odd days",
         company_focus: ["TCS", "Infosys", "Wipro"],
-        questions: clockCalendarQuestions
+        questions: [...clockCalendarQuestions, ...(practiceQuestionExpansion["clocks-calendar"] || [])]
       }
     ]
   },
@@ -3152,7 +3153,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "pen-tool",
         desc: "Vocabulary, error spotting, sentence completion",
         company_focus: ["TCS", "Cognizant", "Capgemini"],
-        questions: verbalQuestions
+        questions: [...verbalQuestions, ...(practiceQuestionExpansion["verbal-main"] || [])]
       }
     ]
   },
@@ -3171,7 +3172,7 @@ export const aptitudeSections: AptitudeSection[] = [
         icon: "layout",
         desc: "Memory management, two pointers, sliding window",
         company_focus: ["Amazon", "Google", "Microsoft"],
-        questions: dsaArrayQuestions
+        questions: [...dsaArrayQuestions, ...(practiceQuestionExpansion["arrays-strings"] || [])]
       }
     ]
   }
