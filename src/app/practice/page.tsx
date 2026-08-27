@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import { useStore } from "@/store/useStore";
 import SideNav from "@/components/layout/SideNav";
 import { 
-  ArrowRight, Sparkles, CheckCircle2, ChevronRight, Lock,
+  Sparkles, ChevronRight, Building2,
   Calculator, Brain, Book, Car, Timer, Percent, Coins, Landmark,
   LineChart, Scale, Hash, Dice5, ArrowRightLeft, Clock, PenTool, Code, Layout
 } from "lucide-react";
 import Link from "next/link";
-import { aptitudeSections, AptitudeTopic } from "@/data/aptitudeData";
+import { aptitudeSections, getTotalQuestions } from "@/data/aptitudeData";
+import { codingQuestions } from "@/data/codingQuestions";
+import { companyNames } from "@/data/companyCatalog";
 
 const iconMap: Record<string, React.ElementType> = {
   "calculator": Calculator,
@@ -62,9 +64,39 @@ export default function PracticeHub() {
             </h2>
           </div>
           <p className="font-sans text-sm text-on-surface-variant max-w-2xl leading-relaxed">
-            Master the core concepts tested by top Indian IT companies. Our structured approach breaks down topics into essential prerequisites, formulas, and progressive difficulty levels.
+            Build placement strength across service, consulting, product, fintech, startup, and global company patterns. Learn prerequisites first, move through progressive difficulty, and create fresh questions whenever a topic queue ends.
           </p>
         </header>
+
+        <section className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div className="bento-card rounded-2xl p-5">
+            <p className="font-display text-3xl font-extrabold text-primary">{getTotalQuestions()}+</p>
+            <p className="font-sans text-[9px] font-bold uppercase tracking-wider text-on-surface-variant mt-1">Aptitude questions ready</p>
+          </div>
+          <div className="bento-card rounded-2xl p-5">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="font-display text-3xl font-extrabold text-primary">{companyNames.length}</p>
+                <p className="font-sans text-[9px] font-bold uppercase tracking-wider text-on-surface-variant mt-1">Company patterns</p>
+              </div>
+              <Building2 className="h-5 w-5 text-secondary-container" />
+            </div>
+          </div>
+          <Link href="/coding" className="rounded-2xl bg-primary p-5 text-on-primary group flex items-center justify-between gap-4">
+            <div>
+              <p className="font-display text-xl font-bold">Coding Lab</p>
+              <p className="font-sans text-[9px] font-bold text-on-primary/60 mt-1">{codingQuestions.length} guided editor problems</p>
+            </div>
+            <ChevronRight className="h-5 w-5 text-secondary-container transition-transform group-hover:translate-x-1" />
+          </Link>
+        </section>
+
+        <div className="rounded-2xl border border-secondary-container/20 bg-secondary-container/10 px-5 py-4 mb-8 flex items-center gap-3">
+          <Sparkles className="h-5 w-5 text-secondary shrink-0" />
+          <p className="font-sans text-xs text-primary leading-relaxed">
+            <strong>Replenishable practice:</strong> finish any topic bank, then use “Create fresh question” to add a new year- and company-matched problem to your stream.
+          </p>
+        </div>
 
         {/* Top Filter Tabs */}
         <div className="flex gap-3 overflow-x-auto pb-4 mb-8 custom-scrollbar">

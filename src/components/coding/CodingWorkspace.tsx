@@ -1,0 +1,643 @@
+"use client";
+
+import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+  Code2,
+  Copy,
+  Eye,
+  Gauge,
+  Languages,
+  Lightbulb,
+  LoaderCircle,
+  Play,
+  RotateCcw,
+  Send,
+  Sparkles,
+  Terminal,
+  TrendingUp,
+  XCircle,
+  Zap,
+} from "lucide-react";
+import SideNav from "@/components/layout/SideNav";
+import { codingQuestions, type CodingQuestion } from "@/data/codingQuestions";
+import { getComplexityGuide } from "@/data/codingComplexity";
+import {
+  codingLanguageMeta,
+  getLanguageTemplate,
+  getSupportedLanguages,
+  type CodingLanguage,
+} from "@/data/codingLanguages";
+import { runJavaScriptTests, type CodingRunResult } from "@/lib/codingRunner";
+import { useStore } from "@/store/useStore";
+import { createClient } from "../../../utils/supabase/client";
+
+type WorkspaceTab = "description" | "concept" | "complexity" | "hints" | "solution";
+
+const difficultyStyles = {
+  Foundation: "bg-violet-50 text-violet-700 border-violet-200",
+  Easy: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  Medium: "bg-amber-50 text-amber-700 border-amber-200",
+  Hard: "bg-red-50 text-red-700 border-red-200",
+};
+
+function displayValue(value: unknown) {
+  if (typeof value === "string") return JSON.stringify(value);
+  if (value === undefined) return "undefined";
+  return JSON.stringify(value);
+}
+
+function isUuid(value: string) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+}
+
+export default function CodingWorkspace({ question }: { question: CodingQuestion }) {
+  const router = useRouter();
+  const { user, updateXP } = useStore();
+  const [activeTab, setActiveTab] = useState<WorkspaceTab>("description");
+  const supportedLanguages = useMemo(() => getSupportedLanguages(question), [question]);
+  const complexity = useMemo(() => getComplexityGuide(question), [question]);
+  const [selectedLanguage, setSelectedLanguage] = useState<CodingLanguage>(() => {
+    if (typeof window === "undefined") return "javascript";
+    const savedLanguage = window.localStorage.getItem(`prepmate_language_${question.id}`) as CodingLanguage | null;
+    return savedLanguage && getSupportedLanguages(question).includes(savedLanguage)
+      ? savedLanguage
+      : "javascript";
+  });
+  const activeTemplate = getLanguageTemplate(question, selectedLanguage) || {
+    starterCode: question.starterCode,
+    solutionCode: question.solutionCode,
+  };
+  const languageMeta = codingLanguageMeta[selectedLanguage];
+  const [code, setCode] = useState(() => {
+    const template = getLanguageTemplate(question, selectedLanguage) || {
+      starterCode: question.starterCode,
+      solutionCode: question.solutionCode,
+    };
+    if (typeof window === "undefined") return template.starterCode;
+    return window.localStorage.getItem(`prepmate_code_${question.id}_${selectedLanguage}`) || template.starterCode;
+  });
+  const [scrollTop, setScrollTop] = useState(0);
+  const [runResult, setRunResult] = useState<CodingRunResult | null>(null);
+  const [isRunning, setIsRunning] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("Ready to run your code");
+  const [showSolution, setShowSolution] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [solved, setSolved] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const solvedQuestions = JSON.parse(
+      window.localStorage.getItem("prepmate_coding_solved") || "[]",
+    ) as string[];
+    return solvedQuestions.includes(question.id);
+  });
+  const editorRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (!user) router.push("/auth");
+  }, [router, user]);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      window.localStorage.setItem(`prepmate_code_${question.id}_${selectedLanguage}`, code);
+      window.localStorage.setItem(`prepmate_language_${question.id}`, selectedLanguage);
+    }, 250);
+    return () => window.clearTimeout(timeout);
+  }, [code, question.id, selectedLanguage]);
+
+  const nextQuestion = useMemo(() => {
+    const currentIndex = codingQuestions.findIndex((item) => item.id === question.id);
+    return codingQuestions[(currentIndex + 1) % codingQuestions.length];
+  }, [question.id]);
+
+  if (!user) return null;
+
+  const execute = async (submit: boolean) => {
+    if (!languageMeta.executable) {
+      setStatusMessage(`${languageMeta.label} is available as guided template practice; switch to JavaScript to run tests in the browser.`);
+      return;
+    }
+    setIsRunning(true);
+    setRunResult(null);
+    setStatusMessage(submit ? "Checking all test cases..." : "Running sample tests...");
+
+    const selectedTests = submit
+      ? question.tests
+      : question.tests.filter((test) => !test.hidden);
+    const result = await runJavaScriptTests(code, question.functionName, selectedTests);
+    setRunResult(result);
+    setIsRunning(false);
+
+    const passedAll = result.total > 0 && result.passed === result.total && !result.error;
+    setStatusMessage(
+      passedAll
+        ? submit
+          ? "Accepted — every test passed"
+          : "Sample tests passed"
+        : result.error || `${result.passed} of ${result.total} tests passed`,
+    );
+
+    if (!submit || !passedAll) return;
+
+    const solvedQuestions = JSON.parse(
+      window.localStorage.getItem("prepmate_coding_solved") || "[]",
+    ) as string[];
+    const firstSolve = !solvedQuestions.includes(question.id);
+    if (firstSolve) {
+      solvedQuestions.push(question.id);
+      window.localStorage.setItem("prepmate_coding_solved", JSON.stringify(solvedQuestions));
+      updateXP(question.xp);
+    }
+    setSolved(true);
+
+    const attempt = {
+      questionId: question.id,
+      questionTitle: question.title,
+      status: "accepted",
+      passedTests: result.passed,
+      totalTests: result.total,
+      runtimeMs: result.runtimeMs,
+      sourceCode: code,
+      language: selectedLanguage,
+      createdAt: new Date().toISOString(),
+    };
+    const attempts = JSON.parse(
+      window.localStorage.getItem("prepmate_coding_attempts") || "[]",
+    ) as typeof attempt[];
+    window.localStorage.setItem(
+      "prepmate_coding_attempts",
+      JSON.stringify([attempt, ...attempts].slice(0, 100)),
+    );
+
+    const supabase = createClient();
+    if (supabase && isUuid(user.id)) {
+      await supabase.from("coding_attempts").insert({
+        user_id: user.id,
+        question_id: question.id,
+        question_title: question.title,
+        study_year: Number(user.studyYear) || 3,
+        language: selectedLanguage,
+        status: "accepted",
+        passed_tests: result.passed,
+        total_tests: result.total,
+        runtime_ms: result.runtimeMs,
+        source_code: code,
+      });
+    }
+  };
+
+  const handleEditorKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key !== "Tab") return;
+    event.preventDefault();
+    const textarea = event.currentTarget;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const nextCode = `${code.slice(0, start)}  ${code.slice(end)}`;
+    setCode(nextCode);
+    window.requestAnimationFrame(() => {
+      textarea.selectionStart = textarea.selectionEnd = start + 2;
+    });
+  };
+
+  const copySolution = async () => {
+    await navigator.clipboard.writeText(activeTemplate.solutionCode);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1500);
+  };
+
+  const changeLanguage = (language: CodingLanguage) => {
+    const template = getLanguageTemplate(question, language);
+    if (!template) return;
+    window.localStorage.setItem(`prepmate_code_${question.id}_${selectedLanguage}`, code);
+    setSelectedLanguage(language);
+    setCode(
+      window.localStorage.getItem(`prepmate_code_${question.id}_${language}`) ||
+        template.starterCode,
+    );
+    setRunResult(null);
+    setShowSolution(false);
+    setStatusMessage(
+      codingLanguageMeta[language].executable
+        ? "Ready to run your code"
+        : `${codingLanguageMeta[language].label} template mode — write and compare your approach`,
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-background text-on-surface">
+      <SideNav />
+
+      <main className="md:ml-64 min-h-screen pb-24 md:pb-0 flex flex-col">
+        <header className="h-auto min-h-16 border-b border-outline-variant bg-surface-container-lowest px-4 md:px-6 py-3 flex flex-wrap items-center gap-3 sticky top-16 md:top-0 z-30">
+          <Link
+            href="/coding"
+            className="h-9 w-9 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors"
+            aria-label="Back to Coding Lab"
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Link>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="font-display text-base md:text-lg font-bold text-primary truncate">
+                {question.title}
+              </h1>
+              <span className={`rounded-full border px-2.5 py-1 font-sans text-[8px] font-extrabold ${difficultyStyles[question.difficulty]}`}>
+                {question.difficulty}
+              </span>
+              {solved && (
+                <span className="rounded-full bg-emerald-50 px-2.5 py-1 font-sans text-[8px] font-extrabold text-emerald-700 flex items-center gap-1">
+                  <CheckCircle2 className="h-3 w-3" /> Solved
+                </span>
+              )}
+            </div>
+            <p className="font-sans text-[9px] text-on-surface-variant font-bold mt-0.5">
+              {question.pattern} • {complexity.optimized.time} • {supportedLanguages.length} language{supportedLanguages.length === 1 ? "" : "s"} • {question.xp} XP
+            </p>
+          </div>
+          <Link
+            href={`/coding/${nextQuestion.id}`}
+            className="rounded-full border border-outline-variant px-4 py-2 font-sans text-[10px] font-bold text-primary flex items-center gap-2 hover:border-primary transition-colors"
+          >
+            Next problem <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </header>
+
+        <div className="flex-1 grid grid-cols-1 xl:grid-cols-2 min-h-0">
+          <section className="border-r border-outline-variant bg-surface-container-lowest xl:h-[calc(100vh-64px)] xl:overflow-y-auto">
+            <nav className="sticky top-0 z-20 bg-surface-container-lowest border-b border-outline-variant px-4 md:px-6 flex overflow-x-auto hide-scrollbar">
+              {(
+                [
+                  ["description", "Description"],
+                  ["concept", "Learn concept"],
+                  ["complexity", "Complexity"],
+                  ["hints", "Hints"],
+                  ["solution", "Solution"],
+                ] as Array<[WorkspaceTab, string]>
+              ).map(([tab, label]) => (
+                <button
+                  key={tab}
+                  type="button"
+                  onClick={() => setActiveTab(tab)}
+                  className={`shrink-0 px-4 py-4 font-sans text-[10px] font-extrabold uppercase tracking-wider border-b-2 transition-colors cursor-pointer ${
+                    activeTab === tab
+                      ? "border-secondary-container text-primary"
+                      : "border-transparent text-on-surface-variant hover:text-primary"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </nav>
+
+            <div className="p-6 md:p-8 max-w-3xl">
+              {activeTab === "description" && (
+                <div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {question.companies.map((company) => (
+                      <span key={company} className="rounded bg-surface-container px-2.5 py-1 font-sans text-[9px] font-bold text-on-surface-variant">
+                        {company}
+                      </span>
+                    ))}
+                    <span className="rounded bg-emerald-50 px-2.5 py-1 font-sans text-[9px] font-extrabold text-emerald-700 flex items-center gap-1">
+                      <Gauge className="h-3 w-3" /> Time {complexity.optimized.time}
+                    </span>
+                    <span className="rounded bg-violet-50 px-2.5 py-1 font-sans text-[9px] font-extrabold text-violet-700">
+                      Space {complexity.optimized.space}
+                    </span>
+                  </div>
+                  <p className="font-sans text-sm text-primary leading-7 mb-8">
+                    {question.problemStatement}
+                  </p>
+
+                  <div className="space-y-5 mb-8">
+                    {question.examples.map((example, index) => (
+                      <div key={example.input}>
+                        <h2 className="font-display text-base font-bold text-primary mb-2">Example {index + 1}</h2>
+                        <div className="rounded-xl bg-primary text-on-primary p-4 font-mono text-xs leading-6 overflow-x-auto">
+                          <p><span className="text-on-primary/50">Input:</span> {example.input}</p>
+                          <p><span className="text-on-primary/50">Output:</span> {example.output}</p>
+                        </div>
+                        <p className="font-sans text-xs text-on-surface-variant mt-2 leading-relaxed">
+                          {example.explanation}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div>
+                    <h2 className="font-display text-base font-bold text-primary mb-3">Constraints</h2>
+                    <ul className="space-y-2">
+                      {question.constraints.map((constraint) => (
+                        <li key={constraint} className="font-mono text-xs text-on-surface-variant flex gap-2">
+                          <span className="text-secondary-container">•</span> {constraint}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "concept" && (
+                <div>
+                  <div className="rounded-2xl bg-secondary-container/10 border border-secondary-container/20 p-5 mb-7">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Sparkles className="h-4 w-4 text-secondary" />
+                      <h2 className="font-display text-lg font-bold text-primary">Why this matters in real products</h2>
+                    </div>
+                    <p className="font-sans text-sm text-on-surface-variant leading-7">
+                      {question.realWorldExample}
+                    </p>
+                  </div>
+
+                  <h2 className="font-display text-xl font-bold text-primary mb-4">Learn {question.pattern}</h2>
+                  <div className="space-y-4 mb-8">
+                    {question.learningSteps.map((step, index) => (
+                      <div key={step} className="flex gap-4 rounded-2xl border border-outline-variant p-4">
+                        <div className="h-8 w-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-display text-xs font-bold shrink-0">
+                          {index + 1}
+                        </div>
+                        <p className="font-sans text-sm text-primary leading-6 pt-1">{step}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <h3 className="font-display text-base font-bold text-primary mb-3">Know these first</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {question.prerequisites.map((item) => (
+                      <span key={item} className="rounded-full border border-outline-variant bg-surface-container-low px-3 py-1.5 font-sans text-[10px] font-bold text-primary">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "complexity" && (
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="h-11 w-11 rounded-xl bg-secondary-container/10 text-secondary flex items-center justify-center">
+                      <TrendingUp className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h2 className="font-display text-xl font-bold text-primary">Complexity coach</h2>
+                      <p className="font-sans text-xs text-on-surface-variant">Understand what changes before memorizing Big-O.</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-7">
+                    <div className="rounded-2xl border border-red-200 bg-red-50/60 p-5">
+                      <p className="font-sans text-[9px] font-extrabold uppercase tracking-wider text-red-700 mb-3">Brute-force thinking</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <span className="rounded-full bg-white px-3 py-1.5 font-mono text-xs font-bold text-red-700">Time {complexity.bruteForce.time}</span>
+                        <span className="rounded-full bg-white px-3 py-1.5 font-mono text-xs font-bold text-red-700">Space {complexity.bruteForce.space}</span>
+                      </div>
+                      <p className="font-sans text-xs text-red-900/75 leading-6">{complexity.bruteForce.explanation}</p>
+                    </div>
+                    <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-5">
+                      <p className="font-sans text-[9px] font-extrabold uppercase tracking-wider text-emerald-700 mb-3">Optimized pattern</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <span className="rounded-full bg-white px-3 py-1.5 font-mono text-xs font-bold text-emerald-700">Time {complexity.optimized.time}</span>
+                        <span className="rounded-full bg-white px-3 py-1.5 font-mono text-xs font-bold text-emerald-700">Space {complexity.optimized.space}</span>
+                      </div>
+                      <p className="font-sans text-xs text-emerald-900/75 leading-6">{complexity.optimized.explanation}</p>
+                    </div>
+                  </div>
+
+                  <h3 className="font-display text-lg font-bold text-primary mb-4">How to improve your approach</h3>
+                  <div className="space-y-3 mb-7">
+                    {complexity.improvementSteps.map((step, index) => (
+                      <div key={step} className="rounded-2xl border border-outline-variant p-4 flex gap-3">
+                        <span className="h-7 w-7 rounded-full bg-primary text-on-primary flex items-center justify-center font-display text-[10px] font-bold shrink-0">{index + 1}</span>
+                        <p className="font-sans text-sm text-primary leading-6">{step}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="rounded-2xl bg-primary p-5 text-on-primary flex gap-3">
+                    <Lightbulb className="h-5 w-5 text-secondary-container shrink-0" />
+                    <div>
+                      <p className="font-sans text-[9px] font-extrabold uppercase tracking-wider text-on-primary/60 mb-1">Interview explanation</p>
+                      <p className="font-sans text-xs leading-6">{complexity.interviewTip}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "hints" && (
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+                      <Lightbulb className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h2 className="font-display text-xl font-bold text-primary">Progressive hints</h2>
+                      <p className="font-sans text-xs text-on-surface-variant">Open only what you need.</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {question.hints.map((hint, index) => (
+                      <details key={hint} className="group rounded-2xl border border-outline-variant bg-background p-4">
+                        <summary className="font-sans text-sm font-bold text-primary cursor-pointer list-none flex items-center justify-between">
+                          Hint {index + 1}
+                          <ChevronDown className="h-4 w-4 text-on-surface-variant transition-transform group-open:rotate-180" />
+                        </summary>
+                        <p className="font-sans text-sm text-on-surface-variant leading-6 mt-3 pt-3 border-t border-outline-variant">
+                          {hint}
+                        </p>
+                      </details>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "solution" && (
+                <div>
+                  <div className="rounded-2xl border border-outline-variant p-6 text-center mb-6">
+                    <Eye className="h-6 w-6 text-secondary-container mx-auto mb-3" />
+                    <h2 className="font-display text-xl font-bold text-primary mb-2">Reference solution</h2>
+                    <p className="font-sans text-xs text-on-surface-variant leading-relaxed max-w-md mx-auto mb-5">
+                      Try the hints and run your own approach first. Revealing the answer is useful for comparison, not memorization.
+                    </p>
+                    {!showSolution && (
+                      <button
+                        type="button"
+                        onClick={() => setShowSolution(true)}
+                        className="rounded-full bg-primary px-5 py-2.5 font-sans text-[10px] font-extrabold uppercase tracking-wider text-on-primary cursor-pointer"
+                      >
+                        Reveal solution
+                      </button>
+                    )}
+                  </div>
+                  {showSolution && (
+                    <div className="rounded-2xl bg-primary text-on-primary overflow-hidden">
+                      <div className="border-b border-on-primary/10 px-4 py-3 flex items-center justify-between">
+                        <span className="font-sans text-[9px] font-bold uppercase tracking-wider text-on-primary/60">{languageMeta.label}</span>
+                        <button type="button" onClick={copySolution} className="text-on-primary/70 hover:text-on-primary flex items-center gap-1.5 font-sans text-[9px] font-bold cursor-pointer">
+                          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                          {copied ? "Copied" : "Copy"}
+                        </button>
+                      </div>
+                      <pre className="p-5 overflow-x-auto font-mono text-xs leading-6"><code>{activeTemplate.solutionCode}</code></pre>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </section>
+
+          <section className="bg-[#151515] text-white xl:h-[calc(100vh-64px)] flex flex-col min-h-[720px]">
+            <div className="h-12 border-b border-white/10 px-4 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-2">
+                <Code2 className="h-4 w-4 text-[#ff5c36]" />
+                <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-white/70">Code</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="relative">
+                  <span className="sr-only">Coding language</span>
+                  <select
+                    value={selectedLanguage}
+                    onChange={(event) => changeLanguage(event.target.value as CodingLanguage)}
+                    className="appearance-none rounded-lg border border-white/10 bg-white/5 py-1.5 pl-3 pr-8 font-sans text-[10px] font-bold text-white/80 outline-none cursor-pointer"
+                  >
+                    {supportedLanguages.map((language) => (
+                      <option key={language} value={language} className="bg-[#151515] text-white">
+                        {codingLanguageMeta[language].label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-2.5 top-1/2 h-3 w-3 -translate-y-1/2 text-white/40 pointer-events-none" />
+                </label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCode(activeTemplate.starterCode);
+                    setRunResult(null);
+                    setStatusMessage("Editor reset");
+                  }}
+                  className="h-8 w-8 rounded-lg border border-white/10 flex items-center justify-center text-white/50 hover:text-white cursor-pointer"
+                  aria-label="Reset code"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="relative flex-1 min-h-[360px] overflow-hidden bg-[#151515]">
+              <div className="absolute inset-y-0 left-0 w-12 border-r border-white/5 bg-[#111] overflow-hidden select-none pointer-events-none">
+                <pre
+                  className="absolute left-0 right-0 top-0 px-3 pt-4 text-right font-mono text-xs leading-6 text-white/25"
+                  style={{ transform: `translateY(-${scrollTop}px)` }}
+                >
+                  {code.split("\n").map((_, index) => `${index + 1}\n`).join("")}
+                </pre>
+              </div>
+              <textarea
+                ref={editorRef}
+                value={code}
+                onChange={(event) => setCode(event.target.value)}
+                onScroll={(event) => setScrollTop(event.currentTarget.scrollTop)}
+                onKeyDown={handleEditorKeyDown}
+                spellCheck={false}
+                aria-label={`${languageMeta.label} solution editor`}
+                className="absolute inset-0 w-full h-full resize-none bg-transparent pl-16 pr-5 py-4 font-mono text-[13px] leading-6 text-[#f3f3f3] caret-[#ff5c36] outline-none overflow-auto tab-size-2"
+              />
+            </div>
+
+            <div className="border-t border-white/10 bg-[#111] shrink-0">
+              <div className="h-11 px-4 flex items-center justify-between border-b border-white/10">
+                <div className="flex items-center gap-2 min-w-0">
+                  <Terminal className="h-4 w-4 text-[#ff5c36] shrink-0" />
+                  <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-white/60 shrink-0">Test results</span>
+                  <span className="font-sans text-[10px] text-white/35 truncate">{statusMessage}</span>
+                </div>
+                {runResult && (
+                  <span className={`font-sans text-[10px] font-bold ${runResult.passed === runResult.total && !runResult.error ? "text-emerald-400" : "text-amber-400"}`}>
+                    {runResult.passed}/{runResult.total} • {runResult.runtimeMs} ms
+                  </span>
+                )}
+              </div>
+
+              <div className="h-44 overflow-y-auto p-4">
+                {!languageMeta.executable && !isRunning && (
+                  <div className="h-full flex flex-col items-center justify-center text-center px-5">
+                    <Languages className="h-5 w-5 text-[#ff5c36]/70 mb-2" />
+                    <p className="font-sans text-[10px] font-bold text-white/60 mb-1">{languageMeta.label} guided template mode</p>
+                    <p className="font-sans text-[10px] text-white/35 leading-5">Write your solution, compare it with the reference, and switch to JavaScript when you want browser test execution.</p>
+                  </div>
+                )}
+                {languageMeta.executable && !runResult && !isRunning && (
+                  <div className="h-full flex flex-col items-center justify-center text-center">
+                    <Play className="h-5 w-5 text-white/20 mb-2" />
+                    <p className="font-sans text-[10px] text-white/35">Run the sample tests when you are ready.</p>
+                  </div>
+                )}
+                {isRunning && (
+                  <div className="h-full flex items-center justify-center gap-2 text-white/50">
+                    <LoaderCircle className="h-4 w-4 animate-spin" />
+                    <span className="font-sans text-[10px] font-bold">Executing in browser sandbox...</span>
+                  </div>
+                )}
+                {runResult?.error && (
+                  <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-red-300 font-mono text-xs">
+                    {runResult.error}
+                  </div>
+                )}
+                {runResult && runResult.results.length > 0 && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {runResult.results.map((result, index) => (
+                      <div key={`${result.label}-${index}`} className={`rounded-xl border p-3 ${result.passed ? "border-emerald-500/20 bg-emerald-500/5" : "border-red-500/20 bg-red-500/5"}`}>
+                        <div className="flex items-center gap-2 mb-2">
+                          {result.passed ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> : <XCircle className="h-3.5 w-3.5 text-red-400" />}
+                          <span className="font-sans text-[10px] font-bold text-white/80">{result.hidden ? `Hidden test ${index + 1}` : result.label}</span>
+                        </div>
+                        {!result.hidden && !result.passed && (
+                          <div className="space-y-1 font-mono text-[10px] text-white/45">
+                            <p>Expected: {displayValue(result.expected)}</p>
+                            <p>Received: {result.error || displayValue(result.actual)}</p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="h-16 border-t border-white/10 px-4 flex items-center justify-between gap-3">
+                <div className="hidden sm:flex items-center gap-2 text-white/30 font-sans text-[9px]">
+                  {languageMeta.executable ? (
+                    <><Zap className="h-3.5 w-3.5" /> 2.5 second safety limit</>
+                  ) : (
+                    <><Languages className="h-3.5 w-3.5" /> Template and solution comparison</>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 ml-auto">
+                  <button
+                    type="button"
+                    onClick={() => execute(false)}
+                    disabled={isRunning || !languageMeta.executable}
+                    className="rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 font-sans text-[10px] font-bold text-white flex items-center gap-2 hover:bg-white/10 disabled:opacity-50 cursor-pointer"
+                  >
+                    <Play className="h-3.5 w-3.5" /> Run
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => execute(true)}
+                    disabled={isRunning || !languageMeta.executable}
+                    className="rounded-lg bg-[#ff5c36] px-4 py-2.5 font-sans text-[10px] font-extrabold text-[#5a0f00] flex items-center gap-2 hover:brightness-105 disabled:opacity-50 cursor-pointer"
+                  >
+                    <Send className="h-3.5 w-3.5" /> Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+}

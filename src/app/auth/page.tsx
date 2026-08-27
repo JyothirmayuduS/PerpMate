@@ -2,12 +2,13 @@ import { login, signup, loginWithGoogle } from './actions'
 import { ArrowRight, Sparkles, Mail, Lock, User } from 'lucide-react'
 import Link from 'next/link'
 
-export default function AuthPage({
+export default async function AuthPage({
   searchParams,
 }: {
-  searchParams: { error?: string, mode?: string }
+  searchParams: Promise<{ error?: string; mode?: string }>;
 }) {
-  const isSignUp = searchParams.mode === 'signup'
+  const resolvedSearchParams = await searchParams;
+  const isSignUp = resolvedSearchParams.mode === 'signup'
 
   return (
     <div className="min-h-screen bg-surface flex flex-col justify-center items-center p-4 relative overflow-hidden">
@@ -34,9 +35,9 @@ export default function AuthPage({
           </p>
         </div>
 
-        {searchParams.error && (
+        {resolvedSearchParams.error && (
           <div className="mb-6 p-4 bg-error-container/30 border border-error/50 rounded-xl">
-            <p className="text-error text-sm font-bold text-center">{searchParams.error}</p>
+            <p className="text-error text-sm font-bold text-center">{resolvedSearchParams.error}</p>
           </div>
         )}
 

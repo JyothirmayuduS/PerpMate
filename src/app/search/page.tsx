@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useStore } from "@/store/useStore";
 import SideNav from "@/components/layout/SideNav";
@@ -15,10 +15,13 @@ import {
   ArrowRight,
   BookOpen,
   ArrowUp,
-  Sparkles,
   CheckCircle2
 } from "lucide-react";
 import Link from "next/link";
+import {
+  featuredInterviewTranscripts,
+  interviewTranscripts,
+} from "@/data/interviewTranscripts";
 
 function SearchContent() {
   const router = useRouter();
@@ -59,30 +62,6 @@ function SearchContent() {
       percent: 0,
       completedText: "Not Started",
       hasStart: true
-    }
-  ];
-
-  // Mock Transcripts Data
-  const transcripts = [
-    {
-      id: "tr-1",
-      name: "Sarah Jenkins",
-      title: "L4 Software Engineer Interview",
-      company: "Google",
-      heading: '"The DP question that almost stumped me..."',
-      desc: "I was asked a variation of the knapsack problem. Initially, I struggled with state definition, but working backwards from the recursive tree helped...",
-      badge: "Offer Received",
-      avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBWOqZMQvwcS6Y52VkUWGEIwvkof71aeZIN20jhxGEhigk6T1NIhn3l3ck7Gor8NNOYqSdORnRy3vJFsxegc7hmxHTLi9u3SS6milLtuvJAr1LnfRpTRUd4uKKfGF8taD4Mw3EX2_DNcFeu9KMlSnxN9wnI6_6-soGFdNoyjOlpH04g5ypfZxaLR2MZ4bfpHKVWyO8QHvvgjI1L0FdbEDNm8gimT7c-lAqpUVJMMA7WxI5NuetmIb1r"
-    },
-    {
-      id: "tr-2",
-      name: "David Chen",
-      title: "E5 Senior Engineer Interview",
-      company: "Meta",
-      heading: '"Optimizing Space in 1D DP"',
-      desc: "The interviewer explicitly asked to optimize the O(N) space complexity down to O(1) for a sequence alignment problem...",
-      badge: "Offer Received",
-      avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuB2t2qWBxWZMN8h4gFwzZ2NmEUBd4aHuduph0lbE_FKxeF4a0Xvi_8q7pW7QW6O8NI7rVc5freXxfB4jKD6Xyvq5tLi3vBVJfns2WRq-I3xwi3TocmuaWcxHXovxEwZfUfm4adVz24muadMvvvx9MNbQHZgjKEKXpyN047Fq6wLbh7C_fpcTdd-Eo3sN3knQNdV4A93tC1EsrK5fsXzyX2ixWSbz_tQYizie_ODvn9s4vc_qMTSn8ck"
     }
   ];
 
@@ -162,7 +141,7 @@ function SearchContent() {
               Search Results
             </h2>
             <p className="font-sans text-sm text-on-surface-variant">
-              Showing top results for "<strong>{activeQuery}</strong>"
+              Showing top results for “<strong>{activeQuery}</strong>”
             </p>
           </div>
 
@@ -261,9 +240,12 @@ function SearchContent() {
 
                     <div>
                       {mod.hasStart ? (
-                        <button className="w-full py-2.5 border border-primary text-primary rounded-xl font-sans text-xs font-bold hover:bg-primary hover:text-on-primary transition-all active:scale-[0.98] cursor-pointer">
+                        <Link
+                          href="/roadmap"
+                          className="block w-full py-2.5 border border-primary text-primary rounded-xl font-sans text-xs font-bold text-center hover:bg-primary hover:text-on-primary transition-all active:scale-[0.98]"
+                        >
                           Start Module
-                        </button>
+                        </Link>
                       ) : (
                         <div>
                           <div className="w-full bg-surface-container-high h-1.5 rounded-full mb-2 overflow-hidden">
@@ -288,22 +270,27 @@ function SearchContent() {
                   Interview Transcripts
                 </h3>
                 <Link 
-                  href="#"
+                  href="/transcripts"
                   className="font-sans text-[10px] font-extrabold uppercase text-secondary-container hover:underline"
                 >
-                  View All (18)
+                  View All ({interviewTranscripts.length})
                 </Link>
               </div>
 
               <div className="grid grid-cols-1 gap-4">
-                {transcripts.map((item) => (
+                {featuredInterviewTranscripts.map((item) => (
                   <div 
                     key={item.id}
                     className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-5 bento-shadow bento-hover"
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <div className="h-9 w-9 rounded-full overflow-hidden border border-outline-variant">
-                        <img src={item.avatar} alt={item.name} className="w-full h-full object-cover" />
+                        <div
+                          role="img"
+                          aria-label={item.name}
+                          className="w-full h-full bg-cover bg-center"
+                          style={{ backgroundImage: `url(${item.avatar})` }}
+                        />
                       </div>
                       <div>
                         <h4 className="font-sans text-xs font-extrabold text-primary leading-none">

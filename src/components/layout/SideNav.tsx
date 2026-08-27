@@ -12,24 +12,22 @@ import {
   Timer, 
   Settings, 
   LogOut,
-  User as UserIcon,
   Compass,
   Search,
   Sparkles,
-  PieChart
+  PieChart,
+  TerminalSquare
 } from "lucide-react";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
+
+const emptySubscribe = () => () => {};
 
 export default function SideNav() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useStore();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   if (!mounted) return null;
 
@@ -39,6 +37,7 @@ export default function SideNav() {
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Search Results", href: "/search", icon: Search },
     { name: "Practice Hub", href: "/practice", icon: Code2 },
+    { name: "Coding Lab", href: "/coding", icon: TerminalSquare, badge: "New" },
     { name: "Company Hub", href: "/companies", icon: Compass },
     { name: "Doubts Board", href: "/doubts", icon: HelpCircle },
     { name: "Roadmap", href: "/roadmap", icon: Map, badge: "AI" },
@@ -162,7 +161,7 @@ export default function SideNav() {
       </div>
 
       {/* Mobile Bottom NavBar */}
-      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe md:hidden bg-surface-container-lowest/90 backdrop-blur-md border-t border-outline-variant shadow-lg rounded-t-xl py-2 h-16">
+      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-start items-center px-2 pb-safe md:hidden bg-surface-container-lowest/90 backdrop-blur-md border-t border-outline-variant shadow-lg rounded-t-xl py-2 h-16 overflow-x-auto hide-scrollbar">
         {navLinks.map((link) => {
           const Icon = link.icon;
           const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
@@ -171,7 +170,7 @@ export default function SideNav() {
             <Link
               key={link.name}
               href={link.href}
-              className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200 ${
+              className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200 min-w-16 ${
                 isActive
                   ? "text-secondary font-bold scale-105"
                   : "text-on-surface-variant"

@@ -1,18 +1,37 @@
 "use client";
 
-import { useState, useEffect, use, useCallback } from "react";
+import { useState, useEffect, use, useMemo, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { useStore, Question, Prerequisite } from "@/store/useStore";
 import SideNav from "@/components/layout/SideNav";
 import {
   ArrowLeft, ArrowRight, CheckCircle2, XCircle, Clock, ListOrdered,
-  BookOpen, Info, ChevronDown, ChevronUp, ExternalLink, X,
-  Sparkles, RefreshCw, AlertTriangle, Building2, Flame,
+  BookOpen, Info, ChevronDown, ChevronUp, X,
+  Building2, Flame,
   Lightbulb, Calculator, Brain
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import MathFormula from "@/components/MathFormula";
+
+const emptySubscribe = () => () => {};
+
+function generatedQuestionsSnapshot() {
+  const keys = Array.from({ length: window.localStorage.length }, (_, index) =>
+    window.localStorage.key(index),
+  )
+    .filter((key): key is string => Boolean(key?.startsWith("prepmate_generated_")))
+    .sort();
+  const generated: Question[] = [];
+  for (const key of keys) {
+    try {
+      generated.push(...(JSON.parse(window.localStorage.getItem(key) || "[]") as Question[]));
+    } catch {
+      // Ignore one damaged topic cache and keep the rest of the saved stream usable.
+    }
+  }
+  return JSON.stringify(generated);
+}
 
 // ─── Difficulty Config ─────────────────────────────────────────────────────────
 
@@ -40,7 +59,8 @@ function PrerequisitesPanel({
   const toggleExpand = (slug: string) => {
     setExpanded(prev => {
       const next = new Set(prev);
-      next.has(slug) ? next.delete(slug) : next.add(slug);
+      if (next.has(slug)) next.delete(slug);
+      else next.add(slug);
       return next;
     });
   };
@@ -48,7 +68,8 @@ function PrerequisitesPanel({
   const toggleCheck = (slug: string) => {
     setChecked(prev => {
       const next = new Set(prev);
-      next.has(slug) ? next.delete(slug) : next.add(slug);
+      if (next.has(slug)) next.delete(slug);
+      else next.add(slug);
       return next;
     });
   };
@@ -163,7 +184,7 @@ function PrerequisitesPanel({
           >
             <CheckCircle2 className="w-4 h-4 fill-white shrink-0" />
             <div>
-              <p className="font-sans text-[10px] font-extrabold uppercase tracking-wider">You're ready!</p>
+              <p className="font-sans text-[10px] font-extrabold uppercase tracking-wider">You&apos;re ready!</p>
               <p className="font-sans text-[10px] font-semibold opacity-90">All basics covered — solve now 🚀</p>
             </div>
           </motion.div>
@@ -182,43 +203,43 @@ export default function QuestionPlayer({ params }: { params: Promise<{ id: strin
   const { id } = use(params);
   const { user, questions, updateXP, updateProgress, logPracticeAttempt } = useStore();
 
-  const [question, setQuestion] = useState<Question | null>(null);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
+  const savedQuestionsJson = useSyncExternalStore(
+    emptySubscribe,
+    generatedQuestionsSnapshot,
+    () => "[]",
+  );
+  const generatedQuestions = useMemo(() => {
+    try {
+      return JSON.parse(savedQuestionsJson) as Question[];
+    } catch {
+      return [];
+    }
+  }, [savedQuestionsJson]);
+  const question = questions.find((item) => item.id === id) ||
+    generatedQuestions.find((item) => item.id === id) ||
+    null;
   const [selectedOption, setSelectedOption] = useState<"A" | "B" | "C" | "D" | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
-  const [timeSpent, setTimeSpent] = useState(0);
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
     if (!question || submitted) return;
     const timer = setInterval(() => {
-      setTimeSpent((prev) => prev + 1);
+      setTime((previous) => previous + 1);
     }, 1000);
     return () => clearInterval(timer);
   }, [question, submitted]);
-  const [time, setTime] = useState(0);
-  const [mounted, setMounted] = useState(false);
 
   // Mobile bottom sheet state
   const [showMobileSheet, setShowMobileSheet] = useState(false);
 
-  useEffect(() => { setMounted(true); }, []);
-
   useEffect(() => {
     if (!mounted) return;
     if (!user) { router.push("/auth"); return; }
-    const q = questions.find((item) => item.id === id);
-    if (q) {
-      setQuestion(q);
-    } else {
-      router.push("/practice");
-    }
-  }, [id, questions, user, router, mounted]);
-
-  useEffect(() => {
-    if (submitted) return;
-    const interval = setInterval(() => setTime(t => t + 1), 1000);
-    return () => clearInterval(interval);
-  }, [submitted]);
+    if (!question) router.push("/practice");
+  }, [mounted, question, router, user]);
 
 
 
@@ -241,7 +262,7 @@ export default function QuestionPlayer({ params }: { params: Promise<{ id: strin
     logPracticeAttempt({
       questionId: question.id,
       topicId: question.topic,
-      timeSpentSeconds: timeSpent,
+      timeSpentSeconds: time,
       isCorrect: correct,
       timestamp: new Date().toISOString()
     });
@@ -254,7 +275,7 @@ export default function QuestionPlayer({ params }: { params: Promise<{ id: strin
     }
   };
 
-  const sectionQuestions = questions.filter(q => q.topic === question.topic);
+  const sectionQuestions = [...questions, ...generatedQuestions].filter(q => q.topic === question.topic);
   const questionIdx = sectionQuestions.findIndex((q) => q.id === id);
   const totalQ = sectionQuestions.length;
   

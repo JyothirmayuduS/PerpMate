@@ -1,16 +1,29 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState, use, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
-import { useStore } from "@/store/useStore";
+import { useStore, type Question } from "@/store/useStore";
 import SideNav from "@/components/layout/SideNav";
 import { 
-  ArrowLeft, ArrowRight, Lock, Sparkles, CheckCircle2, ChevronRight,
+  ArrowLeft, ArrowRight, Lock, Sparkles,
   Calculator, Brain, Book, Car, Timer, Percent, Coins, Landmark,
   LineChart, Scale, Hash, Dice5, ArrowRightLeft, Clock, PenTool, Code, Layout
 } from "lucide-react";
 import Link from "next/link";
 import { aptitudeSections, AptitudeTopic } from "@/data/aptitudeData";
+
+const emptySubscribe = () => () => {};
+
+function loadGeneratedQuestions(topicId: string): Question[] {
+  if (typeof window === "undefined") return [];
+  try {
+    return JSON.parse(
+      window.localStorage.getItem(`prepmate_generated_${topicId}`) || "[]",
+    ) as Question[];
+  } catch {
+    return [];
+  }
+}
 
 const iconMap: Record<string, React.ElementType> = {
   "calculator": Calculator,
@@ -36,11 +49,12 @@ export default function TopicPage({ params }: { params: Promise<{ id: string }> 
   const router = useRouter();
   const { id } = use(params);
   const { user, practiceProgress } = useStore();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
+  const [generatedQuestions, setGeneratedQuestions] = useState<Question[]>(() =>
+    loadGeneratedQuestions(id),
+  );
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationError, setGenerationError] = useState("");
 
   useEffect(() => {
     if (mounted && !user) {
@@ -52,12 +66,10 @@ export default function TopicPage({ params }: { params: Promise<{ id: string }> 
 
   // Find the topic inside aptitudeSections
   let foundTopic: AptitudeTopic | null = null;
-  let parentSection = null;
   for (const section of aptitudeSections) {
     const t = section.topics.find(t => t.id === id);
     if (t) {
       foundTopic = t;
-      parentSection = section;
       break;
     }
   }
@@ -69,8 +81,79 @@ export default function TopicPage({ params }: { params: Promise<{ id: string }> 
 
   const topic = foundTopic;
   const progress = practiceProgress[topic.id] || 0;
-  const solvedCount = Math.round((progress / 100) * topic.questions.length);
+  const allQuestions = [...topic.questions, ...generatedQuestions];
+  const solvedCount = Math.round((progress / 100) * allQuestions.length);
   const TopicIcon = iconMap[topic.icon] || Sparkles;
+
+  const generateFreshQuestion = async () => {
+    const difficultyByYear: Record<string, "Easy" | "Medium" | "Difficult" | "Hard"> = {
+      "1": "Easy",
+      "2": "Medium",
+      "3": "Difficult",
+      "4": "Hard",
+    };
+    const difficulty = difficultyByYear[user.studyYear] || "Medium";
+
+    setIsGenerating(true);
+    setGenerationError("");
+    try {
+      const response = await fetch("/api/questions/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          topic: topic.name,
+          difficulty,
+          companies:
+            user.targetCompanies.length > 0
+              ? user.targetCompanies.slice(0, 8)
+              : topic.company_focus.slice(0, 8),
+        }),
+      });
+      const payload = (await response.json()) as {
+        error?: string;
+        question?: Partial<Question> & { question?: string };
+      };
+      if (!response.ok || !payload.question) {
+        throw new Error(payload.error || "Could not create a fresh question.");
+      }
+
+      const raw = payload.question;
+      const text = raw.text || raw.question;
+      if (!text || !raw.options || !raw.correctOption || !raw.explanation) {
+        throw new Error("The generated question was incomplete. Please try again.");
+      }
+
+      const freshQuestion: Question = {
+        id: `fresh-${topic.id}-${generatedQuestions.length + 1}-${text
+          .slice(0, 28)
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "")}`,
+        topic: raw.topic || topic.name,
+        text,
+        options: raw.options,
+        correctOption: raw.correctOption,
+        explanation: raw.explanation,
+        difficulty: raw.difficulty || difficulty,
+        difficulty_level: raw.difficulty_level,
+        company_tag: raw.company_tag,
+        prerequisites: raw.prerequisites,
+        simple_explanation: raw.simple_explanation,
+        formulas: raw.formulas,
+        tips: raw.tips,
+      };
+      const nextQuestions = [...generatedQuestions, freshQuestion];
+      setGeneratedQuestions(nextQuestions);
+      window.localStorage.setItem(
+        `prepmate_generated_${topic.id}`,
+        JSON.stringify(nextQuestions),
+      );
+    } catch (error) {
+      setGenerationError(error instanceof Error ? error.message : "Could not create a fresh question.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-on-surface">
@@ -114,7 +197,7 @@ export default function TopicPage({ params }: { params: Promise<{ id: string }> 
                 </div>
                 <span className="font-display font-bold text-primary text-lg">{progress}%</span>
               </div>
-              <span className="text-xs font-semibold text-on-surface-variant">{solvedCount} of {topic.questions.length} Solved</span>
+              <span className="text-xs font-semibold text-on-surface-variant">{solvedCount} of {allQuestions.length} Solved</span>
             </div>
           </div>
           
@@ -147,7 +230,7 @@ export default function TopicPage({ params }: { params: Promise<{ id: string }> 
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {topic.questions.map((q, i) => {
+          {allQuestions.map((q, i) => {
             const isHard = q.difficulty === "Hard" || q.difficulty === "Difficult";
             const isLocked = isHard && progress < 40;
             
@@ -195,7 +278,35 @@ export default function TopicPage({ params }: { params: Promise<{ id: string }> 
           })}
         </div>
 
-        {progress < 40 && topic.questions.some(q => q.difficulty === "Hard" || q.difficulty === "Difficult") && (
+        <div className="mt-6 rounded-2xl border border-secondary-container/20 bg-secondary-container/10 p-5 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+          <div className="flex items-start gap-3">
+            <div className="h-10 w-10 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="font-display text-lg font-bold text-primary mb-1">
+                Your practice stream does not end here
+              </h3>
+              <p className="font-sans text-xs text-on-surface-variant leading-relaxed max-w-xl">
+                Create a fresh original {topic.name} question at the right level for your study year and target companies. It is saved on this device for your next session.
+              </p>
+              {generationError && (
+                <p className="font-sans text-[10px] font-bold text-error mt-2">{generationError}</p>
+              )}
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={generateFreshQuestion}
+            disabled={isGenerating}
+            className="rounded-full bg-primary px-5 py-3 font-sans text-[10px] font-extrabold uppercase tracking-wider text-on-primary flex items-center justify-center gap-2 shrink-0 disabled:opacity-50 cursor-pointer"
+          >
+            <Sparkles className={`h-3.5 w-3.5 ${isGenerating ? "animate-spin" : ""}`} />
+            {isGenerating ? "Creating..." : "Create fresh question"}
+          </button>
+        </div>
+
+        {progress < 40 && allQuestions.some(q => q.difficulty === "Hard" || q.difficulty === "Difficult") && (
           <div className="mt-8 p-4 bg-primary/5 rounded-2xl border border-primary/20 flex items-start gap-3">
             <Lock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
             <p className="font-sans text-xs text-primary leading-relaxed">

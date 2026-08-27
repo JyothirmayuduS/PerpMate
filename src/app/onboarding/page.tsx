@@ -3,17 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/store/useStore";
-import { ArrowRight, ArrowLeft, Check, Sparkles, GraduationCap } from "lucide-react";
+import { ArrowRight, ArrowLeft, Building2, Check, Sparkles, GraduationCap, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const companiesList = [
-  { name: "TCS", logo: "https://lh3.googleusercontent.com/aida-public/AB6AXuA9ZaNGzatGKUXkm9G_p0Shv-QQYAA1JqfcH7Z35J2DgiUe6UPw8jmHsnfr1oRFGnoo4ryjrIUwa1d-deEuONVGoIaC9EQ661N1pmi4b737gW4MPYoMp4tGOPPQiQv3_aswYQ5D1jxUgcSZKJoMt61YKL2dpWNHIqmEvMX06nthML8P7QMEPPWuR5IJHqbAQRlb3UFTu2IGMrw9Rb5bKTp1LykEwZuELOIXoKX7brjarHhnk09KMnZx" },
-  { name: "Google", logo: "https://lh3.googleusercontent.com/aida-public/AB6AXuBkOD41ygS2bct23E4M_otJcrxdZzUbgMbyRrrlLijmkxgJmV9gkY-ybPrmHbkxF4bEq_5AgpOiJRQVjuxCfjvLWRania_xguEf1zLnAQZkP-IhuEb99ZX0u9UXJN-ZcoEdCeZNtLlad0uwJp4BoYuTCrcQTVi29vioFLbpxzP3qvGTdQjPK-kLokv3E1Y0OsD7-Qq-KQVoKq7MZYuILpJQrPkqkLxI7J9oLUUI1tjxQlJA9qhickfC" },
-  { name: "Infosys", logo: "https://lh3.googleusercontent.com/aida-public/AB6AXuAD3tZLt-9ogz_NIhvn7suTW0uwO6N3aeePGzY1nFIQzfOQdK4oyjZaHCApD4SYRnFqiEcZXFbjRVGwFR34r7m_WZRec307pY5TUXQxDw12llpdpEL0ePONi0DEzBsiw2ASeA5A9-nt592qlZr0ul6Ooy16465pxIZtMsizaNXdIwMhKYB1MjwJWSTTDHfVLj5LwXmKQzL19cTu38J4Q69ng_Dis6aK_ht9HrVtb9mbKk_jiTg8kUyz" },
-  { name: "Wipro", logo: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAt-OIXXnJRx0BEjsvUik4tuz3Hc-EkJ4XkHQB4pFVH5Cscxg6v8kesjSVeBBg7gWMZJZz8FgHQ38BAA_FuTLIypO9BqgvkDuTq9kkpun_c6aif-3J2DVJKLaO9xEwNh9MIT1tXUFS1oOrCz0eFZ4WFWHo9bNJbNN0iDqcDvrEe_BuK6VVvyzAOzZalUEoMJeZ8nyGMuYD1q6rJoHqey0UxGClM0_HiGpS9e6FQEgbfgeJZnscVoCB" },
-  { name: "Amazon", logo: "https://lh3.googleusercontent.com/aida-public/AB6AXuDEqQWYaTXWAswgTK22OwvMfu_nxv7R0XyEMCqO8Ln4HaLBFvlJQwcUrh-JGFvnsCsegb8yoLfecb4gLLmL8rE5wwDVCGObQMd3lcl6F3kU6BYgvj0hVE04qWeAfrpjoqtLx1lFlIfww0bySpP4OBkuEQHlcUGZU4iRvxTltGU12WSzgoagwEQaRcKyJX1_ShLGyNvy7yPEdovRYEvp178CNf_11gvA50DVUDWNoTBIX00DPl97-hiT" },
-  { name: "Microsoft", logo: "" }
-];
+import { companyGroups } from "@/data/companyCatalog";
 
 const rolesList = [
   "Software Engineer",
@@ -69,10 +61,11 @@ export default function OnboardingPage() {
   const router = useRouter();
   const { user, saveOnboarding } = useStore();
   const [step, setStep] = useState(1);
-  const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
-  const [selectedRole, setSelectedRole] = useState("");
-  const [selectedLevel, setSelectedLevel] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedCompanies, setSelectedCompanies] = useState<string[]>(() => user?.targetCompanies || []);
+  const [selectedRole, setSelectedRole] = useState(() => user?.targetRole || "");
+  const [selectedLevel, setSelectedLevel] = useState(() => user?.targetLevel || "");
+  const [selectedYear, setSelectedYear] = useState(() => user?.studyYear || "");
+  const [companySearch, setCompanySearch] = useState("");
 
   if (!user) {
     if (typeof window !== "undefined") router.push("/auth");
@@ -150,34 +143,63 @@ export default function OnboardingPage() {
                   Target Companies
                 </h1>
                 <p className="font-sans text-sm text-on-surface-variant">
-                  Select companies you wish to prepare for. We will tailor tests and roadmaps to their patterns.
+                  Select any mix of service, consulting, fintech, product, enterprise, or global companies. Your practice queue will use the matching patterns.
                 </p>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 w-full">
-                {companiesList.map((company) => {
-                  const isSelected = selectedCompanies.includes(company.name);
+              <div className="relative max-w-xl mx-auto mb-6 text-left">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant" />
+                <input
+                  type="search"
+                  value={companySearch}
+                  onChange={(event) => setCompanySearch(event.target.value)}
+                  placeholder="Search all supported companies..."
+                  className="w-full rounded-full border border-outline-variant bg-surface-container-lowest py-3 pl-11 pr-4 font-sans text-xs font-bold text-primary outline-none focus:border-primary"
+                />
+              </div>
+              {selectedCompanies.length > 0 && (
+                <p className="font-sans text-[10px] font-extrabold uppercase tracking-wider text-secondary mb-5">
+                  {selectedCompanies.length} selected
+                </p>
+              )}
+              <div className="space-y-7 max-h-[48vh] overflow-y-auto pr-2 custom-scrollbar text-left">
+                {companyGroups.map((group) => {
+                  const matchingCompanies = group.companies.filter((company) =>
+                    company.toLowerCase().includes(companySearch.trim().toLowerCase()),
+                  );
+                  if (matchingCompanies.length === 0) return null;
+
                   return (
-                    <button
-                      key={company.name}
-                      onClick={() => handleToggleCompany(company.name)}
-                      className={`bento-card rounded-2xl p-6 flex flex-col items-center justify-center gap-3 aspect-square cursor-pointer transition-all ${
-                        isSelected ? "border-primary border-2 bg-surface" : ""
-                      }`}
-                    >
-                      <div className="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center overflow-hidden border border-outline-variant">
-                        {company.logo ? (
-                          <img src={company.logo} alt={company.name} className="w-8 h-8 object-contain" />
-                        ) : (
-                          <Sparkles className="w-6 h-6 text-on-surface-variant" />
-                        )}
+                    <section key={group.id}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <Building2 className="h-4 w-4 text-secondary-container" />
+                        <h2 className="font-display text-sm font-bold text-primary">{group.name}</h2>
+                        <span className="font-sans text-[9px] font-bold text-on-surface-variant">{matchingCompanies.length}</span>
                       </div>
-                      <span className="font-sans text-xs font-bold text-primary">{company.name}</span>
-                      {isSelected && (
-                        <div className="absolute top-2 right-2 bg-primary rounded-full p-0.5">
-                          <Check className="w-2.5 h-2.5 text-on-primary" />
-                        </div>
-                      )}
-                    </button>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                        {matchingCompanies.map((company) => {
+                          const isSelected = selectedCompanies.includes(company);
+                          return (
+                            <button
+                              key={company}
+                              type="button"
+                              onClick={() => handleToggleCompany(company)}
+                              className={`relative rounded-xl border p-4 min-h-20 text-left cursor-pointer transition-all ${
+                                isSelected
+                                  ? "border-primary bg-primary/5 shadow-sm"
+                                  : "border-outline-variant bg-surface-container-lowest hover:border-primary/50"
+                              }`}
+                            >
+                              <span className="font-sans text-xs font-bold text-primary leading-snug">{company}</span>
+                              {isSelected && (
+                                <span className="absolute top-2.5 right-2.5 bg-primary rounded-full p-0.5">
+                                  <Check className="w-2.5 h-2.5 text-on-primary" />
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </section>
                   );
                 })}
               </div>
