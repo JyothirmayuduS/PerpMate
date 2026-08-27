@@ -135,6 +135,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
   const [isHydrated, setIsHydrated] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
   const [traceIndex, setTraceIndex] = useState(0);
+  const [tracePhase, setTracePhase] = useState<0 | 1>(0);
   const [isTracePlaying, setIsTracePlaying] = useState(false);
   const [runResult, setRunResult] = useState<CodingRunResult | null>(null);
   const [isRunning, setIsRunning] = useState(false);
@@ -161,6 +162,14 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
     }, 1400);
     return () => window.clearInterval(timer);
   }, [isTracePlaying, iterationTrace.length]);
+
+  useEffect(() => {
+    if (!isTracePlaying) return;
+    const timer = window.setInterval(() => {
+      setTracePhase((phase) => (phase === 0 ? 1 : 0));
+    }, 700);
+    return () => window.clearInterval(timer);
+  }, [isTracePlaying]);
 
   useEffect(() => {
     if (!user) router.push("/auth");
@@ -337,6 +346,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
   };
 
   const activeTrace = iterationTrace[traceIndex] || iterationTrace[0];
+  const activeCodeBlock = codeBlocks[traceIndex === iterationTrace.length - 1 ? 2 : tracePhase] || codeBlocks[0];
 
   return (
     <div className="min-h-screen bg-background text-on-surface">
@@ -531,12 +541,16 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                           <p className="leading-5">{activeTrace?.decision}</p>
                         </div>
                       </div>
+                      <div className="mt-3 flex items-center gap-2 rounded-lg bg-white/70 px-3 py-2 font-sans text-[10px] text-primary">
+                        <span className="h-2 w-2 rounded-full bg-[#ff5c36] animate-pulse" />
+                        <span><strong>{activeCodeBlock?.label || "Current step"}:</strong> {activeCodeBlock?.explanation || "Follow the highlighted source line."}</span>
+                      </div>
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <button type="button" onClick={() => { setTraceIndex(0); setIsTracePlaying(true); }} className="rounded-full bg-primary px-4 py-2 font-sans text-[10px] font-extrabold text-on-primary flex items-center gap-2 cursor-pointer"><Play className="h-3 w-3" /> Play animation</button>
+                      <button type="button" onClick={() => { setTraceIndex(0); setTracePhase(0); setIsTracePlaying(true); }} className="rounded-full bg-primary px-4 py-2 font-sans text-[10px] font-extrabold text-on-primary flex items-center gap-2 cursor-pointer"><Play className="h-3 w-3" /> Play animation</button>
                       <button type="button" onClick={() => setIsTracePlaying((playing) => !playing)} className="rounded-full border border-outline-variant px-3 py-2 font-sans text-[10px] font-bold text-primary flex items-center gap-2 cursor-pointer">{isTracePlaying ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}{isTracePlaying ? "Pause" : "Resume"}</button>
-                      <button type="button" onClick={() => setTraceIndex((current) => Math.min(current + 1, iterationTrace.length - 1))} className="rounded-full border border-outline-variant px-3 py-2 font-sans text-[10px] font-bold text-primary cursor-pointer">Next pass →</button>
-                      <button type="button" onClick={() => { setTraceIndex(0); setIsTracePlaying(false); }} className="rounded-full border border-outline-variant px-3 py-2 font-sans text-[10px] font-bold text-primary cursor-pointer">Reset</button>
+                      <button type="button" onClick={() => { setTraceIndex((current) => Math.min(current + 1, iterationTrace.length - 1)); setTracePhase(0); }} className="rounded-full border border-outline-variant px-3 py-2 font-sans text-[10px] font-bold text-primary cursor-pointer">Next pass →</button>
+                      <button type="button" onClick={() => { setTraceIndex(0); setTracePhase(0); setIsTracePlaying(false); }} className="rounded-full border border-outline-variant px-3 py-2 font-sans text-[10px] font-bold text-primary cursor-pointer">Reset</button>
                     </div>
                     <p className="font-sans text-[10px] text-on-surface-variant mt-3">This animation traces the algorithm’s pattern state on the sample input. It helps you predict the next iteration before reading the final answer.</p>
                   </div>
@@ -552,7 +566,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                     <p className="font-sans text-[10px] text-white/55 leading-5 mb-4">The highlighted block is the part responsible for the current pass. The snippets come from the reference solution in the selected editor language.</p>
                     <div className="space-y-2">
                       {codeBlocks.map((block, index) => {
-                        const activeIndex = traceIndex === iterationTrace.length - 1 ? 2 : 0;
+                        const activeIndex = traceIndex === iterationTrace.length - 1 ? 2 : tracePhase;
                         const active = index === activeIndex;
                         return (
                           <div key={block.label} className={`rounded-xl border p-3 transition-all duration-500 ${active ? "border-[#ff8a70] bg-[#ff5c36]/15" : "border-white/10 bg-white/5"}`}>
@@ -571,7 +585,8 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                       <div className="max-h-64 overflow-y-auto p-2">
                         {activeTemplate.solutionCode.split("\n").map((line, index) => {
                           const lineNumber = index + 1;
-                          const activeLine = traceIndex === iterationTrace.length - 1 ? codeBlocks[2]?.lineNumber : codeBlocks[0]?.lineNumber;
+                          const activeIndex = traceIndex === iterationTrace.length - 1 ? 2 : tracePhase;
+                          const activeLine = codeBlocks[activeIndex]?.lineNumber;
                           const isActive = lineNumber === activeLine;
                           return (
                             <div key={`${lineNumber}-${line}`} className={`flex gap-3 px-2 py-1 font-mono text-[10px] leading-5 transition-colors duration-500 ${isActive ? "bg-[#ff5c36]/20 text-[#ffd2c8]" : "text-white/45"}`}>
