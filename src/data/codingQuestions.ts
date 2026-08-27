@@ -1,3 +1,5 @@
+import { additionalCodingQuestions } from "@/data/codingQuestionExpansion";
+
 export type CodingDifficulty = "Foundation" | "Easy" | "Medium" | "Hard";
 
 export type CodingExample = {
@@ -1557,7 +1559,9 @@ const curatedCodingQuestions: CodingQuestion[] = [
 // Keep the queue useful after a learner finishes the curated set. These drills
 // reuse the same learning objective but rotate public/hidden cases and labels,
 // so a student can practise the pattern again without seeing an empty board.
-const codingDrills: CodingQuestion[] = curatedCodingQuestions.flatMap((question) =>
+const expandedCuratedQuestions = [...curatedCodingQuestions, ...additionalCodingQuestions];
+
+const codingDrills: CodingQuestion[] = expandedCuratedQuestions.flatMap((question) =>
   Array.from({ length: 4 }, (_, variantIndex) => {
     const shift = (variantIndex + 1) % question.tests.length;
     const rotatedTests = question.tests
@@ -1584,7 +1588,7 @@ const codingDrills: CodingQuestion[] = curatedCodingQuestions.flatMap((question)
   }),
 );
 
-export const codingQuestions: CodingQuestion[] = [...curatedCodingQuestions, ...codingDrills];
+export const codingQuestions: CodingQuestion[] = [...expandedCuratedQuestions, ...codingDrills];
 
 export const codingPatterns = [...new Set(codingQuestions.map((question) => question.pattern))].sort();
 
