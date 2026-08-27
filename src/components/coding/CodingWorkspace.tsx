@@ -14,6 +14,7 @@ import {
   Eye,
   Gauge,
   Lightbulb,
+  ListChecks,
   LoaderCircle,
   Play,
   RotateCcw,
@@ -37,7 +38,7 @@ import { runCompiledLanguageTests, runJavaScriptTests, type CodingRunResult } fr
 import { useStore } from "@/store/useStore";
 import { createClient } from "../../../utils/supabase/client";
 
-type WorkspaceTab = "description" | "concept" | "complexity" | "hints" | "solution";
+type WorkspaceTab = "description" | "concept" | "complexity" | "testcases" | "hints" | "solution";
 
 const difficultyStyles = {
   Foundation: "bg-violet-50 text-violet-700 border-violet-200",
@@ -62,39 +63,25 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
   const [activeTab, setActiveTab] = useState<WorkspaceTab>("description");
   const supportedLanguages = useMemo(() => getSupportedLanguages(question), [question]);
   const complexity = useMemo(() => getComplexityGuide(question), [question]);
-  const [selectedLanguage, setSelectedLanguage] = useState<CodingLanguage>(() => {
-    if (typeof window === "undefined") return "javascript";
-    const savedLanguage = window.localStorage.getItem(`prepmate_language_${question.id}`) as CodingLanguage | null;
-    return savedLanguage && getSupportedLanguages(question).includes(savedLanguage)
-      ? savedLanguage
-      : "javascript";
-  });
+  const [selectedLanguage, setSelectedLanguage] = useState<CodingLanguage>("javascript");
   const activeTemplate = getLanguageTemplate(question, selectedLanguage) || {
     starterCode: question.starterCode,
     solutionCode: question.solutionCode,
   };
   const languageMeta = codingLanguageMeta[selectedLanguage];
-  const [code, setCode] = useState(() => {
-    const template = getLanguageTemplate(question, selectedLanguage) || {
-      starterCode: question.starterCode,
-      solutionCode: question.solutionCode,
-    };
-    if (typeof window === "undefined") return template.starterCode;
-    return window.localStorage.getItem(`prepmate_code_${question.id}_${selectedLanguage}`) || template.starterCode;
-  });
+  const [code, setCode] = useState(() => activeTemplate.starterCode);
+  const [isHydrated, setIsHydrated] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
   const [runResult, setRunResult] = useState<CodingRunResult | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [statusMessage, setStatusMessage] = useState("Ready to run your code");
+  const [customCase, setCustomCase] = useState(() => JSON.stringify({
+    input: question.tests[0]?.input || [],
+    expected: question.tests[0]?.expected ?? null,
+  }, null, 2));
   const [showSolution, setShowSolution] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [solved, setSolved] = useState(() => {
-    if (typeof window === "undefined") return false;
-    const solvedQuestions = JSON.parse(
-      window.localStorage.getItem("prepmate_coding_solved") || "[]",
-    ) as string[];
-    return solvedQuestions.includes(question.id);
-  });
+  const [solved, setSolved] = useState(false);
   const editorRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -103,11 +90,35 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
+      const savedLanguage = window.localStorage.getItem(`prepmate_language_${question.id}`) as CodingLanguage | null;
+      const nextLanguage = savedLanguage && getSupportedLanguages(question).includes(savedLanguage)
+        ? savedLanguage
+        : "javascript";
+      const nextTemplate = getLanguageTemplate(question, nextLanguage) || {
+        starterCode: question.starterCode,
+        solutionCode: question.solutionCode,
+      };
+      setSelectedLanguage(nextLanguage);
+      setCode(window.localStorage.getItem(`prepmate_code_${question.id}_${nextLanguage}`) || nextTemplate.starterCode);
+      try {
+        const solvedQuestions = JSON.parse(window.localStorage.getItem("prepmate_coding_solved") || "[]") as string[];
+        setSolved(solvedQuestions.includes(question.id));
+      } catch {
+        setSolved(false);
+      }
+      setIsHydrated(true);
+    }, 0);
+    return () => window.clearTimeout(timeout);
+  }, [question]);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+    const timeout = window.setTimeout(() => {
       window.localStorage.setItem(`prepmate_code_${question.id}_${selectedLanguage}`, code);
       window.localStorage.setItem(`prepmate_language_${question.id}`, selectedLanguage);
     }, 250);
     return () => window.clearTimeout(timeout);
-  }, [code, question.id, selectedLanguage]);
+  }, [code, isHydrated, question.id, selectedLanguage]);
 
   const nextQuestion = useMemo(() => {
     const currentIndex = codingQuestions.findIndex((item) => item.id === question.id);
@@ -116,14 +127,11 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
 
   if (!user) return null;
 
-  const execute = async (submit: boolean) => {
+  const executeTests = async (selectedTests: CodingQuestion["tests"], submit: boolean, label: string) => {
     setIsRunning(true);
     setRunResult(null);
-    setStatusMessage(submit ? "Checking all test cases..." : "Running sample tests...");
+    setStatusMessage(submit ? "Checking all hidden and public tests..." : label);
 
-    const selectedTests = submit
-      ? question.tests
-      : question.tests.filter((test) => !test.hidden);
     const result = languageMeta.executable
       ? await runJavaScriptTests(code, question.functionName, selectedTests)
       : await runCompiledLanguageTests(code, selectedLanguage as Exclude<CodingLanguage, "javascript">, question.functionName, selectedTests);
@@ -185,6 +193,25 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
         runtime_ms: result.runtimeMs,
         source_code: code,
       });
+    }
+  };
+
+  const execute = (submit: boolean) => executeTests(
+    submit ? question.tests : question.tests.filter((test) => !test.hidden),
+    submit,
+    "Running public sample tests...",
+  );
+
+  const executeCustom = () => {
+    try {
+      const parsed = JSON.parse(customCase) as { input?: unknown; expected?: unknown };
+      if (!Array.isArray(parsed.input)) throw new Error("Input must be a JSON array of function arguments.");
+      return executeTests([
+        { label: "Custom test", input: parsed.input, expected: parsed.expected ?? null },
+      ], false, "Running your custom test...");
+    } catch (error) {
+      setRunResult({ passed: 0, total: 1, runtimeMs: 0, results: [], error: error instanceof Error ? error.message : "Use valid JSON for the custom test." });
+      setStatusMessage("Custom test needs valid JSON");
     }
   };
 
@@ -268,6 +295,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                   ["description", "Description"],
                   ["concept", "Learn concept"],
                   ["complexity", "Complexity"],
+                  ["testcases", "Test cases"],
                   ["hints", "Hints"],
                   ["solution", "Solution"],
                 ] as Array<[WorkspaceTab, string]>
@@ -421,6 +449,39 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                 </div>
               )}
 
+              {activeTab === "testcases" && (
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="h-11 w-11 rounded-xl bg-secondary-container/10 text-secondary flex items-center justify-center">
+                      <ListChecks className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h2 className="font-display text-xl font-bold text-primary">Judge test suite</h2>
+                      <p className="font-sans text-xs text-on-surface-variant">Public examples help you start; hidden cases protect the final submission.</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {question.tests.map((test, index) => (
+                      <div key={`${test.label}-${index}`} className="rounded-2xl border border-outline-variant bg-background p-4">
+                        <div className="flex items-center justify-between gap-3 mb-3">
+                          <div className="flex items-center gap-2">
+                            <span className="h-7 w-7 rounded-lg bg-primary text-on-primary flex items-center justify-center font-mono text-[10px] font-bold">{index + 1}</span>
+                            <span className="font-sans text-sm font-bold text-primary">{test.hidden ? `Hidden test ${index + 1}` : test.label}</span>
+                          </div>
+                          <span className={`rounded-full px-2.5 py-1 font-sans text-[9px] font-extrabold ${test.hidden ? "bg-violet-50 text-violet-700" : "bg-emerald-50 text-emerald-700"}`}>
+                            {test.hidden ? "Hidden on submit" : "Public sample"}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-[11px]">
+                          <div className="rounded-xl bg-primary p-3 text-on-primary/80 overflow-x-auto"><span className="text-on-primary/45">Input</span>{"\n"}{displayValue(test.input)}</div>
+                          <div className="rounded-xl bg-surface-container p-3 text-primary overflow-x-auto"><span className="text-on-surface-variant">Expected</span>{"\n"}{test.hidden ? "Hidden until submission" : displayValue(test.expected)}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {activeTab === "hints" && (
                 <div>
                   <div className="flex items-center gap-3 mb-6">
@@ -565,7 +626,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                 {isRunning && (
                   <div className="h-full flex items-center justify-center gap-2 text-white/50">
                     <LoaderCircle className="h-4 w-4 animate-spin" />
-                    <span className="font-sans text-[10px] font-bold">Executing in browser sandbox...</span>
+                    <span className="font-sans text-[10px] font-bold">Running in a secure code sandbox...</span>
                   </div>
                 )}
                 {runResult?.error && (
@@ -600,6 +661,14 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                 <div className="flex items-center gap-2 ml-auto">
                   <button
                     type="button"
+                    onClick={executeCustom}
+                    disabled={isRunning}
+                    className="rounded-lg border border-white/15 bg-white/5 px-3 py-2.5 font-sans text-[10px] font-bold text-white flex items-center gap-2 hover:bg-white/10 disabled:opacity-50 cursor-pointer"
+                  >
+                    <Terminal className="h-3.5 w-3.5" /> Custom
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => execute(false)}
                     disabled={isRunning}
                     className="rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 font-sans text-[10px] font-bold text-white flex items-center gap-2 hover:bg-white/10 disabled:opacity-50 cursor-pointer"
@@ -615,6 +684,18 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                     <Send className="h-3.5 w-3.5" /> Submit
                   </button>
                 </div>
+              </div>
+              <div className="border-t border-white/10 px-4 py-3">
+                <label htmlFor="custom-test-case" className="font-sans text-[9px] font-extrabold uppercase tracking-wider text-white/45">Custom test case · JSON</label>
+                <textarea
+                  id="custom-test-case"
+                  value={customCase}
+                  onChange={(event) => setCustomCase(event.target.value)}
+                  spellCheck={false}
+                  className="mt-2 w-full min-h-20 resize-y rounded-lg border border-white/10 bg-white/5 p-2.5 font-mono text-[10px] leading-5 text-white/75 outline-none focus:border-[#ff5c36]"
+                  aria-label="Custom test case JSON"
+                />
+                <p className="mt-1 font-sans text-[9px] text-white/30">Use <span className="font-mono">{"{ \"input\": [...], \"expected\": ... }"}</span> to try edge cases like a hackathon judge.</p>
               </div>
             </div>
           </section>
