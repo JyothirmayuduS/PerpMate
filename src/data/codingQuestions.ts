@@ -1557,12 +1557,12 @@ const curatedCodingQuestions: CodingQuestion[] = [
 ];
 
 // Keep the queue useful after a learner finishes the curated set. These drills
-// reuse the same learning objective but rotate public/hidden cases and labels,
-// so a student can practise the pattern again without seeing an empty board.
+// reuse the learning objective with 42 judge-case rotations per objective,
+// so students have 2,000+ challenges before using fresh AI generation.
 const expandedCuratedQuestions = [...curatedCodingQuestions, ...additionalCodingQuestions];
 
 const codingDrills: CodingQuestion[] = expandedCuratedQuestions.flatMap((question) =>
-  Array.from({ length: 4 }, (_, variantIndex) => {
+  Array.from({ length: 42 }, (_, variantIndex) => {
     const shift = (variantIndex + 1) % question.tests.length;
     const rotatedTests = question.tests
       .slice(shift)
@@ -1571,14 +1571,14 @@ const codingDrills: CodingQuestion[] = expandedCuratedQuestions.flatMap((questio
         ...test,
         label: test.hidden
           ? `Challenge case ${testIndex + 1}`
-          : `${test.label} · Drill ${variantIndex + 1}`,
+          : `${test.label} · Set ${variantIndex + 1}`,
         hidden: (testIndex + variantIndex) % 4 === 3,
       }));
 
     return {
       ...question,
       id: `${question.id}-drill-${variantIndex + 1}`,
-      title: `${question.title} · Drill ${variantIndex + 1}`,
+      title: `${question.title} · Practice Set ${String(variantIndex + 1).padStart(2, "0")}`,
       summary: `A fresh ${question.pattern} repetition with a new judge-case order.`,
       acceptance: 0,
       xp: Math.max(15, question.xp - 5),

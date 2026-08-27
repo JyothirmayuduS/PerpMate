@@ -3,8 +3,14 @@ import { notFound } from "next/navigation";
 import CodingWorkspace from "@/components/coding/CodingWorkspace";
 import { codingQuestions, getCodingQuestion } from "@/data/codingQuestions";
 
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return codingQuestions.map((question) => ({ id: question.id }));
+  // Pre-render the core curriculum. Rotating drills remain fully routable and
+  // are rendered on demand so a large practice bank does not slow deployments.
+  return codingQuestions
+    .filter((question) => !question.templateSourceId)
+    .map((question) => ({ id: question.id }));
 }
 
 export async function generateMetadata({
