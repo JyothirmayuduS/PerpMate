@@ -4,6 +4,11 @@ export type CodingModule = {
   whyItMatters: string;
   example: string;
   takeaway: string;
+  mentalModel?: string;
+  steps?: string[];
+  complexity?: string;
+  pitfalls?: string[];
+  videoSearch?: string;
 };
 
 const modules: Record<string, CodingModule> = {
@@ -93,6 +98,81 @@ const modules: Record<string, CodingModule> = {
   },
 };
 
+const lessonDetails: Record<string, Pick<CodingModule, "mentalModel" | "steps" | "complexity" | "pitfalls">> = {
+  arrays: {
+    mentalModel: "An array is a row of boxes. The index tells you which box to inspect, and a scan moves a pointer from left to right.",
+    steps: ["Write down the input length and the answer you need.", "Choose whether you need to read, replace, insert, or reorder values.", "State what your variables mean after each index is processed.", "Test an empty array, one item, duplicates, and the last index."],
+    complexity: "Index access is O(1). One full scan is O(n). A second array or result buffer is O(n) extra space.",
+    pitfalls: ["Using an index outside 0 through length - 1", "Forgetting that an empty array has no first item", "Mutating the input when the problem expects a new result"],
+  },
+  loops: {
+    mentalModel: "A loop is a repeated promise: before every iteration, the loop condition is true; after the body, progress must move toward stopping.",
+    steps: ["Choose the starting state before the loop.", "Name the value processed during one iteration.", "Update state exactly once and make visible progress.", "Trace zero iterations, one iteration, and the final iteration."],
+    complexity: "One loop over n items is O(n). Nested loops multiply their ranges. Constant-size variables use O(1) extra space.",
+    pitfalls: ["Off-by-one boundaries", "Changing the wrong variable inside the loop", "Returning before required state has been updated"],
+  },
+  counters: {
+    mentalModel: "A counter compresses many observations into one number: it changes only when the current item satisfies a condition.",
+    steps: ["Initialize the counter to the identity value, usually zero.", "Define exactly what event increments it.", "Scan each item once and update at the decision point.", "Check the counter for empty input and all-matching input."],
+    complexity: "A counter added to one scan is O(n) time and O(1) extra space.",
+    pitfalls: ["Incrementing on both branches", "Starting with one instead of zero", "Counting values instead of events"],
+  },
+  sets: {
+    mentalModel: "A set is a memory of what has already appeared. Lookup answers ‘have I seen this?’ without scanning the old values again.",
+    steps: ["Create an empty set before scanning.", "Check membership before or after insertion based on the problem’s order requirement.", "Store the current value if it should affect future iterations.", "Test a repeated first item and an all-unique input."],
+    complexity: "Average membership and insertion are O(1), giving O(n) average time and O(n) extra space.",
+    pitfalls: ["Inserting before checking when the second occurrence matters", "Assuming worst-case hashing is always O(1)", "Using a set when counts or key-value data are required"],
+  },
+  "two-pointers": {
+    mentalModel: "Two pointers describe two positions whose movement eliminates impossible pairs or invalid ranges.",
+    steps: ["Define what the left and right pointers represent.", "Compare the current pair or window with the target condition.", "Move only the pointer that cannot keep a valid answer after the comparison.", "Prove why the movement does not skip a solution."],
+    complexity: "After any required sort, the pointer scan is O(n). The pointers use O(1) extra space unless sorting allocates memory.",
+    pitfalls: ["Moving both pointers without justification", "Forgetting sortedness is required for many variants", "Not handling equal values or crossing pointers"],
+  },
+  "string-methods": {
+    mentalModel: "Treat a string transformation as a pipeline: normalize the raw text, validate it, then build the output.",
+    steps: ["Write one input and expected output pair.", "Apply one transformation at a time.", "Keep the original value available if later rules need it.", "Test spaces, casing, empty strings, and repeated separators."],
+    complexity: "A transformation that visits every character is O(n) time. New strings commonly require O(n) space.",
+    pitfalls: ["Changing the original string accidentally", "Using a greedy replacement that misses repeated separators", "Forgetting strings are immutable in JavaScript"],
+  },
+  stacks: {
+    mentalModel: "A stack is a pile: the last item placed is the first item removed. This mirrors nested work and undo history.",
+    steps: ["Push an item when a future closing or undo action must match it.", "Peek before popping when you need to compare.", "Pop only when the top item is the correct match.", "Finish with an empty stack when every opening item was closed."],
+    complexity: "Each push and pop is O(1), so one scan is O(n) time and O(n) worst-case space.",
+    pitfalls: ["Popping an empty stack", "Comparing with the wrong top item", "Returning true while unmatched items remain"],
+  },
+  recursion: {
+    mentalModel: "Every recursive call should make the same problem smaller, while the base case gives the smallest answer directly.",
+    steps: ["Write the base case before the recursive call.", "Choose the smaller input passed to the next call.", "Combine the returned answer with the current work.", "Count the maximum call depth as memory."],
+    complexity: "Time and space depend on the recurrence. A linear recursive scan is often O(n) time and O(n) call-stack space.",
+    pitfalls: ["Missing or unreachable base cases", "Calling with an input that does not shrink", "Ignoring stack overflow on large inputs"],
+  },
+  "binary-search": {
+    mentalModel: "Binary search keeps a range that may contain the answer and removes half only when the ordering invariant proves it cannot be there.",
+    steps: ["Define whether left and right are inclusive.", "Compute the middle without overflowing in fixed-width languages.", "Discard the impossible half using a precise comparison.", "Return the boundary that satisfies the required first/last condition."],
+    complexity: "Each comparison halves the search range: O(log n) time and O(1) iterative space.",
+    pitfalls: ["Infinite loops from not moving a boundary", "Returning any match when the first or last match is required", "Using binary search on unsorted data"],
+  },
+  "sliding-window": {
+    mentalModel: "A window is a live range. Expand it to include new data, then shrink it only until the validity rule is true again.",
+    steps: ["Define the window’s left and right boundaries.", "Add the right item to the state.", "While invalid, remove the left item and advance left.", "Record the best valid window after restoring validity."],
+    complexity: "Each item enters and leaves the window at most once: O(n) time and O(k) state space for the maintained window data.",
+    pitfalls: ["Shrinking only once instead of while invalid", "Recording an invalid window", "Forgetting to remove the left item from counts"],
+  },
+  hashing: {
+    mentalModel: "A hash map turns a repeated question into a lookup: use a key that captures exactly the information needed for the next decision.",
+    steps: ["Choose the key: value, complement, frequency, or group identity.", "Decide whether to read before writing for the current item.", "Update the map after processing the decision.", "Check missing keys, duplicate keys, and collision-independent correctness."],
+    complexity: "Average O(1) lookup gives O(n) time for one scan and O(n) extra space.",
+    pitfalls: ["Overwriting a value when the first occurrence matters", "Using a mutable object as a key", "Ignoring whether order must be preserved"],
+  },
+  "dynamic-programming": {
+    mentalModel: "Dynamic programming is a table of trusted smaller answers. Each cell must have a meaning, and every transition must come from already-known cells.",
+    steps: ["Describe the state in one sentence, such as ‘best answer for the first i items.’", "Write the base cases for zero items or zero capacity.", "Write the transition by listing the choices at the current state.", "Choose an iteration order that computes dependencies first, then reduce memory only after correctness."],
+    complexity: "Time is usually number of states × transitions. Space is the table size, sometimes compressible to one or two rows.",
+    pitfalls: ["A state that loses information needed for a future choice", "Wrong base-case values", "Updating a 0/1 table in the wrong direction and reusing an item twice"],
+  },
+};
+
 export function codingModuleSlug(value: string) {
   return value
     .toLowerCase()
@@ -104,11 +184,17 @@ export function codingModuleSlug(value: string) {
 }
 
 export function getCodingModule(slug: string): CodingModule {
-  return modules[slug] || {
+  const base = modules[slug] || {
     title: slug.split("-").filter(Boolean).map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" ") || "Coding Fundamentals",
     summary: "Build a clear mental model for this prerequisite before applying it in a coding problem.",
     whyItMatters: "Strong fundamentals make it easier to choose an approach, explain your reasoning, and debug edge cases.",
     example: "A production feature becomes easier to maintain when each operation has a clear input, state change, and output.",
     takeaway: "Explain the invariant in your own words, then practise it on an empty case and a boundary case.",
+  };
+  const details = lessonDetails[slug];
+  return {
+    ...base,
+    ...details,
+    videoSearch: `${base.title} data structures algorithms tutorial beginner`,
   };
 }

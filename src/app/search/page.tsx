@@ -29,7 +29,7 @@ function SearchContent() {
   const { user } = useStore();
 
   // Search input state
-  const initialQuery = searchParams.get("q") || "Dynamic Programming";
+  const initialQuery = searchParams.get("q") || "";
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [activeQuery, setActiveQuery] = useState(initialQuery);
 
@@ -141,7 +141,7 @@ function SearchContent() {
               Search Results
             </h2>
             <p className="font-sans text-sm text-on-surface-variant">
-              Showing top results for “<strong>{activeQuery}</strong>”
+              {activeQuery ? <>Showing top results for “<strong>{activeQuery}</strong>”</> : "Explore questions, modules, and interview resources"}
             </p>
           </div>
 

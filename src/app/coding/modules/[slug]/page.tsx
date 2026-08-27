@@ -2,7 +2,7 @@
 
 import { use, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Lightbulb } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Lightbulb, PlayCircle, ShieldAlert } from "lucide-react";
 import SideNav from "@/components/layout/SideNav";
 import { codingModuleSlug, getCodingModule } from "@/data/codingModules";
 import { useStore } from "@/store/useStore";
@@ -38,7 +38,15 @@ export default function CodingModulePage({ params }: { params: Promise<{ slug: s
             <p className="mt-3 max-w-2xl font-sans text-sm leading-6 text-on-surface-variant">{learningModule.summary}</p>
           </header>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <section className="rounded-2xl border border-secondary-container/30 bg-secondary-container/10 p-5">
+            <div className="mb-3 flex items-center gap-2">
+              <Lightbulb className="h-4 w-4 text-secondary" />
+              <h2 className="font-display text-lg font-bold text-primary">Build the mental model</h2>
+            </div>
+            <p className="font-sans text-sm leading-6 text-primary">{learningModule.mentalModel || learningModule.summary}</p>
+          </section>
+
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
             <section className="rounded-2xl border border-outline-variant bg-surface-container-lowest p-5">
               <h2 className="mb-3 font-display text-lg font-bold text-primary">Why this matters</h2>
               <p className="font-sans text-sm leading-6 text-on-surface-variant">{learningModule.whyItMatters}</p>
@@ -55,6 +63,43 @@ export default function CodingModulePage({ params }: { params: Promise<{ slug: s
               <h2 className="font-display text-lg font-bold">Remember this</h2>
             </div>
             <p className="font-sans text-sm leading-6 text-on-primary/75">{learningModule.takeaway}</p>
+          </section>
+
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <section className="rounded-2xl border border-outline-variant bg-surface-container-lowest p-5">
+              <h2 className="mb-4 font-display text-lg font-bold text-primary">How to solve with it</h2>
+              <div className="space-y-3">
+                {(learningModule.steps || ["Understand the input.", "Trace one small example.", "State the invariant.", "Test the boundary cases."]).map((step, index) => (
+                  <div key={step} className="flex gap-3">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary font-mono text-[10px] font-bold text-on-primary">{index + 1}</span>
+                    <p className="font-sans text-xs leading-5 text-on-surface-variant">{step}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+            <section className="rounded-2xl border border-outline-variant bg-surface-container-lowest p-5">
+              <div className="mb-3 flex items-center gap-2">
+                <ShieldAlert className="h-4 w-4 text-secondary" />
+                <h2 className="font-display text-lg font-bold text-primary">Complexity and pitfalls</h2>
+              </div>
+              <p className="mb-4 font-sans text-xs leading-5 text-on-surface-variant">{learningModule.complexity || "Count the input items, repeated work, and memory retained between steps."}</p>
+              <ul className="space-y-2">
+                {(learningModule.pitfalls || ["Test the empty input.", "Check the first and last positions.", "Explain what each variable means."]).map((pitfall) => (
+                  <li key={pitfall} className="font-sans text-xs leading-5 text-on-surface-variant">• {pitfall}</li>
+                ))}
+              </ul>
+            </section>
+          </div>
+
+          <section className="mt-4 rounded-2xl border border-outline-variant bg-surface-container-lowest p-5">
+            <div className="mb-2 flex items-center gap-2">
+              <PlayCircle className="h-4 w-4 text-secondary" />
+              <h2 className="font-display text-lg font-bold text-primary">Watch a guided video lesson</h2>
+            </div>
+            <p className="mb-4 font-sans text-xs leading-5 text-on-surface-variant">Use a visual explanation first, then return here and trace the smallest example in the execution map.</p>
+            <a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(learningModule.videoSearch || learningModule.title)}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 font-sans text-xs font-bold text-on-primary transition-opacity hover:opacity-90">
+              Search video lessons <ArrowRight className="h-4 w-4" />
+            </a>
           </section>
 
           <section className="mt-6 rounded-2xl border border-outline-variant bg-surface-container-lowest p-5">
