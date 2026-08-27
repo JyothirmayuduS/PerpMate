@@ -17,6 +17,22 @@ type QuestionSeed = {
   tests: CodingTestCase[];
 };
 
+const patternLearningSteps: Record<string, string[]> = {
+  "Character Scan": ["Normalize each character once so uppercase and lowercase behave consistently.", "Check whether the current character belongs to the target group.", "Increase the counter and return it after the scan finishes."],
+  "Star Patterns": ["Decide what each row should contain: spaces, stars, or both.", "Use the row number to calculate the width and alignment.", "Join completed rows with newlines and avoid an extra trailing newline."],
+  "Array Transformation": ["Read each input value from left to right.", "Build the next output value from the current value and its position.", "Return the new array without changing the original input."],
+  "Bit Manipulation": ["Write the binary property the answer needs to measure.", "Use a mask or n & (n - 1) to remove or inspect one bit.", "Repeat until no relevant bits remain and count the operations."],
+  "Divide and Conquer": ["Compare the middle with its neighbor to identify a safe half to discard.", "Move the boundary that cannot contain the answer.", "Stop when both boundaries point to the same valid position."],
+  Trie: ["Create one node for each character in every stored word.", "Increment the count at the node representing each complete prefix.", "Walk each query prefix and return the count at its final node."],
+  "0/1 Knapsack": ["Define dp[capacity] as the best value achievable so far.", "For each item, compare skipping it with taking it once.", "Scan capacities downward so the same item cannot be reused."],
+  LIS: ["Maintain the smallest possible tail for every subsequence length.", "Binary-search the first tail that is not smaller than the current value.", "Replace that tail and use the number of tails as the answer."],
+  "KMP String Matching": ["Build the prefix table describing reusable pattern prefixes.", "Advance both pointers when characters match.", "On a mismatch, fall back inside the pattern instead of restarting the text."],
+  "Sweep Line": ["Convert every interval into a start event and an end event.", "Sort events and process ends before starts at the same time for half-open intervals.", "Update the active count and keep the largest value seen."],
+  "Difference Array": ["Record each range update only at its start and after its end.", "Build a running sum across the difference array.", "The running sum at each index is the final value for that index."],
+  "LRU Cache": ["Use a map for direct key lookup and an order structure for recency.", "Move a key to the newest position after every successful get or put.", "When capacity is exceeded, remove the oldest position."],
+  "Minimum Spanning Tree": ["Consider links from cheapest to most expensive.", "Accept a link only when it connects two different components.", "Stop after connecting n-1 links or report that the graph is disconnected."],
+};
+
 function makeQuestion(seed: QuestionSeed): CodingQuestion {
   const firstTest = seed.tests[0];
   return {
@@ -25,7 +41,7 @@ function makeQuestion(seed: QuestionSeed): CodingQuestion {
     acceptance: seed.difficulty === "Hard" ? 34 : seed.difficulty === "Medium" ? 58 : 76,
     xp: seed.difficulty === "Hard" ? 125 : seed.difficulty === "Medium" ? 75 : 40,
     prerequisites: [seed.pattern, "Functions", "Edge cases"],
-    learningSteps: [
+    learningSteps: patternLearningSteps[seed.pattern] || [
       "Write down the invariant that should remain true after each step.",
       "Choose the data structure that makes the next operation cheap.",
       "Test the empty, smallest, boundary, and largest valid inputs.",

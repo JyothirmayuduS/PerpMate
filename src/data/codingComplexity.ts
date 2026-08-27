@@ -40,6 +40,12 @@ const guides: Record<string, ComplexityGuide> = {
     improvementSteps: linearSteps,
     interviewTip: "Name the invariant maintained after each element.",
   },
+  "Character Scan": {
+    bruteForce: { time: "O(n × k)", space: "O(1)", explanation: "Checking the full target collection for every character adds k work per input character." },
+    optimized: { time: "O(n)", space: "O(1)", explanation: "The text is visited once and the target set is fixed, so each character takes constant work." },
+    improvementSteps: ["Normalize the input once before scanning.", "Use a constant-time membership check for each character.", "Keep only the counter and current character instead of copying the text."],
+    interviewTip: "Define n as the number of characters and mention whether the alphabet or target set is fixed.",
+  },
   Transformation: {
     bruteForce: { time: "O(n²)", space: "O(n)", explanation: "Repeatedly searching the output list for duplicates can make every insertion expensive." },
     optimized: { time: "O(n)", space: "O(n)", explanation: "Normalize each item once and use a Set for average O(1) duplicate checks." },

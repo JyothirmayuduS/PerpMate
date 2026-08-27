@@ -407,18 +407,20 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                     <p className="font-sans text-xs text-on-surface-variant leading-6 mb-4">
                       Follow the state change from the sample input to the expected output. Use each checkpoint to explain your code aloud.
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto_1fr_auto] items-center gap-3">
-                      <div className="rounded-xl bg-primary px-3 py-2 font-mono text-[10px] text-on-primary break-all">Input<br />{question.examples[0]?.input || "—"}</div>
+                    <div className="space-y-2">
+                      <div className="rounded-xl bg-primary px-4 py-3 font-mono text-[11px] text-on-primary break-words"><span className="text-on-primary/50">INPUT</span><br />{question.examples[0]?.input || "—"}</div>
                       {question.learningSteps.slice(0, 3).map((step, index) => (
-                        <div key={step} className="contents">
-                          <ArrowRight className="hidden md:block h-4 w-4 text-secondary-container" />
-                          <div className="rounded-xl border border-secondary-container/30 bg-secondary-container/10 px-3 py-2 font-sans text-[10px] font-bold text-primary">
-                            {index + 1}. {step}
+                        <div key={step} className="flex items-start gap-3">
+                          <div className="flex flex-col items-center self-stretch">
+                            <ArrowRight className="h-4 w-4 rotate-90 text-secondary-container mt-2" />
+                            {index < 2 && <div className="w-px flex-1 bg-secondary-container/30 mt-1" />}
+                          </div>
+                          <div className="flex-1 rounded-xl border border-secondary-container/30 bg-secondary-container/10 px-4 py-3 font-sans text-xs font-bold text-primary">
+                            <span className="text-secondary-container mr-1">Step {index + 1}</span>{step}
                           </div>
                         </div>
                       ))}
-                      <ArrowRight className="hidden md:block h-4 w-4 text-secondary-container" />
-                      <div className="rounded-xl bg-emerald-50 px-3 py-2 font-mono text-[10px] text-emerald-800 break-all">Output<br />{question.examples[0]?.output || "—"}</div>
+                      <div className="rounded-xl bg-emerald-50 px-4 py-3 font-mono text-[11px] text-emerald-800 break-words"><span className="text-emerald-700/60">EXPECTED OUTPUT</span><br />{question.examples[0]?.output || "—"}</div>
                     </div>
                   </div>
 
@@ -461,6 +463,22 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                         <span className="rounded-full bg-white px-3 py-1.5 font-mono text-xs font-bold text-emerald-700">Space {complexity.optimized.space}</span>
                       </div>
                       <p className="font-sans text-xs text-emerald-900/75 leading-6">{complexity.optimized.explanation}</p>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-outline-variant bg-background p-5 mb-7">
+                    <h3 className="font-display text-lg font-bold text-primary mb-3">How to judge your own code</h3>
+                    <div className="space-y-3">
+                      {[
+                        ["1", "Name the input", "Use n for the number of items, rows, characters, or edges. If there are two inputs, name both, such as n and m."],
+                        ["2", "Count repeated work", "One loop over n items is O(n). A loop inside a loop is usually O(n²). A loop that halves the search range is O(log n)."],
+                        ["3", "Count retained memory", "Include arrays, maps, sets, stacks, queues, and recursion depth. Output space only counts when your function stores the output."],
+                      ].map(([number, title, explanation]) => (
+                        <div key={number} className="flex gap-3 rounded-xl border border-outline-variant p-3">
+                          <span className="h-7 w-7 rounded-full bg-secondary-container text-primary flex items-center justify-center font-display text-[10px] font-bold shrink-0">{number}</span>
+                          <p className="font-sans text-xs text-primary leading-5"><strong>{title}:</strong> {explanation}</p>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
