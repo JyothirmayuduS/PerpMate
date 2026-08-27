@@ -33,6 +33,34 @@ function generatedQuestionsSnapshot() {
   return JSON.stringify(generated);
 }
 
+function ExplanationLines({ explanation }: { explanation: string }) {
+  const lines = explanation.split(/\r?\n/).filter((line, index, all) => line.trim() || (index > 0 && all[index - 1].trim()));
+
+  return (
+    <div className="space-y-2">
+      {lines.map((line, index) => {
+        const content = line.trim();
+        if (!content) return <div key={`space-${index}`} className="h-1" />;
+        const isMath = content.includes("\\");
+        const parts = content.split(/(\*\*[^*]+\*\*)/g);
+        return (
+          <div key={`${index}-${content}`} className="w-full rounded-lg bg-surface-container-low px-3 py-2 font-sans text-xs leading-6 text-on-surface-variant break-words overflow-hidden">
+            {isMath ? (
+              <div className="max-w-full overflow-hidden [&_.katex-display]:my-0 [&_.katex-display]:text-left [&_.katex]:max-w-full [&_.katex]:text-wrap">
+                <MathFormula block={true} math={content.replace(/\*\*/g, "")} />
+              </div>
+            ) : (
+              parts.map((part, partIndex) => part.startsWith("**") && part.endsWith("**")
+                ? <strong key={partIndex} className="font-extrabold text-primary">{part.slice(2, -2)}</strong>
+                : <span key={partIndex}>{part}</span>)
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ─── Difficulty Config ─────────────────────────────────────────────────────────
 
 const diffConfig: Record<string, { color: string; bg: string; border: string; dot: string; label: string }> = {
@@ -489,13 +517,7 @@ export default function QuestionPlayer({ params }: { params: Promise<{ id: strin
                         <h4 className="font-sans text-[10px] font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide flex items-center gap-1.5">
                           <ListOrdered className="w-4 h-4 text-primary" /> Step-by-Step Solution
                         </h4>
-                        <div className="font-sans text-xs text-on-surface-variant leading-relaxed whitespace-pre-wrap overflow-x-auto pb-2">
-                          {question.explanation.includes('\\') ? (
-                            <MathFormula block={true} math={question.explanation} />
-                          ) : (
-                            <span>{question.explanation}</span>
-                          )}
-                        </div>
+                        <ExplanationLines explanation={question.explanation} />
                       </div>
 
                       {/* Pro Tips */}
