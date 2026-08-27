@@ -180,12 +180,21 @@ function PrerequisitesPanel({
 export default function QuestionPlayer({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const { id } = use(params);
-  const { user, questions, updateXP, updateProgress } = useStore();
+  const { user, questions, updateXP, updateProgress, logPracticeAttempt } = useStore();
 
   const [question, setQuestion] = useState<Question | null>(null);
   const [selectedOption, setSelectedOption] = useState<"A" | "B" | "C" | "D" | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [timeSpent, setTimeSpent] = useState(0);
+
+  useEffect(() => {
+    if (!question || submitted) return;
+    const timer = setInterval(() => {
+      setTimeSpent((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [question, submitted]);
   const [time, setTime] = useState(0);
   const [mounted, setMounted] = useState(false);
 
@@ -228,6 +237,15 @@ export default function QuestionPlayer({ params }: { params: Promise<{ id: strin
     const correct = selectedOption === question.correctOption;
     setIsCorrect(correct);
     setSubmitted(true);
+
+    logPracticeAttempt({
+      questionId: question.id,
+      topicId: question.topic,
+      timeSpentSeconds: timeSpent,
+      isCorrect: correct,
+      timestamp: new Date().toISOString()
+    });
+
     if (correct) {
       updateXP(20);
       updateProgress(question.topic, 100);

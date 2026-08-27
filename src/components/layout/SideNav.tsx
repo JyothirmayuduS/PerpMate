@@ -15,7 +15,8 @@ import {
   User as UserIcon,
   Compass,
   Search,
-  Sparkles
+  Sparkles,
+  PieChart
 } from "lucide-react";
 
 import { useState, useEffect } from "react";
@@ -43,6 +44,7 @@ export default function SideNav() {
     { name: "Roadmap", href: "/roadmap", icon: Map, badge: "AI" },
     { name: "Mock Tests", href: "/tests", icon: Timer },
     { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
+    { name: "Report", href: "/report", icon: PieChart },
   ];
 
   const handleLogout = () => {

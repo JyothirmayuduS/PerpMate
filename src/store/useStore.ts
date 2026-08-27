@@ -105,6 +105,14 @@ export interface MockTestAttempt {
   date: string;
 }
 
+export interface PracticeAttempt {
+  questionId: string;
+  topicId: string;
+  timeSpentSeconds: number;
+  isCorrect: boolean;
+  timestamp: string;
+}
+
 interface AppState {
   user: User | null;
   doubts: Doubt[];
@@ -113,6 +121,7 @@ interface AppState {
   mockTests: MockTest[];
   attempts: MockTestAttempt[];
   questions: Question[];
+  practiceAttempts: PracticeAttempt[];
   
   // Actions
   login: (email: string, name?: string) => void;
@@ -125,6 +134,7 @@ interface AppState {
   updateXP: (amount: number) => void;
   updateProgress: (topic: string, newPercentage: number) => void;
   addAttempt: (attempt: MockTestAttempt) => void;
+  logPracticeAttempt: (attempt: PracticeAttempt) => void;
   fetchInitialData: () => Promise<void>;
 }
 
@@ -261,6 +271,7 @@ export const useStore = create<AppState>((set, get) => {
         date: "2026-08-25"
       }
     ],
+    practiceAttempts: savedState?.practiceAttempts || [],
     questions: allAptitudeQuestions,
 
     login: (email, name) => {
@@ -418,7 +429,8 @@ export const useStore = create<AppState>((set, get) => {
           tasks: get().tasks,
           practiceProgress: get().practiceProgress,
           mockTests: get().mockTests,
-          attempts: get().attempts
+          attempts: get().attempts,
+          practiceAttempts: get().practiceAttempts
         };
         localStorage.setItem("prepmate_store", JSON.stringify(fullState));
       }
@@ -476,6 +488,39 @@ export const useStore = create<AppState>((set, get) => {
           correct_answers: attempt.correctAnswers,
           total_questions: attempt.totalQuestions,
           xp_gained: attempt.xpGained
+        }).then();
+      }
+    },
+
+    logPracticeAttempt: (attempt: PracticeAttempt) => {
+      set((state) => ({
+        practiceAttempts: [...state.practiceAttempts, attempt]
+      }));
+      // Save complete store to local storage
+      if (typeof window !== "undefined") {
+        const fullState = {
+          user: get().user,
+          doubts: get().doubts,
+          tasks: get().tasks,
+          practiceProgress: get().practiceProgress,
+          mockTests: get().mockTests,
+          attempts: get().attempts,
+          practiceAttempts: get().practiceAttempts
+        };
+        localStorage.setItem("prepmate_store", JSON.stringify(fullState));
+      }
+      
+      // Async sync to Supabase (assuming practice_attempts table exists or will exist)
+      const supabase = createClient();
+      const user = get().user;
+      if (supabase && user) {
+        supabase.from('practice_attempts').insert({
+          user_id: user.id,
+          question_id: attempt.questionId,
+          topic_id: attempt.topicId,
+          time_spent_seconds: attempt.timeSpentSeconds,
+          is_correct: attempt.isCorrect,
+          created_at: attempt.timestamp
         }).then();
       }
     },
