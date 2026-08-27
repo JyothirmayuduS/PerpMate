@@ -1,4 +1,5 @@
 import type { CodingTestCase } from "@/data/codingQuestions";
+import type { CodingLanguage } from "@/data/codingLanguages";
 
 export type CodingTestResult = {
   label: string;
@@ -16,6 +17,34 @@ export type CodingRunResult = {
   results: CodingTestResult[];
   error?: string;
 };
+
+export async function runCompiledLanguageTests(
+  code: string,
+  language: Exclude<CodingLanguage, "javascript">,
+  functionName: string,
+  tests: CodingTestCase[],
+): Promise<CodingRunResult> {
+  try {
+    const response = await fetch("/api/coding/execute", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code, language, functionName, tests }),
+    });
+    const payload = (await response.json()) as CodingRunResult;
+    if (!response.ok && !payload.error) {
+      return { passed: 0, total: tests.length, runtimeMs: 0, results: [], error: "The language runner returned an unexpected response." };
+    }
+    return payload;
+  } catch (error) {
+    return {
+      passed: 0,
+      total: tests.length,
+      runtimeMs: 0,
+      results: [],
+      error: error instanceof Error ? error.message : "Could not reach the language runner.",
+    };
+  }
+}
 
 const WORKER_TIMEOUT_MS = 2500;
 

@@ -13,7 +13,6 @@ import {
   Copy,
   Eye,
   Gauge,
-  Languages,
   Lightbulb,
   LoaderCircle,
   Play,
@@ -34,7 +33,7 @@ import {
   getSupportedLanguages,
   type CodingLanguage,
 } from "@/data/codingLanguages";
-import { runJavaScriptTests, type CodingRunResult } from "@/lib/codingRunner";
+import { runCompiledLanguageTests, runJavaScriptTests, type CodingRunResult } from "@/lib/codingRunner";
 import { useStore } from "@/store/useStore";
 import { createClient } from "../../../utils/supabase/client";
 
@@ -118,10 +117,6 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
   if (!user) return null;
 
   const execute = async (submit: boolean) => {
-    if (!languageMeta.executable) {
-      setStatusMessage(`${languageMeta.label} is available as guided template practice; switch to JavaScript to run tests in the browser.`);
-      return;
-    }
     setIsRunning(true);
     setRunResult(null);
     setStatusMessage(submit ? "Checking all test cases..." : "Running sample tests...");
@@ -129,7 +124,9 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
     const selectedTests = submit
       ? question.tests
       : question.tests.filter((test) => !test.hidden);
-    const result = await runJavaScriptTests(code, question.functionName, selectedTests);
+    const result = languageMeta.executable
+      ? await runJavaScriptTests(code, question.functionName, selectedTests)
+      : await runCompiledLanguageTests(code, selectedLanguage as Exclude<CodingLanguage, "javascript">, question.functionName, selectedTests);
     setRunResult(result);
     setIsRunning(false);
 
@@ -221,11 +218,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
     );
     setRunResult(null);
     setShowSolution(false);
-    setStatusMessage(
-      codingLanguageMeta[language].executable
-        ? "Ready to run your code"
-        : `${codingLanguageMeta[language].label} template mode — write and compare your approach`,
-    );
+    setStatusMessage("Ready to run your code");
   };
 
   return (
@@ -563,14 +556,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
               </div>
 
               <div className="h-44 overflow-y-auto p-4">
-                {!languageMeta.executable && !isRunning && (
-                  <div className="h-full flex flex-col items-center justify-center text-center px-5">
-                    <Languages className="h-5 w-5 text-[#ff5c36]/70 mb-2" />
-                    <p className="font-sans text-[10px] font-bold text-white/60 mb-1">{languageMeta.label} guided template mode</p>
-                    <p className="font-sans text-[10px] text-white/35 leading-5">Write your solution, compare it with the reference, and switch to JavaScript when you want browser test execution.</p>
-                  </div>
-                )}
-                {languageMeta.executable && !runResult && !isRunning && (
+                {!runResult && !isRunning && (
                   <div className="h-full flex flex-col items-center justify-center text-center">
                     <Play className="h-5 w-5 text-white/20 mb-2" />
                     <p className="font-sans text-[10px] text-white/35">Run the sample tests when you are ready.</p>
@@ -609,17 +595,13 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
 
               <div className="h-16 border-t border-white/10 px-4 flex items-center justify-between gap-3">
                 <div className="hidden sm:flex items-center gap-2 text-white/30 font-sans text-[9px]">
-                  {languageMeta.executable ? (
-                    <><Zap className="h-3.5 w-3.5" /> 2.5 second safety limit</>
-                  ) : (
-                    <><Languages className="h-3.5 w-3.5" /> Template and solution comparison</>
-                  )}
+                  <><Zap className="h-3.5 w-3.5" /> 12 second safety limit • {languageMeta.label} runner</>
                 </div>
                 <div className="flex items-center gap-2 ml-auto">
                   <button
                     type="button"
                     onClick={() => execute(false)}
-                    disabled={isRunning || !languageMeta.executable}
+                    disabled={isRunning}
                     className="rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 font-sans text-[10px] font-bold text-white flex items-center gap-2 hover:bg-white/10 disabled:opacity-50 cursor-pointer"
                   >
                     <Play className="h-3.5 w-3.5" /> Run
@@ -627,7 +609,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                   <button
                     type="button"
                     onClick={() => execute(true)}
-                    disabled={isRunning || !languageMeta.executable}
+                    disabled={isRunning}
                     className="rounded-lg bg-[#ff5c36] px-4 py-2.5 font-sans text-[10px] font-extrabold text-[#5a0f00] flex items-center gap-2 hover:brightness-105 disabled:opacity-50 cursor-pointer"
                   >
                     <Send className="h-3.5 w-3.5" /> Submit
