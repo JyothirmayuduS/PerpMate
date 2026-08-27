@@ -165,7 +165,6 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
     starterCode: question.starterCode,
     solutionCode: question.solutionCode,
   };
-  const codeBlocks = useMemo(() => buildCodeBlocks(activeTemplate.solutionCode), [activeTemplate.solutionCode]);
   const languageMeta = codingLanguageMeta[selectedLanguage];
   const solutionTemplate = getLanguageTemplate(question, solutionLanguage) || activeTemplate;
   const [code, setCode] = useState(() => activeTemplate.starterCode);
@@ -185,6 +184,8 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
   const [copied, setCopied] = useState(false);
   const [solved, setSolved] = useState(false);
   const editorRef = useRef<HTMLTextAreaElement>(null);
+  const visualizerCode = showSolution ? solutionTemplate.solutionCode : code;
+  const visualizerBlocks = useMemo(() => buildCodeBlocks(visualizerCode), [visualizerCode]);
 
   useEffect(() => {
     if (!isTracePlaying) return;
@@ -382,8 +383,9 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
     setStatusMessage("Ready to run your code");
   };
 
+  const hasExecutionContext = showSolution || Boolean(runResult && !runResult.error);
   const activeTrace = iterationTrace[traceIndex] || iterationTrace[0];
-  const activeCodeBlock = codeBlocks[traceIndex === iterationTrace.length - 1 ? 2 : tracePhase] || codeBlocks[0];
+  const activeCodeBlock = visualizerBlocks[traceIndex === iterationTrace.length - 1 ? 2 : tracePhase] || visualizerBlocks[0];
 
   return (
     <div className="min-h-screen bg-background text-on-surface">
@@ -633,17 +635,28 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                     <p className="font-sans text-[10px] text-on-surface-variant mt-3">This animation traces the algorithm’s pattern state on the sample input. It helps you predict the next iteration before reading the final answer.</p>
                   </div>
 
-                  <div className="rounded-2xl border border-outline-variant bg-primary p-5 mb-8 text-on-primary">
+                  {!hasExecutionContext && (
+                    <div className="rounded-2xl border border-dashed border-outline-variant bg-surface-container-low p-5 mb-8">
+                      <div className="flex items-start gap-3">
+                        <Code2 className="h-5 w-5 text-secondary-container shrink-0 mt-0.5" />
+                        <div>
+                          <h3 className="font-display text-base font-bold text-primary">Your execution map is waiting</h3>
+                          <p className="font-sans text-xs leading-5 text-on-surface-variant mt-1">Run your code to map your own approach, or reveal the solution to inspect the reference approach. Different correct solutions may highlight different blocks.</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <div className={`rounded-2xl border border-outline-variant bg-primary p-5 mb-8 text-on-primary ${!hasExecutionContext ? "hidden" : ""}`}>
                     <div className="flex items-center justify-between gap-3 mb-2">
                       <div className="flex items-center gap-2">
                         <Code2 className="h-4 w-4 text-[#ff8a70]" />
                         <h3 className="font-display text-lg font-bold">Which code block is running?</h3>
                       </div>
-                      <span className="rounded-full bg-white/10 px-2.5 py-1 font-mono text-[9px] font-bold text-white/60">{codingLanguageMeta[selectedLanguage].shortLabel}</span>
+                      <span className="rounded-full bg-white/10 px-2.5 py-1 font-mono text-[9px] font-bold text-white/60">{showSolution ? `${codingLanguageMeta[solutionLanguage].shortLabel} reference` : `${codingLanguageMeta[selectedLanguage].shortLabel} submission`}</span>
                     </div>
-                    <p className="font-sans text-[10px] text-white/55 leading-5 mb-4">The highlighted block is the part responsible for the current pass. The snippets come from the reference solution in the selected editor language.</p>
+                    <p className="font-sans text-[10px] text-white/55 leading-5 mb-4">The highlighted block is the part responsible for the current pass. {showSolution ? "This map follows the reference solution." : "This map follows the code you submitted."} Valid solutions can use different approaches, so their highlighted blocks may look different.</p>
                     <div className="space-y-2">
-                      {codeBlocks.map((block, index) => {
+                      {visualizerBlocks.map((block, index) => {
                         const activeIndex = traceIndex === iterationTrace.length - 1 ? 2 : tracePhase;
                         const active = index === activeIndex;
                         return (
@@ -661,10 +674,10 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                     <div className="mt-4 rounded-xl border border-white/10 bg-[#111] overflow-hidden">
                       <div className="border-b border-white/10 px-3 py-2 font-sans text-[9px] font-extrabold uppercase tracking-wider text-white/45">Source line pointer</div>
                       <div className="max-h-64 overflow-y-auto p-2">
-                        {activeTemplate.solutionCode.split("\n").map((line, index) => {
+                        {visualizerCode.split("\n").map((line, index) => {
                           const lineNumber = index + 1;
                           const activeIndex = traceIndex === iterationTrace.length - 1 ? 2 : tracePhase;
-                          const activeLine = codeBlocks[activeIndex]?.lineNumber;
+                          const activeLine = visualizerBlocks[activeIndex]?.lineNumber;
                           const isActive = lineNumber === activeLine;
                           return (
                             <div key={`${lineNumber}-${line}`} className={`flex gap-3 px-2 py-1 font-mono text-[10px] leading-5 transition-colors duration-500 ${isActive ? "bg-[#ff5c36]/20 text-[#ffd2c8]" : "text-white/45"}`}>
@@ -892,6 +905,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                   onClick={() => {
                     setCode(activeTemplate.starterCode);
                     setRunResult(null);
+                    setShowSolution(false);
                     setStatusMessage("Editor reset");
                   }}
                   className="h-8 w-8 rounded-lg border border-white/10 flex items-center justify-center text-white/50 hover:text-white cursor-pointer"
@@ -914,7 +928,11 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
               <textarea
                 ref={editorRef}
                 value={code}
-                onChange={(event) => setCode(event.target.value)}
+                onChange={(event) => {
+                  setCode(event.target.value);
+                  setRunResult(null);
+                  setShowSolution(false);
+                }}
                 onScroll={(event) => setScrollTop(event.currentTarget.scrollTop)}
                 onKeyDown={handleEditorKeyDown}
                 spellCheck={false}
