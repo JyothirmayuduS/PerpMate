@@ -256,7 +256,7 @@ function CodingPracticeContent() {
                 <div className="rounded-2xl bg-primary p-5 text-on-primary shrink-0 md:w-48">
                   <BookOpen className="h-5 w-5 mb-5 text-secondary-container" />
                   <p className="font-sans text-[9px] font-bold uppercase tracking-wider text-on-primary/60 mb-1">
-                    Weekly target
+                    Weekly target · {allQuestions.length}+ drills
                   </p>
                   <p className="font-display text-lg font-bold leading-snug">{path.weeklyTarget}</p>
                 </div>

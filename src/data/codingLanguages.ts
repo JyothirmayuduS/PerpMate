@@ -516,7 +516,7 @@ public:
 };
 
 export function getSupportedLanguages(question: CodingQuestion): CodingLanguage[] {
-  const additional = languageTemplates[question.id] || {};
+  const additional = languageTemplates[question.templateSourceId || question.id] || {};
   return (["javascript", "python", "java", "cpp"] as CodingLanguage[]).filter(
     (language) => language === "javascript" || Boolean(additional[language as AdditionalLanguage]),
   );
@@ -529,5 +529,5 @@ export function getLanguageTemplate(
   if (language === "javascript") {
     return { starterCode: question.starterCode, solutionCode: question.solutionCode };
   }
-  return languageTemplates[question.id]?.[language] || null;
+  return languageTemplates[question.templateSourceId || question.id]?.[language] || null;
 }
