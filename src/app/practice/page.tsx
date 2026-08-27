@@ -60,9 +60,6 @@ export default function PracticeHub() {
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary">
               Placement Practice Hub
             </h2>
-            <div className="px-3 py-1 bg-primary/10 text-primary rounded-full font-sans text-[10px] font-bold uppercase tracking-wider">
-              IndiaBix Style
-            </div>
           </div>
           <p className="font-sans text-sm text-on-surface-variant max-w-2xl leading-relaxed">
             Master the core concepts tested by top Indian IT companies. Our structured approach breaks down topics into essential prerequisites, formulas, and progressive difficulty levels.
