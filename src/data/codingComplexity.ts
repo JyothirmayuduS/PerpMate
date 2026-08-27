@@ -277,6 +277,12 @@ const additionalPatternGuides: Record<string, ComplexityGuide> = {
     improvementSteps: ["Sort edges by weight.", "Use Union-Find to test whether an edge creates a cycle.", "Stop after V - 1 accepted edges and verify disconnected graphs."],
     interviewTip: "Distinguish a minimum spanning tree from a shortest-path tree: they optimize different objectives.",
   },
+  "Star Patterns": {
+    bruteForce: { time: "O(n²)", space: "O(n²)", explanation: "Printing a two-dimensional pattern visits every row-column position and stores the complete output." },
+    optimized: { time: "O(n²)", space: "O(n²) output or O(n) streaming", explanation: "Each visible character must still be produced, but row construction can use counters and repeated strings instead of repeated concatenation." },
+    improvementSteps: ["Separate row count, column count, spaces, and symbols.", "Write the row formula before coding.", "Stream rows when the platform allows it to avoid retaining the full output."],
+    interviewTip: "Pattern-printing complexity is bounded by the number of characters printed; include spaces and newline characters in the output cost.",
+  },
 };
 
 Object.assign(guides, additionalPatternGuides);
