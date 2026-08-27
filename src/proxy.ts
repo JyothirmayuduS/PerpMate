@@ -6,16 +6,30 @@ export default async function proxy(request: NextRequest) {
     request,
   })
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  // Preview/production deployments should still render when Supabase
+  // variables have not been added to the Vercel project yet.
+  if (!supabaseUrl || !supabaseAnonKey) {
+    const url = request.nextUrl.clone()
+    if (url.pathname.startsWith('/profile') || url.pathname.startsWith('/practice') || url.pathname.startsWith('/roadmap')) {
+      url.pathname = '/auth'
+      return NextResponse.redirect(url)
+    }
+    return supabaseResponse
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           supabaseResponse = NextResponse.next({
             request,
           })
