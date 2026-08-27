@@ -57,12 +57,57 @@ function isUuid(value: string) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
 
+type IterationTrace = { iteration: number; state: string; decision: string };
+
+function buildIterationTrace(question: CodingQuestion): IterationTrace[] {
+  const firstInput = question.tests[0]?.input[0];
+  if (Array.isArray(firstInput)) {
+    return firstInput.slice(0, 10).map((value, index) => ({
+      iteration: index + 1,
+      state: `index ${index} → ${JSON.stringify(value)}`,
+      decision: question.pattern === "Character Scan"
+        ? `Check whether ${JSON.stringify(value)} matches the target group.`
+        : question.pattern === "Star Patterns"
+          ? `Build row ${index + 1} from its width and alignment rule.`
+          : `Apply ${question.pattern} state to this item, then continue.`,
+    }));
+  }
+  if (typeof firstInput === "string") {
+    return Array.from(firstInput).slice(0, 10).map((character, index) => ({
+      iteration: index + 1,
+      state: `position ${index} → ${JSON.stringify(character)}`,
+      decision: question.pattern === "Character Scan"
+        ? `Normalize it, test membership, and update the counter.`
+        : `Compare it with the current ${question.pattern} state.`,
+    }));
+  }
+  if (typeof firstInput === "number") {
+    return Array.from({ length: Math.min(Math.max(firstInput, 0), 10) }, (_, index) => ({
+      iteration: index + 1,
+      state: `row ${index + 1}`,
+      decision: question.pattern === "Star Patterns"
+        ? `Calculate spaces and stars for row ${index + 1}.`
+        : `Update the running ${question.pattern} state.`,
+    }));
+  }
+  return [{ iteration: 1, state: "Read the sample input", decision: `Apply the ${question.pattern} invariant before returning the result.` }];
+}
+
+function getMistakeCoach(question: CodingQuestion, result: CodingRunResult) {
+  if (result.error) return `The runner stopped before comparing an answer: ${result.error} Check the function name, syntax, and whether every branch returns a value.`;
+  const failed = result.results.find((item) => !item.passed);
+  if (!failed) return `No mistake found in these tests. To improve further, compare your loop count and retained state with the optimized ${question.pattern} approach.`;
+  if (failed.error) return `The first mistake is in “${failed.label}”: ${failed.error} Fix this exception first, then rerun the same test before changing the algorithm.`;
+  return `The first mismatch is in “${failed.label}”: expected ${displayValue(failed.expected)} but received ${displayValue(failed.actual)}. Recheck the input boundary, the state update, and the return value before optimizing.`;
+}
+
 export default function CodingWorkspace({ question }: { question: CodingQuestion }) {
   const router = useRouter();
   const { user, updateXP } = useStore();
   const [activeTab, setActiveTab] = useState<WorkspaceTab>("description");
   const supportedLanguages = useMemo(() => getSupportedLanguages(question), [question]);
   const complexity = useMemo(() => getComplexityGuide(question), [question]);
+  const iterationTrace = useMemo(() => buildIterationTrace(question), [question]);
   const [selectedLanguage, setSelectedLanguage] = useState<CodingLanguage>("javascript");
   const [solutionLanguage, setSolutionLanguage] = useState<CodingLanguage>("javascript");
   const activeTemplate = getLanguageTemplate(question, selectedLanguage) || {
@@ -424,6 +469,34 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                     </div>
                   </div>
 
+                  <div className="rounded-2xl border border-outline-variant bg-background p-5 mb-8">
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="h-4 w-4 text-secondary-container" />
+                        <h3 className="font-display text-lg font-bold text-primary">Iteration visualizer</h3>
+                      </div>
+                      <span className="rounded-full bg-secondary-container/10 px-2.5 py-1 font-mono text-[9px] font-bold text-secondary">sample trace</span>
+                    </div>
+                    <p className="font-sans text-xs text-on-surface-variant leading-6 mb-4">
+                      Watch what changes on each pass. The trace uses the first public example so you can pause, predict the next state, and then compare.
+                    </p>
+                    <div className="overflow-x-auto rounded-xl border border-outline-variant">
+                      <div className="min-w-[560px]">
+                        <div className="grid grid-cols-[80px_1fr_2fr] gap-3 bg-surface-container px-4 py-2 font-sans text-[9px] font-extrabold uppercase tracking-wider text-on-surface-variant">
+                          <span>Pass</span><span>State</span><span>What happens</span>
+                        </div>
+                        {iterationTrace.map((trace) => (
+                          <div key={trace.iteration} className="grid grid-cols-[80px_1fr_2fr] gap-3 border-t border-outline-variant px-4 py-3 font-sans text-xs text-primary">
+                            <span className="font-mono font-bold text-secondary-container">#{trace.iteration}</span>
+                            <span className="font-mono break-words">{trace.state}</span>
+                            <span className="leading-5">{trace.decision}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <p className="font-sans text-[10px] text-on-surface-variant mt-3">Showing the first {iterationTrace.length} passes. For larger inputs, the same invariant repeats until the input is exhausted.</p>
+                  </div>
+
                   <h3 className="font-display text-base font-bold text-primary mb-3">Know these first</h3>
                   <div className="flex flex-wrap gap-2">
                     {question.prerequisites.map((item) => (
@@ -729,7 +802,9 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                       This run took {runResult.runtimeMs} ms. The expected optimized pattern is {complexity.optimized.time} time and {complexity.optimized.space} space; runtime is a measurement, while Big-O describes how the work grows as input grows.
                     </p>
                     <p className="font-sans text-[10px] leading-5 text-white/45 mt-1">Next improvement: {complexity.improvementSteps[0]}</p>
-                    <button type="button" onClick={() => setActiveTab("complexity")} className="mt-2 text-[10px] font-bold text-[#ff9b84] hover:text-white cursor-pointer">Open the step-by-step complexity coach →</button>
+                    <p className="font-sans text-[10px] leading-5 text-white/65 mt-1"><span className="font-bold text-white/80">What to fix:</span> {getMistakeCoach(question, runResult)}</p>
+                    <button type="button" onClick={() => setActiveTab("concept")} className="mt-2 text-[10px] font-bold text-[#ff9b84] hover:text-white cursor-pointer">Open the iteration visualizer →</button>
+                    <button type="button" onClick={() => setActiveTab("complexity")} className="mt-2 ml-3 text-[10px] font-bold text-[#ff9b84] hover:text-white cursor-pointer">Open the step-by-step complexity coach →</button>
                   </div>
                 )}
               </div>
