@@ -59,6 +59,19 @@ function isUuid(value: string) {
 }
 
 type IterationTrace = { iteration: number; state: string; decision: string };
+type CodeBlock = { label: string; code: string; explanation: string };
+
+function buildCodeBlocks(code: string): CodeBlock[] {
+  const lines = code.split("\n").map((line) => line.trim()).filter(Boolean);
+  const loop = lines.find((line) => /\b(for|while|foreach)\b/i.test(line)) || lines[1] || "Process the next input";
+  const update = lines.find((line) => /\b(count|total|sum|best|current|answer|result|push|append|set|dp|return)\b/i.test(line) && line !== loop) || lines[2] || "Update the current state";
+  const returns = [...lines].reverse().find((line) => /\breturn\b/i.test(line)) || "return the answer";
+  return [
+    { label: "Repeating block", code: loop, explanation: "This block runs once for the current item, character, row, or node." },
+    { label: "State update", code: update, explanation: "This block changes the value that the next iteration will see." },
+    { label: "Finish and return", code: returns, explanation: "This block runs after the input is exhausted and produces the final answer." },
+  ];
+}
 
 function buildIterationTrace(question: CodingQuestion): IterationTrace[] {
   const firstInput = question.tests[0]?.input[0];
@@ -115,6 +128,7 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
     starterCode: question.starterCode,
     solutionCode: question.solutionCode,
   };
+  const codeBlocks = useMemo(() => buildCodeBlocks(activeTemplate.solutionCode), [activeTemplate.solutionCode]);
   const languageMeta = codingLanguageMeta[selectedLanguage];
   const solutionTemplate = getLanguageTemplate(question, solutionLanguage) || activeTemplate;
   const [code, setCode] = useState(() => activeTemplate.starterCode);
@@ -525,6 +539,33 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                       <button type="button" onClick={() => { setTraceIndex(0); setIsTracePlaying(false); }} className="rounded-full border border-outline-variant px-3 py-2 font-sans text-[10px] font-bold text-primary cursor-pointer">Reset</button>
                     </div>
                     <p className="font-sans text-[10px] text-on-surface-variant mt-3">This animation traces the algorithm’s pattern state on the sample input. It helps you predict the next iteration before reading the final answer.</p>
+                  </div>
+
+                  <div className="rounded-2xl border border-outline-variant bg-primary p-5 mb-8 text-on-primary">
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <div className="flex items-center gap-2">
+                        <Code2 className="h-4 w-4 text-[#ff8a70]" />
+                        <h3 className="font-display text-lg font-bold">Which code block is running?</h3>
+                      </div>
+                      <span className="rounded-full bg-white/10 px-2.5 py-1 font-mono text-[9px] font-bold text-white/60">{codingLanguageMeta[selectedLanguage].shortLabel}</span>
+                    </div>
+                    <p className="font-sans text-[10px] text-white/55 leading-5 mb-4">The highlighted block is the part responsible for the current pass. The snippets come from the reference solution in the selected editor language.</p>
+                    <div className="space-y-2">
+                      {codeBlocks.map((block, index) => {
+                        const activeIndex = traceIndex === iterationTrace.length - 1 ? 2 : 0;
+                        const active = index === activeIndex;
+                        return (
+                          <div key={block.label} className={`rounded-xl border p-3 transition-all duration-500 ${active ? "border-[#ff8a70] bg-[#ff5c36]/15" : "border-white/10 bg-white/5"}`}>
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className={`h-5 w-5 rounded-full flex items-center justify-center font-mono text-[9px] font-bold ${active ? "bg-[#ff5c36] text-[#5a0f00]" : "bg-white/10 text-white/55"}`}>{index + 1}</span>
+                              <span className="font-sans text-[10px] font-extrabold uppercase tracking-wider text-white/75">{block.label}{active ? " · executing now" : ""}</span>
+                            </div>
+                            <pre className="overflow-x-auto font-mono text-[10px] leading-5 text-[#ffd2c8] whitespace-pre-wrap break-words">{block.code}</pre>
+                            <p className="font-sans text-[10px] leading-5 text-white/45 mt-1">{block.explanation}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
 
                   <h3 className="font-display text-base font-bold text-primary mb-3">Know these first</h3>
