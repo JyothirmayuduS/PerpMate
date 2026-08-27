@@ -1,0 +1,437 @@
+[
+  {
+    "id": "scraped-TCS-Time and Work-1787824313-0",
+    "topic": "Time and Work",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "TCS",
+      "RS Aggarwal"
+    ],
+    "text": "A can do a work in 15 days and B in 20 days. If they work on it together for 4 days, then the fraction of the work that is left is :",
+    "options": {
+      "A": "14",
+      "B": "110",
+      "C": "715",
+      "D": "815"
+    },
+    "correctOption": "D",
+    "explanation": "A's 1 day's work =1;15B's 1 day's work =1;20(A + B)'s 1 day's work =1+1=7.152060(A + B)'s 4 day's work =7x 4=7.6015Therefore, Remaining work =1 -7=8.1515",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "A's 1 day's work =1;15B's 1 day's work =1;20(A + B)'s 1 day's work =1+1=7.152060(A + B)'s 4 day's wo...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-TCS-Time and Work-1787824313-1",
+    "topic": "Time and Work",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "TCS",
+      "RS Aggarwal"
+    ],
+    "text": "A can lay railway track between two given stations in 16 days and B can do the same job in 12 days. With help of C, they did the job in 4 days only. Then, C alone can do the job in:",
+    "options": {
+      "A": "91days5",
+      "B": "92days5",
+      "C": "93days5",
+      "D": "10"
+    },
+    "correctOption": "C",
+    "explanation": "(A + B + C)'s 1 day's work =1,4A's 1 day's work =1,16B's 1 day's work =1.12C's 1 day's work =1-1+1=1-7=5.4161244848So, C alone can do the work in48= 93days.55",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "(A + B + C)'s 1 day's work =1,4A's 1 day's work =1,16B's 1 day's work =1.12C's 1 day's work =1-1+1=1...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-TCS-Time and Work-1787824313-2",
+    "topic": "Time and Work",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "TCS",
+      "RS Aggarwal"
+    ],
+    "text": "A, B and C can do a piece of work in 20, 30 and 60 days respectively. In how many days can A do the work if he is assisted by B and C on every third day?",
+    "options": {
+      "A": "12 days",
+      "B": "15 days",
+      "C": "16 days",
+      "D": "18 days"
+    },
+    "correctOption": "B",
+    "explanation": "A's 2 day's work =1x 2=1.2010(A + B + C)'s 1 day's work =1+1+1=6=1.2030606010Work done in 3 days =1+1=1.10105Now,1work is done in 3 days.5Whole work will be done in (3 x 5) = 15 days.",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "A's 2 day's work =1x 2=1.2010(A + B + C)'s 1 day's work =1+1+1=6=1.2030606010Work done in 3 days =1+...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-TCS-Time and Work-1787824313-3",
+    "topic": "Time and Work",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "TCS",
+      "RS Aggarwal"
+    ],
+    "text": "A is thrice as good as workman as B and therefore is able to finish a job in 60 days less than B. Working together, they can do it in:",
+    "options": {
+      "A": "20 days",
+      "B": "221days2",
+      "C": "25 days",
+      "D": "30 days"
+    },
+    "correctOption": "B",
+    "explanation": "Ratio of times taken by A and B = 1 : 3.The time difference is (3 - 1) 2 days while B take 3 days and A takes 1 day.If difference of time is 2 days, B takes 3 days.If difference of time is 60 days, B takes3x 60= 90 days.2So, A takes 30 days to do the work.A's 1 day's work =130B's 1 day's work =190(A + B)'s 1 day's work =1+1=4=230909045A and B together can do the work in45= 221days.22",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "Ratio of times taken by A and B = 1 : 3.The time difference is (3 - 1) 2 days while B take 3 days an...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-TCS-Time and Work-1787824313-4",
+    "topic": "Time and Work",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "TCS",
+      "RS Aggarwal"
+    ],
+    "text": "A alone can do a piece of work in 6 days and B alone in 8 days. A and B undertook to do it for Rs. 3200. With the help of C, they completed the work in 3 days. How much is to be paid to C?",
+    "options": {
+      "A": "Rs. 375",
+      "B": "Rs. 400",
+      "C": "Rs. 600",
+      "D": "Rs. 800"
+    },
+    "correctOption": "B",
+    "explanation": "C's 1 day's work =1-1+1=1-7=1.36832424A's wages : B's wages : C's wages =1:1:1= 4 : 3 : 1.6824C's share (for 3 days) = Rs.3 x1x 3200= Rs. 400.24",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "C's 1 day's work =1-1+1=1-7=1.36832424A's wages : B's wages : C's wages =1:1:1= 4 : 3 : 1.6824C's sh...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-Infosys-Profit and Loss-1787824315-0",
+    "topic": "Profit and Loss",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "Infosys",
+      "RS Aggarwal"
+    ],
+    "text": "Alfred buys an old scooter for Rs. 4700 and spends Rs. 800 on its repairs. If he sells the scooter for Rs. 5800, his gain percent is:",
+    "options": {
+      "A": "44%7",
+      "B": "55%11",
+      "C": "10%",
+      "D": "12%"
+    },
+    "correctOption": "B",
+    "explanation": "Cost Price (C.P.) = Rs. (4700 + 800) = Rs. 5500.Selling Price (S.P.) = Rs. 5800.Gain = (S.P.) - (C.P.) = Rs.(5800 - 5500) = Rs. 300.Gain % =300x 100%= 55%550011",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "Cost Price (C.P.) = Rs. (4700 + 800) = Rs. 5500.Selling Price (S.P.) = Rs. 5800.Gain = (S.P.) - (C.P...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-Infosys-Profit and Loss-1787824315-1",
+    "topic": "Profit and Loss",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "Infosys",
+      "RS Aggarwal"
+    ],
+    "text": "The cost price of 20 articles is the same as the selling price ofxarticles. If the profit is 25%, then the value ofxis:",
+    "options": {
+      "A": "15",
+      "B": "16",
+      "C": "18",
+      "D": "25"
+    },
+    "correctOption": "B",
+    "explanation": "Let C.P. of each article be Re. 1 C.P. ofxarticles = Rs.x.S.P. ofxarticles = Rs. 20.Profit = Rs. (20 -x).20 -xx 100 = 25x2000 - 100x= 25x125x= 2000x= 16.Video Explanation:https://youtu.be/sidqvjUoZxY",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "Let C.P. of each article be Re. 1 C.P. ofxarticles = Rs.x.S.P. ofxarticles = Rs. 20.Profit = Rs. (20...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-Infosys-Profit and Loss-1787824315-2",
+    "topic": "Profit and Loss",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "Infosys",
+      "RS Aggarwal"
+    ],
+    "text": "If selling price is doubled, the profit triples. Find the profit percent.",
+    "options": {
+      "A": "6623",
+      "B": "100",
+      "C": "10513",
+      "D": "120"
+    },
+    "correctOption": "B",
+    "explanation": "Let C.P. be Rs.xand S.P. be Rs.y.Then, 3(y-x) = (2y-x)y= 2x.Profit = Rs. (y-x) = Rs. (2x-x) = Rs.x.Profit % =xx 100% = 100%xVideo Explanation:https://youtu.be/dPzF10mGsWE",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "Let C.P. be Rs.xand S.P. be Rs.y.Then, 3(y-x) = (2y-x)y= 2x.Profit = Rs. (y-x) = Rs. (2x-x) = Rs.x.P...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-Infosys-Profit and Loss-1787824315-3",
+    "topic": "Profit and Loss",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "Infosys",
+      "RS Aggarwal"
+    ],
+    "text": "In a certain store, the profit is 320% of the cost. If the cost increases by 25% but the selling price remains constant, approximately what percentage of the selling price is the profit?",
+    "options": {
+      "A": "30%",
+      "B": "70%",
+      "C": "100%",
+      "D": "250%"
+    },
+    "correctOption": "B",
+    "explanation": "Let C.P.= Rs. 100. Then, Profit = Rs. 320, S.P. = Rs. 420.New C.P. = 125% of Rs. 100 = Rs. 125New S.P. = Rs. 420.Profit = Rs. (420 - 125) = Rs. 295.Required percentage =295x 100%=1475% = 70% (approximately).42021Video Explanation:https://youtu.be/bQA8SB8ycbw",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "Let C.P.= Rs. 100. Then, Profit = Rs. 320, S.P. = Rs. 420.New C.P. = 125% of Rs. 100 = Rs. 125New S....",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-Infosys-Profit and Loss-1787824315-4",
+    "topic": "Profit and Loss",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "Infosys",
+      "RS Aggarwal"
+    ],
+    "text": "A vendor bought toffees at 6 for a rupee. How many for a rupee must he sell to gain 20%?",
+    "options": {
+      "A": "3",
+      "B": "4",
+      "C": "5",
+      "D": "6"
+    },
+    "correctOption": "C",
+    "explanation": "C.P. of 6 toffees = Re. 1S.P. of 6 toffees = 120% of Re. 1 = Rs.65For Rs.6, toffees sold = 6.5For Re. 1, toffees sold =6 x5= 5.6Video Explanation:https://youtu.be/7wKrnZ0LKA8",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "C.P. of 6 toffees = Re. 1S.P. of 6 toffees = 120% of Re. 1 = Rs.65For Rs.6, toffees sold = 6.5For Re...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-Wipro-Percentages-1787824319-0",
+    "topic": "Percentages",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "Wipro",
+      "RS Aggarwal"
+    ],
+    "text": "A batsman scored 110 runs which included 3 boundaries and 8 sixes. What percent of his total score did he make by running between the wickets?",
+    "options": {
+      "A": "45%",
+      "B": "455%11",
+      "C": "546%11",
+      "D": "55%"
+    },
+    "correctOption": "B",
+    "explanation": "Number of runs made by running = 110 - (3 x 4 + 8 x 6)= 110 - (60)= 50.Required percentage =50x 100% = 455%11011Video Explanation:https://youtu.be/X2zTnABqEHU",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "Number of runs made by running = 110 - (3 x 4 + 8 x 6)= 110 - (60)= 50.Required percentage =50x 100%...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-Wipro-Percentages-1787824319-1",
+    "topic": "Percentages",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "Wipro",
+      "RS Aggarwal"
+    ],
+    "text": "Two students appeared at an examination. One of them secured 9 marks more than the other and his marks was 56% of the sum of their marks. The marks obtained by them are:",
+    "options": {
+      "A": "39, 30",
+      "B": "41, 32",
+      "C": "42, 33",
+      "D": "43, 34"
+    },
+    "correctOption": "C",
+    "explanation": "Let their marks be (x+ 9) andx.Then,x+ 9 =56(x+ 9 +x)10025(x+ 9) = 14(2x+ 9)3x= 99x= 33So, their marks are 42 and 33.",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "Let their marks be (x+ 9) andx.Then,x+ 9 =56(x+ 9 +x)10025(x+ 9) = 14(2x+ 9)3x= 99x= 33So, their mar...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-Wipro-Percentages-1787824319-2",
+    "topic": "Percentages",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "Wipro",
+      "RS Aggarwal"
+    ],
+    "text": "A fruit seller had some apples. He sells 40% apples and still has 420 apples. Originally, he had:",
+    "options": {
+      "A": "588 apples",
+      "B": "600 apples",
+      "C": "672 apples",
+      "D": "700 apples"
+    },
+    "correctOption": "D",
+    "explanation": "Suppose originally he hadxapples.Then, (100 - 40)% ofx= 420.60xx= 420100x=420 x 100= 700.60Video Explanation:https://youtu.be/-Pv25Do3WwY",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "Suppose originally he hadxapples.Then, (100 - 40)% ofx= 420.60xx= 420100x=420 x 100= 700.60Video Exp...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-Wipro-Percentages-1787824319-3",
+    "topic": "Percentages",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "Wipro",
+      "RS Aggarwal"
+    ],
+    "text": "What percentage of numbers from 1 to 70 have 1 or 9 in the unit's digit?",
+    "options": {
+      "A": "1",
+      "B": "14",
+      "C": "20",
+      "D": "21"
+    },
+    "correctOption": "C",
+    "explanation": "Clearly, the numbers which have 1 or 9 in the unit's digit, have squares that end in the digit 1. Such numbers from 1 to 70 are 1, 9, 11, 19, 21, 29, 31, 39, 41, 49, 51, 59, 61, 69.Number of such number =14Required percentage =14x 100% = 20%.70Video Explanation:https://youtu.be/cBamI6iRNIA",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "Clearly, the numbers which have 1 or 9 in the unit's digit, have squares that end in the digit 1. Su...",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  },
+  {
+    "id": "scraped-Wipro-Percentages-1787824319-4",
+    "topic": "Percentages",
+    "difficulty": "Medium",
+    "difficulty_level": 2,
+    "company_tag": [
+      "Wipro",
+      "RS Aggarwal"
+    ],
+    "text": "If A =x% ofyand B =y% ofx, then which of the following is true?",
+    "options": {
+      "A": "A is smaller than B.",
+      "B": "A is greater than B",
+      "C": "Relationship between A and B cannot be determined.",
+      "D": "Ifxis smaller thany, then A is greater than B."
+    },
+    "correctOption": "E",
+    "explanation": "x% ofy=xxy=yxx=y% ofx100100A = B.",
+    "prerequisites": [
+      {
+        "slug": "general",
+        "title": "General",
+        "summary": "Basic concepts"
+      }
+    ],
+    "simple_explanation": "x% ofy=xxy=yxx=y% ofx100100A = B....",
+    "formulas": [],
+    "tips": "Practice regularly!"
+  }
+]
