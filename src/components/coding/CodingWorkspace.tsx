@@ -58,7 +58,15 @@ function isUuid(value: string) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
 
-type IterationTrace = { iteration: number; state: string; decision: string };
+type IterationTrace = {
+  iteration: number;
+  state: string;
+  decision: string;
+  cells: string[];
+  focusIndex: number;
+  variables: Array<{ name: string; value: string }>;
+  output: string;
+};
 type CodeBlock = { label: string; code: string; explanation: string; lineNumber: number };
 
 function buildCodeBlocks(code: string): CodeBlock[] {
@@ -76,7 +84,8 @@ function buildCodeBlocks(code: string): CodeBlock[] {
 function buildIterationTrace(question: CodingQuestion): IterationTrace[] {
   const firstInput = question.tests[0]?.input[0];
   if (Array.isArray(firstInput)) {
-    return firstInput.slice(0, 10).map((value, index) => ({
+    const cells = firstInput.slice(0, 12).map((value) => displayValue(value));
+    return cells.map((value, index) => ({
       iteration: index + 1,
       state: `index ${index} → ${JSON.stringify(value)}`,
       decision: question.pattern === "Character Scan"
@@ -84,27 +93,55 @@ function buildIterationTrace(question: CodingQuestion): IterationTrace[] {
         : question.pattern === "Star Patterns"
           ? `Build row ${index + 1} from its width and alignment rule.`
           : `Apply ${question.pattern} state to this item, then continue.`,
+      cells,
+      focusIndex: index,
+      variables: [
+        { name: "index", value: String(index) },
+        { name: "current", value },
+      ],
+      output: `Read ${value}; prepare the next state.`,
     }));
   }
   if (typeof firstInput === "string") {
-    return Array.from(firstInput).slice(0, 10).map((character, index) => ({
+    const cells = Array.from(firstInput).slice(0, 12);
+    return cells.map((character, index) => ({
       iteration: index + 1,
       state: `position ${index} → ${JSON.stringify(character)}`,
       decision: question.pattern === "Character Scan"
         ? `Normalize it, test membership, and update the counter.`
         : `Compare it with the current ${question.pattern} state.`,
+      cells,
+      focusIndex: index,
+      variables: [
+        { name: "position", value: String(index) },
+        { name: "character", value: JSON.stringify(character) },
+      ],
+      output: `Inspect ${JSON.stringify(character)}; continue scanning.`,
     }));
   }
   if (typeof firstInput === "number") {
-    return Array.from({ length: Math.min(Math.max(firstInput, 0), 10) }, (_, index) => ({
+    const cells = Array.from({ length: Math.min(Math.max(firstInput, 0), 12) }, (_, index) => `row ${index + 1}`);
+    return cells.map((value, index) => ({
       iteration: index + 1,
-      state: `row ${index + 1}`,
+      state: value,
       decision: question.pattern === "Star Patterns"
         ? `Calculate spaces and stars for row ${index + 1}.`
         : `Update the running ${question.pattern} state.`,
+      cells,
+      focusIndex: index,
+      variables: [{ name: "row", value: String(index + 1) }],
+      output: `Construct ${value}; append it to the result.`,
     }));
   }
-  return [{ iteration: 1, state: "Read the sample input", decision: `Apply the ${question.pattern} invariant before returning the result.` }];
+  return [{
+    iteration: 1,
+    state: "Read the sample input",
+    decision: `Apply the ${question.pattern} invariant before returning the result.`,
+    cells: ["input"],
+    focusIndex: 0,
+    variables: [{ name: "input", value: "sample" }],
+    output: "The reference algorithm is ready to run.",
+  }];
 }
 
 function getMistakeCoach(question: CodingQuestion, result: CodingRunResult) {
@@ -544,6 +581,47 @@ export default function CodingWorkspace({ question }: { question: CodingQuestion
                       <div className="mt-3 flex items-center gap-2 rounded-lg bg-white/70 px-3 py-2 font-sans text-[10px] text-primary">
                         <span className="h-2 w-2 rounded-full bg-[#ff5c36] animate-pulse" />
                         <span><strong>{activeCodeBlock?.label || "Current step"}:</strong> {activeCodeBlock?.explanation || "Follow the highlighted source line."}</span>
+                      </div>
+                    </div>
+                    <div className="rounded-xl border border-outline-variant bg-surface-container-low p-4 mb-3" aria-live="polite">
+                      <div className="flex items-center justify-between gap-3 mb-3">
+                        <div>
+                          <p className="font-sans text-[9px] font-extrabold uppercase tracking-wider text-on-surface-variant">Tracer canvas</p>
+                          <p className="font-sans text-[10px] text-on-surface-variant mt-1">A replayable snapshot of the input, pointer, variables, and output log.</p>
+                        </div>
+                        <span className="rounded-full bg-primary px-2.5 py-1 font-mono text-[9px] font-bold text-on-primary">snapshot {traceIndex + 1}</span>
+                      </div>
+                      <div className="overflow-x-auto pb-1">
+                        <div className="flex min-w-max items-end gap-2">
+                          {activeTrace?.cells.map((cell, index) => {
+                            const focused = index === activeTrace.focusIndex;
+                            const visited = index < activeTrace.focusIndex;
+                            return (
+                              <div key={`${cell}-${index}`} className="flex w-16 flex-col items-center gap-1">
+                                <span className={`font-mono text-[9px] transition-opacity duration-500 ${focused ? "text-secondary opacity-100" : "text-on-surface-variant opacity-0"}`}>▲ current</span>
+                                <div className={`flex h-11 w-16 items-center justify-center rounded-lg border font-mono text-[10px] transition-all duration-500 ${focused ? "scale-105 border-secondary bg-secondary-container/30 text-primary shadow-sm" : visited ? "border-emerald-200 bg-emerald-50 text-emerald-800" : "border-outline-variant bg-background text-on-surface-variant"}`}>{cell}</div>
+                                <span className="font-mono text-[9px] text-on-surface-variant">{index}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                        <div className="rounded-lg bg-background p-3">
+                          <p className="font-sans text-[9px] font-extrabold uppercase tracking-wider text-on-surface-variant mb-2">Variables</p>
+                          <div className="space-y-1">
+                            {activeTrace?.variables.map((variable) => (
+                              <div key={variable.name} className="flex items-center justify-between gap-3 font-mono text-[10px]">
+                                <span className="text-on-surface-variant">{variable.name}</span>
+                                <span className="font-bold text-primary break-all text-right">{variable.value}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="rounded-lg bg-primary p-3 text-on-primary">
+                          <p className="font-sans text-[9px] font-extrabold uppercase tracking-wider text-on-primary/45 mb-2">Output log</p>
+                          <p className="font-mono text-[10px] leading-5 text-[#ffd2c8]">{activeTrace?.output}</p>
+                        </div>
                       </div>
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
