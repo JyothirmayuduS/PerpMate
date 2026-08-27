@@ -210,6 +210,77 @@ const guides: Record<string, ComplexityGuide> = {
   },
 };
 
+const additionalPatternGuides: Record<string, ComplexityGuide> = {
+  Greedy: {
+    bruteForce: { time: "O(2ⁿ)", space: "O(n)", explanation: "Trying every subset of choices explores all possible combinations." },
+    optimized: { time: "O(n log n)", space: "O(1) or O(n)", explanation: "Sorting by the greedy key lets each choice be made once while preserving the proof invariant." },
+    improvementSteps: ["Define the local choice and why it is safe.", "Sort or prioritize candidates by that choice.", "Prove that an optimal solution can be exchanged into the greedy choice."],
+    interviewTip: "Always explain the exchange argument; a fast-looking choice is not automatically greedy-correct.",
+  },
+  "Bit Manipulation": {
+    bruteForce: { time: "O(log n)", space: "O(1)", explanation: "Inspecting every binary digit works but may perform unnecessary shifts." },
+    optimized: { time: "O(k)", space: "O(1)", explanation: "Bit tricks such as n & (n - 1) jump directly between set bits; k is the number of set bits." },
+    improvementSteps: ["Write the binary invariant for the operation.", "Replace repeated division or remainder work with masks.", "Check signed values and language integer-width behavior."],
+    interviewTip: "State whether the complexity is by bit width or by the number of set bits.",
+  },
+  "Divide and Conquer": {
+    bruteForce: { time: "O(n)", space: "O(1)", explanation: "A linear scan checks every candidate without using the structure of the input." },
+    optimized: { time: "O(log n)", space: "O(log n)", explanation: "Each decision discards half of the remaining range, with logarithmic recursion depth." },
+    improvementSteps: ["Identify a decision that rules out half the search space.", "Keep the invariant true at both boundaries.", "Use an iterative version when stack space matters."],
+    interviewTip: "Name the discarded half and justify why it cannot contain a valid better answer.",
+  },
+  Trie: {
+    bruteForce: { time: "O(q × n)", space: "O(1)", explanation: "Comparing each query with every stored word repeatedly scans the dictionary." },
+    optimized: { time: "O(total input characters)", space: "O(total stored characters)", explanation: "A trie shares common prefixes, so each word or prefix is traversed only by its characters." },
+    improvementSteps: ["Create one node per prefix character.", "Store terminal counts or flags for complete words.", "Use iterative traversal when inputs can make recursion deep."],
+    interviewTip: "Include the alphabet size or map implementation in the space discussion when relevant.",
+  },
+  "0/1 Knapsack": {
+    bruteForce: { time: "O(2ⁿ)", space: "O(n)", explanation: "Each item branches into take or skip choices." },
+    optimized: { time: "O(n × capacity)", space: "O(capacity)", explanation: "Dynamic programming reuses the best value for every capacity and processes each item once." },
+    improvementSteps: ["Define dp[c] as the best value at capacity c.", "Iterate capacity downward so an item is not reused.", "Compress from two dimensions only after confirming transition order."],
+    interviewTip: "The downward capacity loop is the key difference between 0/1 and unbounded knapsack.",
+  },
+  LIS: {
+    bruteForce: { time: "O(2ⁿ)", space: "O(n)", explanation: "Enumerating every subsequence creates an exponential number of candidates." },
+    optimized: { time: "O(n log n)", space: "O(n)", explanation: "Binary search maintains the smallest possible tail for each subsequence length." },
+    improvementSteps: ["Start with the O(n²) DP recurrence.", "Track tails rather than full subsequences.", "Use predecessor indices if the actual sequence must be reconstructed."],
+    interviewTip: "The tails array stores minimal endings; it is not necessarily the final LIS itself.",
+  },
+  "KMP String Matching": {
+    bruteForce: { time: "O(n × m)", space: "O(1)", explanation: "A mismatch can restart the pattern comparison from the next text position." },
+    optimized: { time: "O(n + m)", space: "O(m)", explanation: "The prefix table reuses matched pattern prefixes, so text and pattern characters move forward linearly." },
+    improvementSteps: ["Build the longest-prefix-suffix table.", "Fall back within the pattern after a mismatch.", "Keep text and pattern indices monotonic."],
+    interviewTip: "Explain what lps[i] means; that definition makes the fallback logic memorable.",
+  },
+  "Sweep Line": {
+    bruteForce: { time: "O(n²)", space: "O(n)", explanation: "Comparing every pair of intervals or events repeats overlap checks." },
+    optimized: { time: "O(n log n)", space: "O(n)", explanation: "Sorting event boundaries lets one pass maintain the active count or set." },
+    improvementSteps: ["Turn starts and ends into ordered events.", "Define tie ordering for simultaneous events.", "Update the active state exactly once per boundary."],
+    interviewTip: "Tie handling can change the answer when one event ends as another begins.",
+  },
+  "Difference Array": {
+    bruteForce: { time: "O(n × q)", space: "O(n)", explanation: "Updating every element for every range repeats work across overlapping ranges." },
+    optimized: { time: "O(n + q)", space: "O(n)", explanation: "Range changes are recorded at two boundaries and reconstructed with one prefix pass." },
+    improvementSteps: ["Mark the start with +delta and the exclusive end with -delta.", "Build the final values using a running sum.", "Check whether the end index is inclusive before placing the marker."],
+    interviewTip: "Difference arrays are ideal when updates are known first and values are queried afterward.",
+  },
+  "LRU Cache": {
+    bruteForce: { time: "O(n × capacity)", space: "O(capacity)", explanation: "Searching or shifting entries to update recency costs linear time per operation." },
+    optimized: { time: "O(n)", space: "O(capacity)", explanation: "A hash map locates entries and a doubly linked list moves them in constant time." },
+    improvementSteps: ["Separate lookup from ordering.", "Use sentinels to simplify head and tail removal.", "Update recency on both reads and writes."],
+    interviewTip: "State the invariant: the list order is the eviction order and the map points to every list node.",
+  },
+  "Minimum Spanning Tree": {
+    bruteForce: { time: "O(2ᴱ)", space: "O(V + E)", explanation: "Enumerating edge subsets and checking which form spanning trees is exponential." },
+    optimized: { time: "O(E log V)", space: "O(V + E)", explanation: "Kruskal sorts edges and Union-Find rejects cycles while building the minimum tree." },
+    improvementSteps: ["Sort edges by weight.", "Use Union-Find to test whether an edge creates a cycle.", "Stop after V - 1 accepted edges and verify disconnected graphs."],
+    interviewTip: "Distinguish a minimum spanning tree from a shortest-path tree: they optimize different objectives.",
+  },
+};
+
+Object.assign(guides, additionalPatternGuides);
+
 const fallbackGuide: ComplexityGuide = {
   bruteForce: {
     time: "Approach-dependent",
